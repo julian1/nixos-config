@@ -1,0 +1,34 @@
+
+
+
+
+
+-------------
+done - /etc/bashrc reads the following.
+  So we should just be able to write this...
+
+  # Read system-wide modifications.
+  if test -f /etc/bashrc.local; then
+      . /etc/bashrc.local
+  fi
+
+
+
+-----------
+
+For having vim, git etc all configured in the shell.
+
+done - fixed screen - when started in nix-shell, the bash shell does not have the shellHook, and so looses all aliases/and prompt
+  can manually just import,
+ 
+  start screen. then 
+  [me@nixos03:~/my-nixos-config]$ . ./dotfiles/bash_aliases 
+  me@nixos03:~/my-nixos-config$ 
+
+
+done - fixed. vim is sprawing swp swo files everywhere
+
+done - fixed. screen has a startup screen
+
+
+
