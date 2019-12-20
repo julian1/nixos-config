@@ -18,8 +18,11 @@ stdenv.mkDerivation {
   buildInputs = [
     cabal-install
     ghc
-    # hoogle db written to $HOME/.hoogle. persists through nix-shell
+    # hoogle db written to $HOME/.hoogle. persists through nix-shell restarts
     haskellPackages.hoogle
+    # haskellPackages.hindent
+    haskellPackages.project-m36
+    # haskellPackages.idris
   ];
 
 }
