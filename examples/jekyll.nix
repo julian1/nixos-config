@@ -1,3 +1,8 @@
+
+# see the exec replacement of bash. to run a webserver.
+
+# doesn't work. because bundlerEnv not in scope... 
+
 let jekyll_env = bundlerEnv rec {
     name = "jekyll_env";
     ruby = ruby_2_2;
