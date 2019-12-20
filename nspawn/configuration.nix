@@ -144,5 +144,7 @@ users.users.me.packages =
 
   services.mingetty.greetingLine = mkForce ''<<< Whoot \4 Welcome to NixOS ${config.system.nixos.label} (\m) - \l >>>'';
 
+  # nixpkgs.config.allowBroken = true; 
+
 }
 

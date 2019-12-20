@@ -3,6 +3,11 @@
 # https://github.com/haskell-distributed/network-transport-tcp/
 # https://stackoverflow.com/questions/27968909/how-to-get-cabal-and-nix-work-together
 
+# https://github.com/Gabriel439/haskell-nix/tree/master/project4
+
+# cd network-transport-tcp/
+# cabal2nix network-transport-tcp.cabal 
+# cabal2nix network-transport-tcp.cabal > shell.nix
 
 
 let
@@ -11,7 +16,9 @@ let
       haskellPackages = pkgs.haskellPackages.override {
         overrides = haskellPackagesNew: haskellPackagesOld: rec {
 
-         network-transport-tcp = haskellPackagesNew.callPackage /home/me/network-transport-tcp/shell.nix  { };
+          network-transport-tcp = 
+            pkgs.haskell.lib.dontCheck  
+              (haskellPackagesNew.callPackage /home/me/network-transport-tcp/shell.nix  { });
 
         };
       };
@@ -22,6 +29,9 @@ let
 in
 with pkgs;
 
+  let network-transport-tcp  = pkgs.haskellPackages.network-transport-tcp;
+
+  in
 
 pkgs.stdenv.mkDerivation {
   name = "my-example";
@@ -35,7 +45,7 @@ pkgs.stdenv.mkDerivation {
     # hoogle db written to $HOME/.hoogle. persists through nix-shell restarts
     haskellPackages.hoogle
     
-    haskellPackages.network-transport-tcp
+    network-transport-tcp
 
     # haskellPackages.idris
   ];
