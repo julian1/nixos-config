@@ -1,7 +1,7 @@
 
-# see the exec replacement of bash. to run a webserver.
+# good example about how to do exec replacement of bash. eg. in this case will run a webserver.
 
-# doesn't work. because bundlerEnv not in scope... 
+# won't work. because bundlerEnv not in scope... 
 
 let jekyll_env = bundlerEnv rec {
     name = "jekyll_env";

@@ -1,6 +1,8 @@
 
 
-
+simple xmonad/dmenu configuration.nix in nixos
+  scroll down.
+  https://github.com/NixOS/nixpkgs/issues/75333
 
 
 -------------
@@ -16,7 +18,6 @@ done - /etc/bashrc reads the following.
 
 -----------
 
-For having vim, git etc all configured in the shell.
 
 done - fixed screen - when started in nix-shell, the bash shell does not have the shellHook, and so looses all aliases/and prompt
   can manually just import,
