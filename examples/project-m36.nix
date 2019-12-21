@@ -75,11 +75,9 @@ pkgs.stdenv.mkDerivation {
     #pkgs.haskellPackages.stm-hamt
     #pkgs.haskellPackages.distributed-process-client-server
     
-    pkgs.haskellPackages.primitive-0.7.0.0
-    pkgs.haskellPackages.primitive-extras
-    pkgs.haskellPackages.stm-containers
+    #pkgs.haskellPackages.stm-containers
 
-    #pkgs.haskellPackages.project-m36
+    pkgs.haskellPackages.project-m36
   ];
 
 }

@@ -12,8 +12,6 @@ in
 pkgs.stdenv.mkDerivation {
   name = "my-example";
 
-
-
   buildInputs = [
     cabal-install
     ghc
