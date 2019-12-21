@@ -26,7 +26,7 @@ pkgs.stdenv.mkDerivation {
 
   buildInputs = [
     
-    pkgs.haskellPackages.secp256k1 
+    pkgs.haskellPackages.secp256k1-haskell 
 
   ];
 
