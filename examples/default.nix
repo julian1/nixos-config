@@ -1,8 +1,6 @@
 
-# OK. This works to give us a custom vimRC !!!!
-# and works to set the shell
-# so we need git configuration
-# and we have ssh keys...   maybe can place in here...
+# vim and git
+# bash and screen moved into configuration.nix...
 
 # https://github.com/NixOS/nixpkgs/blob/master/pkgs/misc/vim-plugins/vim-utils.nix
 # using a local directory 
@@ -127,7 +125,6 @@ stdenv.mkDerivation {
 #	#-- old;
 #	interactiveShellInit.value = ''whoot=ls'' ;
 #  }
-
 
 
   buildInputs = [
