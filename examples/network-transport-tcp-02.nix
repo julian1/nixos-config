@@ -21,7 +21,6 @@ let
           let
             toPackage = file: _: {
               name  = builtins.replaceStrings [ ".nix" ] [ "" ] file;
-
               value = haskellPackagesNew.callPackage (./. + "/nix/${file}") { };
             };
             packages = pkgs.lib.mapAttrs' toPackage (builtins.readDir ./nix);
@@ -30,12 +29,13 @@ let
             packages // {
               network-transport-tcp = 
                 pkgs.haskell.lib.dontCheck  
-                  (haskellPackagesNew.callPackage /home/me/nixos-config/nix/network-transport-tcp/shell.nix  { });
+                  (haskellPackagesNew.callPackage nix/network-transport-tcp/shell.nix  { });
             };
         };
       };
     };
 
+  # nothing seems to be getting overridden... even if it's reading my directories...
   pkgs = import <nixpkgs> { inherit config; };
 in
 with pkgs;

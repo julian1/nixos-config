@@ -15,12 +15,17 @@
 
 let
   config = {
+
+    ### WOOT this works!!
+    allowBroken = true;
+    allowUnfree = true;
+
     packageOverrides = pkgs: rec {
       haskellPackages = pkgs.haskellPackages.override {
         overrides = haskellPackagesNew: haskellPackagesOld: rec {
 
           network-transport-tcp = 
-            pkgs.haskell.lib.dontCheck  
+            #pkgs.haskell.lib.dontCheck  
               (haskellPackagesNew.callPackage /home/me/nixos-config/nix/network-transport-tcp/shell.nix { });
         };
       };

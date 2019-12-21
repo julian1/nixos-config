@@ -1,6 +1,4 @@
 
-
-
 # https://github.com/haskell-distributed/network-transport-tcp/
 # https://stackoverflow.com/questions/27968909/how-to-get-cabal-and-nix-work-together
 
@@ -18,9 +16,9 @@
 
 
 let
-
   config = {
 
+    ### WOOT this works!!
     allowBroken = true;
 
     packageOverrides = pkgs: rec {
