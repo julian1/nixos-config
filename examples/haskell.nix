@@ -7,6 +7,8 @@ let
   x = 1 ;
 in
 
+# hoogle db written to $HOME/.hoogle. persists through nix-shell restarts
+
 pkgs.stdenv.mkDerivation {
   name = "my-example";
 
@@ -15,7 +17,6 @@ pkgs.stdenv.mkDerivation {
   buildInputs = [
     cabal-install
     ghc
-    # hoogle db written to $HOME/.hoogle. persists through nix-shell restarts
     haskellPackages.hoogle
     haskellPackages.cabal2nix
 

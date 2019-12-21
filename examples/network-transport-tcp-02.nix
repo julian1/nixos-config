@@ -31,7 +31,7 @@ let
 
               network-transport-tcp = 
                 pkgs.haskell.lib.dontCheck  
-                  (haskellPackagesNew.callPackage ./nix/network-transport-tcp/shell.nix  { });
+                  (haskellPackagesNew.callPackage /home/me/nixos-config/nix/network-transport-tcp/shell.nix  { });
 
             };
         };
