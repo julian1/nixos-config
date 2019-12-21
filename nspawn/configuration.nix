@@ -53,7 +53,7 @@ users.extraUsers.me =
 
 
 users.users.root.packages =
-          with pkgs;[ vim git screen less psmisc ];
+          with pkgs;[ vim git screen less man psmisc ];
 
 
 users.users.me.packages =
@@ -96,7 +96,7 @@ users.users.me.packages =
   in
 
   # note less, nc, netstat, curl, rsync are installed by default
-  with pkgs;[ myVim myGit screen less psmisc ];
+  with pkgs;[ myVim myGit screen less man psmisc ];
 
   environment.etc = {
 
