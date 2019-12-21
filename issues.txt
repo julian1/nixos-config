@@ -1,4 +1,24 @@
 
+OK- issue is now the tests... 
+  - or maybe as a dependency...
+
+[nix-shell:~/nixos-config/nix/network-transport-tcp]$ nix-build
+these derivations will be built:
+  /nix/store/rgvy6b9qwg73gr7bapf69q2p5rr3q368-network-transport-tests-0.2.4.2.drv
+  /nix/store/lgl1bvy4mnh4drl38vsmvjdwv2j6w6ws-network-transport-tcp-0.6.0.drv
+building '/nix/store/rgvy6b9qwg73gr7bapf69q2p5rr3q368-network-transport-tests-0.2.4.2.drv'...
+setupCompilerEnvironmentPhase
+Build with /nix/store/hg3na12737n7wws1kndxvs95ai88fgn8-ghc-8.6.5.
+
+
+
+---------------------
+So i think we want to find the original nix for network-transport-tcp 
+  and copy it.
+
+  eg. it's not in the package itself. 
+
+-----------
 
 simple xmonad/dmenu configuration.nix in nixos
   scroll down.
