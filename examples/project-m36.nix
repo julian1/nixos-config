@@ -45,11 +45,14 @@ let
           # Setup: Encountered missing dependencies:
           # primitive ==0.7.*, primitive-extras ==0.8.*
           # we have, "primitive-0.7.0.0",   primitive-extras-0.7.1.1"
-          #stm-hamt
-          # so it should be ok.... maybe needs package deps regenerated 
-          # https://hackage.haskell.org/package/stm-hamt
-          # deleeted tests...
+          # NO. we also have  "name": "primitive-0.5.1.0"
+          # so there are multiple versions. not clear which one is required... 
+          # perhaps some package is requesting an older version. presumably...
           stm-hamt = (haskellPackagesNew.callPackage /home/me/nixos-config/nix/stm-hamt/shell.nix { });
+
+          # stm-containers = (haskellPackagesNew.callPackage /home/me/nixos-config/nix/stm-containers/shell.nix { });
+
+          #ghc-shell-for-stm-hamt
 
         };
       };
@@ -65,14 +68,18 @@ pkgs.stdenv.mkDerivation {
   buildInputs = [
     # pkgs.haskellPackages.network-transport-tcp
 
-    pkgs.haskellPackages.primitive
+    #pkgs.haskellPackages.primitive
+    #pkgs.haskellPackages.primitive-extras
+
+    #pkgs.haskellPackages.rank1dynamic
+    #pkgs.haskellPackages.stm-hamt
+    #pkgs.haskellPackages.distributed-process-client-server
+    
+    pkgs.haskellPackages.primitive-0.7.0.0
     pkgs.haskellPackages.primitive-extras
+    pkgs.haskellPackages.stm-containers
 
-    pkgs.haskellPackages.rank1dynamic
-    pkgs.haskellPackages.stm-hamt
-    pkgs.haskellPackages.distributed-process-client-server
-
-    pkgs.haskellPackages.project-m36
+    #pkgs.haskellPackages.project-m36
   ];
 
 }
