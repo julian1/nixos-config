@@ -31,7 +31,9 @@ let
 
           # test fail...  disable tests
           # rank1dynamic-0.4.0
-          rank1dynamic = pkgs.haskell.lib.dontCheck  haskellPackagesOld.rank1dynamic;
+          # needs more than this.
+          # rank1dynamic = pkgs.haskell.lib.dontCheck  haskellPackagesOld.rank1dynamic;
+          rank1dynamic = (haskellPackagesNew.callPackage /home/me/nixos-config/nix/rank1dynamic/shell.nix { });
 
           # distributed-process-0.7.4 also has the same issue... a dependency on containers ==0.5.*,
           # branch master has been updated, containers >= 0.5 && < 0.7,
@@ -63,10 +65,12 @@ pkgs.stdenv.mkDerivation {
   buildInputs = [
     # pkgs.haskellPackages.network-transport-tcp
 
-    # pkgs.haskellPackages.rank1dynamic
     pkgs.haskellPackages.primitive
     pkgs.haskellPackages.primitive-extras
+
+    pkgs.haskellPackages.rank1dynamic
     pkgs.haskellPackages.stm-hamt
+    pkgs.haskellPackages.distributed-process-client-server
 
     pkgs.haskellPackages.project-m36
   ];
