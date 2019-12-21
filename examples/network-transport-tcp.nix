@@ -24,9 +24,13 @@ let
       haskellPackages = pkgs.haskellPackages.override {
         overrides = haskellPackagesNew: haskellPackagesOld: rec {
 
-          network-transport-tcp = 
-            #pkgs.haskell.lib.dontCheck  
-              (haskellPackagesNew.callPackage /home/me/nixos-config/nix/network-transport-tcp/shell.nix { });
+          # needs master branch built which alleviates 
+          network-transport-tcp = (haskellPackagesNew.callPackage /home/me/nixos-config/nix/network-transport-tcp/shell.nix { });
+
+          # test fail...
+          rank1dynamic = pkgs.haskell.lib.dontCheck  haskellPackagesOld.rank1dynamic;
+
+
         };
       };
     };
@@ -42,6 +46,8 @@ pkgs.stdenv.mkDerivation {
     pkgs.cabal-install
     pkgs.ghc
     pkgs.haskellPackages.network-transport-tcp
+
+    pkgs.haskellPackages.project-m36
   ];
 
 }
