@@ -20,7 +20,6 @@ let
           network-transport-tcp = 
             pkgs.haskell.lib.dontCheck  
               (haskellPackagesNew.callPackage /home/me/nixos-config/nix/network-transport-tcp/shell.nix { });
-
         };
       };
     };
@@ -30,25 +29,13 @@ let
 in
 with pkgs;
 
-  let network-transport-tcp  = pkgs.haskellPackages.network-transport-tcp;
-
-  in
-
 pkgs.stdenv.mkDerivation {
   name = "my-example";
-
-  # why doesn't this work!!!.
-  # pkgs.config.allowBroken = true;
 
   buildInputs = [
     cabal-install
     ghc
-    # hoogle db written to $HOME/.hoogle. persists through nix-shell restarts
-    haskellPackages.hoogle
-    
-    network-transport-tcp
-
-    # haskellPackages.idris
+    haskellPackages.network-transport-tcp
   ];
 
 }
