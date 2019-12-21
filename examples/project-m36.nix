@@ -25,8 +25,8 @@ let
         overrides = haskellPackagesNew: haskellPackagesOld: rec {
 
           # network-transport-tcp-0.6.0 has a dependency on old version of containers
-          # so we need master branch of network-transport-tcp
-          # also remove tests which are in a separate module from cabal file
+          # master branch relaxes version
+          # also need to remove tests which are in a separate module from cabal file
           network-transport-tcp = (haskellPackagesNew.callPackage /home/me/nixos-config/nix/network-transport-tcp/shell.nix { });
 
           # test fail...  disable tests
@@ -34,6 +34,20 @@ let
           rank1dynamic = pkgs.haskell.lib.dontCheck  haskellPackagesOld.rank1dynamic;
 
           # distributed-process-0.7.4 also has the same issue... a dependency on containers ==0.5.*,
+          # branch master has been updated, containers >= 0.5 && < 0.7,
+          # no need to edit cabal. so perhaps we could have specified a master branch, rather than checking out source code
+          distributed-process = (haskellPackagesNew.callPackage /home/me/nixos-config/nix/distributed-process/shell.nix { });
+
+
+          #  stm-hamt-1.2.0.4
+          # Setup: Encountered missing dependencies:
+          # primitive ==0.7.*, primitive-extras ==0.8.*
+          # we have, "primitive-0.7.0.0",   primitive-extras-0.7.1.1"
+          #stm-hamt
+          # so it should be ok.... maybe needs package deps regenerated 
+          # https://hackage.haskell.org/package/stm-hamt
+          # deleeted tests...
+          stm-hamt = (haskellPackagesNew.callPackage /home/me/nixos-config/nix/stm-hamt/shell.nix { });
 
         };
       };
@@ -48,6 +62,11 @@ pkgs.stdenv.mkDerivation {
 
   buildInputs = [
     # pkgs.haskellPackages.network-transport-tcp
+
+    # pkgs.haskellPackages.rank1dynamic
+    pkgs.haskellPackages.primitive
+    pkgs.haskellPackages.primitive-extras
+    pkgs.haskellPackages.stm-hamt
 
     pkgs.haskellPackages.project-m36
   ];
