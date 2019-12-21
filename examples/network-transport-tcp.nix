@@ -32,18 +32,16 @@ let
     };
   };
 
-  # nixpkgs = import ./nixpkgs.nix;
-  pkgs = import <nixpkgs> { inherit config; };
+  pkgs = import <nixpkgs> { inherit config; }; 
 in
-with pkgs;
 
 pkgs.stdenv.mkDerivation {
   name = "my-example";
 
   buildInputs = [
-    cabal-install
-    ghc
-    haskellPackages.network-transport-tcp
+    pkgs.cabal-install
+    pkgs.ghc
+    pkgs.haskellPackages.network-transport-tcp
   ];
 
 }
