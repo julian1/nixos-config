@@ -24,21 +24,24 @@ let
       haskellPackages = pkgs.haskellPackages.override {
         overrides = haskellPackagesNew: haskellPackagesOld: rec {
 
+          # IMPORTANT
+          # not sure if should be using /default.nix or /shell.nix
+
           # network-transport-tcp-0.6.0 has a dependency on old version of containers
           # master branch relaxes version
           # also need to remove tests which are in a separate module from cabal file
-          network-transport-tcp = (haskellPackagesNew.callPackage /home/me/nixos-config/nix/network-transport-tcp/shell.nix { });
+          network-transport-tcp = (haskellPackagesNew.callPackage /home/me/nixos-config/nix/network-transport-tcp/default.nix { });
 
           # test fail...  disable tests
           # rank1dynamic-0.4.0
           # needs more than this.
           # rank1dynamic = pkgs.haskell.lib.dontCheck  haskellPackagesOld.rank1dynamic;
-          rank1dynamic = (haskellPackagesNew.callPackage /home/me/nixos-config/nix/rank1dynamic/shell.nix { });
+          rank1dynamic = (haskellPackagesNew.callPackage /home/me/nixos-config/nix/rank1dynamic/default.nix { });
 
           # distributed-process-0.7.4 also has the same issue... a dependency on containers ==0.5.*,
           # branch master has been updated, containers >= 0.5 && < 0.7,
           # no need to edit cabal. so perhaps we could have specified a master branch, rather than checking out source code
-          distributed-process = (haskellPackagesNew.callPackage /home/me/nixos-config/nix/distributed-process/shell.nix { });
+          distributed-process = (haskellPackagesNew.callPackage /home/me/nixos-config/nix/distributed-process/default.nix { });
 
 
           #  stm-hamt-1.2.0.4
@@ -48,7 +51,7 @@ let
           # NO. we also have  "name": "primitive-0.5.1.0"
           # so there are multiple versions. not clear which one is required... 
           # perhaps some package is requesting an older version. presumably...
-          stm-hamt = (haskellPackagesNew.callPackage /home/me/nixos-config/nix/stm-hamt/shell.nix { });
+          stm-hamt = (haskellPackagesNew.callPackage /home/me/nixos-config/nix/stm-hamt/default.nix { });
 
           # stm-containers = (haskellPackagesNew.callPackage /home/me/nixos-config/nix/stm-containers/shell.nix { });
 
