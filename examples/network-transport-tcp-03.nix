@@ -20,6 +20,9 @@
 let
 
   config = {
+
+    allowBroken = true;
+
     packageOverrides = pkgs: rec {
       haskellPackages = pkgs.haskellPackages.override {
        
@@ -29,7 +32,7 @@ let
             addPkg = path: rest: lib.dontCheck (lib.dontHaddock (self.haskellPackages.callPackage path rest));
           in {
               haskellPackages = super.haskellPackages.extend (hself: hsuper: {
-                network-transport-tcp = addPkg ~/src/some-package1/default.nix {};
+                network-transport-tcp = addPkg ~/src/some-package1/default.nix {   };
                 some-package2 = addPkg ~/src/some-package2/default.nix {};
                 });
             };
