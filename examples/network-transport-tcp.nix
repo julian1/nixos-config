@@ -16,7 +16,7 @@
 let
   config = {
 
-    ### WOOT this works!!
+    # works to suppress refusal to build!!
     allowBroken = true;
     allowUnfree = true;
 
