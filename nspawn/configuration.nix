@@ -1,17 +1,17 @@
 # eg.
 # ln -sf /home/me/nixos-config/nspawn/configuration.nix  /etc/nixos/configuration.nix
 
-{ lib, config, pkgs, ... }:
+{ lib,  pkgs, ... }:
 with lib;   
 
 {
   imports = [ <nixpkgs/nixos/modules/virtualisation/lxc-container.nix> ];
 
 
-  networking.hostName = "nixos03"; # Define your hostname.
+  config.networking.hostName = "nixos03"; # Define your hostname.
 
   # Select internationalisation properties.
-  i18n = {
+  config.i18n = {
     consoleFont = "Lat2-Terminus16";
     consoleKeyMap = "us";
     # defaultLocale = "en_US.UTF-8";
@@ -24,8 +24,8 @@ with lib;
 
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-  services.openssh.permitRootLogin = "without-password";
+  config.services.openssh.enable = true;
+  config.services.openssh.permitRootLogin = "without-password";
   # JA usePAM is default
   # think would need the %u is user, %h is home /root/.ssh...
   # services.openssh.authorizedKeysFiles = ["%h/.ssh/authorized_keys"];
@@ -33,30 +33,30 @@ with lib;
   # services.openssh.authorizedKeysFiles = ["/root/.ssh/authorized_keys"];
 
   # services.openssh.authorizedKeysFiles = ["~/.ssh/authorized_keys"];
-  users.extraUsers.root.openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDd9DazuhCPLh9YcW8BtHTIWZ+k4ZXo7TtI55f2r/r1MXF/odbQsYb+lJmLMStp8ncHyH7YUaWBvWlz6q9ourkXixYuf255NjrVxBsnqWW58xPwtnRz7jVtVr2oBuId8Uf1o4HCou2a5vLRhuajq6Xd/VHz4z2kpcCsdObiteHqzrLCoZCtDlKxlcGADC057OqZM1FrIV1+2T5ZnN/PDwXphK0D+ZnHm2Sd5n0prpR4NfVtnlq3/68o5xzS2Wm4FhHXF2DqDzolC6OnPWHMqYNXn2vbmQD05Ef4iix0O8cYQ888QQ4/cUnW4ONPPCk1ixv8xqpXsLSAt8EdQjQsZRHB me" ];
+  config.users.extraUsers.root.openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDd9DazuhCPLh9YcW8BtHTIWZ+k4ZXo7TtI55f2r/r1MXF/odbQsYb+lJmLMStp8ncHyH7YUaWBvWlz6q9ourkXixYuf255NjrVxBsnqWW58xPwtnRz7jVtVr2oBuId8Uf1o4HCou2a5vLRhuajq6Xd/VHz4z2kpcCsdObiteHqzrLCoZCtDlKxlcGADC057OqZM1FrIV1+2T5ZnN/PDwXphK0D+ZnHm2Sd5n0prpR4NfVtnlq3/68o5xzS2Wm4FhHXF2DqDzolC6OnPWHMqYNXn2vbmQD05Ef4iix0O8cYQ888QQ4/cUnW4ONPPCk1ixv8xqpXsLSAt8EdQjQsZRHB me" ];
 
 
-  networking.firewall.enable = false;
+  config.networking.firewall.enable = false;
 
 
-# currently needed for ansible to run dotfiles deploy
-users.extraGroups.me.gid = 1000;
+  # currently needed for ansible to run dotfiles deploy
+  config.users.extraGroups.me.gid = 1000;
 
-users.extraUsers.me =
- { isNormalUser = true;
-   home = "/home/me";
-   description = "my description";
-   extraGroups = [ "me" "wheel" "networkmanager" ];
-   openssh.authorizedKeys.keys =
-      [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDd9DazuhCPLh9YcW8BtHTIWZ+k4ZXo7TtI55f2r/r1MXF/odbQsYb+lJmLMStp8ncHyH7YUaWBvWlz6q9ourkXixYuf255NjrVxBsnqWW58xPwtnRz7jVtVr2oBuId8Uf1o4HCou2a5vLRhuajq6Xd/VHz4z2kpcCsdObiteHqzrLCoZCtDlKxlcGADC057OqZM1FrIV1+2T5ZnN/PDwXphK0D+ZnHm2Sd5n0prpR4NfVtnlq3/68o5xzS2Wm4FhHXF2DqDzolC6OnPWHMqYNXn2vbmQD05Ef4iix0O8cYQ888QQ4/cUnW4ONPPCk1ixv8xqpXsLSAt8EdQjQsZRHB me" ];
- };
-
-
-users.users.root.packages =
-          with pkgs;[ vim git screen less man psmisc ];
+  config.users.extraUsers.me =
+   { isNormalUser = true;
+     home = "/home/me";
+     description = "my description";
+     extraGroups = [ "me" "wheel" "networkmanager" ];
+     openssh.authorizedKeys.keys =
+        [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDd9DazuhCPLh9YcW8BtHTIWZ+k4ZXo7TtI55f2r/r1MXF/odbQsYb+lJmLMStp8ncHyH7YUaWBvWlz6q9ourkXixYuf255NjrVxBsnqWW58xPwtnRz7jVtVr2oBuId8Uf1o4HCou2a5vLRhuajq6Xd/VHz4z2kpcCsdObiteHqzrLCoZCtDlKxlcGADC057OqZM1FrIV1+2T5ZnN/PDwXphK0D+ZnHm2Sd5n0prpR4NfVtnlq3/68o5xzS2Wm4FhHXF2DqDzolC6OnPWHMqYNXn2vbmQD05Ef4iix0O8cYQ888QQ4/cUnW4ONPPCk1ixv8xqpXsLSAt8EdQjQsZRHB me" ];
+   };
 
 
-users.users.me.packages =
+  config.users.users.root.packages =
+            with pkgs;[ vim git screen less man psmisc ];
+
+
+  config.users.users.me.packages =
 
   # system is mostly unusable without a good working vim.
   # note we symlink config files, so not really needed for root.
@@ -108,7 +108,7 @@ users.users.me.packages =
   
   [ myVim myGit screen less man psmisc ];
 
-  environment.etc = {
+  config.environment.etc = {
 
     # Whoot. fixed screen message. uses /etc/screenrc
     # eg. nix-repl> pkgs.screen.configureFlags
@@ -126,11 +126,10 @@ users.users.me.packages =
       mode = "0444";
     };
 
-
   };
 
 
-   system.activationScripts =  {
+   config.system.activationScripts =  {
 
     #  do this for root also???
     myfiles = 
@@ -149,9 +148,30 @@ users.users.me.packages =
   # https://www.reddit.com/r/NixOS/comments/7e4yke/modify_etcinputrc_or_any_other_system_file/
   # show ip address to login prompt. 
 
-  services.mingetty.greetingLine = mkForce ''<<< Whoot \4 Welcome to NixOS ${config.system.nixos.label} (\m) - \l >>>'';
+  # why doesn't this work?
+  #config.services.mingetty.greetingLine = mkForce ''<<< Whoot \4 Welcome to NixOS ${config.system.nixos.label} (\m) - \l >>>'';
+  config.services.mingetty.greetingLine = mkForce ''<<< Whoot \4 Welcome to NixOS (\m) - \l >>>'';
 
   # nixpkgs.config.allowBroken = true; 
+
+  # ok this actually installs the ipfs binary.
+  # but how do we write a new service...
+
+  # services are here...
+
+#  config.systemd.services.ipfs-daemon  = {
+#    description = "IPFS Daemon";
+#    serviceConfig = {
+#      Type = "forking";
+#      ExecStart = "${pkgs.ipfs}/bin/ipfs daemon";
+#      ExecStop = "pkill ipfs";
+#      Restart = "on-failure";
+#    };
+#    wantedBy = [ "default.target" ];
+#  };
+
+# systemd.services.ipfs-daemon.enable = true;
+
 
 }
 
