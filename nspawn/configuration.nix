@@ -61,7 +61,8 @@ users.users.me.packages =
   # system is mostly unusable without a good working vim.
   # note we symlink config files, so not really needed for root.
   # https://www.mpscholten.de/nixos/2016/04/11/setting-up-vim-on-nixos.html
-  let myVim = 
+  let 
+    myVim = 
     pkgs.vim_configurable.customize {
         # Specifies the vim binary name.
         name = "vim";
@@ -80,38 +81,44 @@ users.users.me.packages =
         };
     };
 
-  # likewise for git
-  # https://qnikst.github.io/posts/2018-08-22-long-live-dotfiles.html
-  # https://github.com/qnikst/homster/tree/master/git
-  myGit = 
-    pkgs.git.overrideAttrs (old: {
-      configureFlags = [ "--with-gitconfig=$out/etc/gitconfig" ];
-      postInstall = ''
-        mkdir $out/etc/
-        cp "${/home/me/nixos-config/dotfiles/gitconfig}" $out/etc/gitconfig
-      '';
-    });
+    # likewise for git
+    # https://qnikst.github.io/posts/2018-08-22-long-live-dotfiles.html
+    # https://github.com/qnikst/homster/tree/master/git
+    myGit = 
+      pkgs.git.overrideAttrs (old: {
+        configureFlags = [ "--with-gitconfig=$out/etc/gitconfig" ];
+        postInstall = ''
+          mkdir $out/etc/
+          cp "${/home/me/nixos-config/dotfiles/gitconfig}" $out/etc/gitconfig
+        '';
+      });
 
+      
+    #myScreen = {
+    #    text = builtins.readFile ( "${/home/me/nixos-config/dotfiles/screenrc}"  ) ;
+    #    mode = "0444";
+    #  };
+
+   
 
   in
 
   # note less, nc, netstat, curl, rsync are installed by default
-  with pkgs;[ myVim myGit screen less man psmisc ];
+  with pkgs;
+  
+  [ myVim myGit screen less man psmisc ];
 
   environment.etc = {
 
-    # Whoot. fixed screen message.
-    # nix-repl> pkgs.screen.configureFlags
+    # Whoot. fixed screen message. uses /etc/screenrc
+    # eg. nix-repl> pkgs.screen.configureFlags
     # [ "--enable-telnet" "--enable-pam" "--with-sys-screenrc=/etc/screenrc" "--enable-colors256" ]
-    screenrc = {
-      text = ''
-        # Don't display the copyright page
-        startup_message off           # default: on
-      '';
+    # screenrc = myScreen;
 
-      # The UNIX file mode bits
-      mode = "0444";
-    };
+    screenrc = {
+        text = builtins.readFile ( "${/home/me/nixos-config/dotfiles/screenrc}"  ) ;
+        mode = "0444";
+      };
 
     # bashrc/ bash_aliases
     "bashrc.local" = {

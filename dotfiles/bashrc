@@ -32,14 +32,30 @@ alias c=clear
 alias l=ls
 
 
-#alias l=less
-#alias v='vim -p'
-#alias p=ping
 
+# OLD
+# Single key aliases are idempotent, no rm,cp,mv etc
+# alias l=less
+# alias v='vim -p'
+# alias p=ping
+# alias a=apt-get         # ansible
+# alias c=cat             # cd or cat? config_stufff
+# alias f=find
+# alias h=history
+# alias ps='ps auxf'
+# alias sv='sudo vim -p'
+# TODO issue ss conflicts with sockets util, also
+# alias ss='sudo -s'
+# alias se='sudo -sE'
+# alias sc='systemctl'
+
+# sc conflicts with systemctl and /usr/bin/sc
 alias sc=systemctl    # shadows /usr/bin/sc
 alias jc=journalctl
 alias mc=machinectl
 
+# useful to decode nix paths
+alias path='for i in $( echo "$PATH" | sed "s/\:/ /g" ) ; do echo $i; done'
 
 # just use  cd $(mktemp -d )
 # alias tmp='export T=$(mktemp -d); pushd $T'
@@ -52,28 +68,28 @@ alias myip4="curl -s http://www.ip-adress.eu/ | grep My | sed 's/.*\">//' "
 
 # ping
 
-# ping gateway - shadowns /usr/bin/pg
-function pg() {
+# ping gateway
+function pgw() {
   gateway=$( ip route | grep '^default' | cut -d ' ' -f 3  )
-  ping $gateway
+  ping -i 0.7 $gateway
 }
 # ping dns server
-function pd() {
-  dns=$( grep '^nameserver' /etc/resolv.conf | cut -d ' ' -f 2 )
-  ping $dns
+function pdns() {
+  dns=$( grep '^nameserver' /etc/resolv.conf | head -n 1 | cut -d ' ' -f 2 )
+  ping -i 0.7  $dns
 }
 # ping google
-alias p8="ping 8.8.8.8"
+alias p8="ping -i 0.7 8.8.8.8"
 # ping opendns
-alias p9="ping 208.67.222.222"
+alias p9="ping -i 0.7 208.67.222.222"
 
 # watch ping google
-alias pw='watch ping -c 1 8.8.8.8'
+alias wp8='watch -n 0.7 ping -i 0.7 -c 1 8.8.8.8'
 
-# generate a password
-alias pass="cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 18 | head -n 1"
+# generate a password. change name mkpass
+alias mkpass="cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 18 | head -n 1"
 
-# print doc
+# print text doc
 alias pr='a2ps -1 -R -f 9'
 
 # record screen video
@@ -107,25 +123,13 @@ function ls2() {
     }'
 }
 
-# OLD
-# Single key aliases are idempotent, no rm,cp,mv etc
-# alias a=apt-get         # ansible
-# alias c=cat             # cd or cat? config_stufff
-# alias f=find
-# alias h=history
-# alias ps='ps auxf'
-# alias sv='sudo vim -p'
-# TODO issue ss conflicts with sockets util, also
-# alias ss='sudo -s'
-# alias se='sudo -sE'
-# alias sc='systemctl'
 
-# format in columns really useful for output of 'ip route'
+# format in columns really useful for reading output of 'ip route'
+# eg. ip route | ct
 ct() {
     column -t $1
 }
 
-# sc conflicts with systemctl and /usr/bin/sc
 # https://serverfault.com/questions/116775/sudo-as-different-user-and-running-screen
 # alias screen2='script -q -c screen /dev/null'
 
@@ -135,11 +139,11 @@ function screen2() {
 
 # tail files in a directory. note, this won't catch newly created files
 # https://unix.stackexchange.com/questions/39729/monitor-files-%c3%a0-la-tail-f-in-an-entire-directory-even-new-ones
+# eg.
+# taildir /var/log/
 function taildir() {
   tail -f -n 0  $( find "${*}" -type f )
 }
-
-
 
 # mkdir and cd into it
 mkcd() {
@@ -149,7 +153,7 @@ mkcd() {
 
 # cd up n directory levels using numerical argument
 # change name from cdu to up?
-up() {
+cdup() {
     if [ -z "$1" ]; then
       cd ..
     else
@@ -157,27 +161,12 @@ up() {
     fi
 }
 
-
 # read log files, by first sorting, and then unzipping if necessary
 # TODO - maybe remove since it's a bit specific
 # need to cd to log location before
 function logs() {
   zcat -f $(ls -rv "$1"*) | less;
 }
-
-
-
-# should we use sc instead? although conflict with screen
-# systemd specific
-#if [ -f /bin/systemctl ]; then
-#function start()    { systemctl start $@;   }
-#function stop()     { systemctl stop $@;    }
-#function restart()  { systemctl restart $@; }
-#function status()   { systemctl status $@;  }
-#function enable()   { systemctl enable $@;  }
-#function disable()  { systemctl disable $@; }
-#function daemon-reload() { systemctl daemon-reload $@; }
-#fi
 
 
 # shell colors...
