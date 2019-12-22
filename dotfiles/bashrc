@@ -53,6 +53,7 @@ alias l=ls
 alias sc=systemctl    # shadows /usr/bin/sc
 alias jc=journalctl
 alias mc=machinectl
+alias lc=machinectl
 
 # useful to decode nix paths
 alias path='for i in $( echo "$PATH" | sed "s/\:/ /g" ) ; do echo $i; done'
