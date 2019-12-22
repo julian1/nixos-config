@@ -79,11 +79,11 @@ users.users.me.packages =
           # autocmd FileType php :packadd phpCompletion
         };
     };
-  in
+
   # likewise for git
   # https://qnikst.github.io/posts/2018-08-22-long-live-dotfiles.html
   # https://github.com/qnikst/homster/tree/master/git
-  let myGit = 
+  myGit = 
     pkgs.git.overrideAttrs (old: {
       configureFlags = [ "--with-gitconfig=$out/etc/gitconfig" ];
       postInstall = ''

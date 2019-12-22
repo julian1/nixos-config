@@ -2,9 +2,10 @@
 { pkgs ? import <nixpkgs> {} }:
 with pkgs;
 
-
+# we don't need all the let bindings,
 let
   x = 1 ;
+  y = 2;
 in
 
 # hoogle db written to $HOME/.hoogle. persists through nix-shell restarts
