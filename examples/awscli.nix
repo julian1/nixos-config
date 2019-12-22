@@ -2,6 +2,7 @@
 { pkgs ? import <nixpkgs> {} }:
 with pkgs;
 
+# awscli. which is a pain to insteall with pip, python.
 # works great. just needs credentials
 # [nix-shell:~/nixos-config]$ ls ~/.aws/
 # config  credentials
