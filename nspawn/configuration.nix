@@ -2,7 +2,7 @@
 # ln -sf /home/me/nixos-config/nspawn/configuration.nix  /etc/nixos/configuration.nix
 
 { lib,  pkgs, ... }:
-with lib;   
+with lib;
 
 {
   imports = [ <nixpkgs/nixos/modules/virtualisation/lxc-container.nix> ];
@@ -61,8 +61,8 @@ with lib;
   # system is mostly unusable without a good working vim.
   # note we symlink config files, so not really needed for root.
   # https://www.mpscholten.de/nixos/2016/04/11/setting-up-vim-on-nixos.html
-  let 
-    myVim = 
+  let
+    myVim =
     pkgs.vim_configurable.customize {
         # Specifies the vim binary name.
         name = "vim";
@@ -84,7 +84,7 @@ with lib;
     # likewise for git
     # https://qnikst.github.io/posts/2018-08-22-long-live-dotfiles.html
     # https://github.com/qnikst/homster/tree/master/git
-    myGit = 
+    myGit =
       pkgs.git.overrideAttrs (old: {
         configureFlags = [ "--with-gitconfig=$out/etc/gitconfig" ];
         postInstall = ''
@@ -93,19 +93,19 @@ with lib;
         '';
       });
 
-      
+
     #myScreen = {
     #    text = builtins.readFile ( "${/home/me/nixos-config/dotfiles/screenrc}"  ) ;
     #    mode = "0444";
     #  };
 
-   
+
 
   in
 
   # note less, nc, netstat, curl, rsync are installed by default
   with pkgs;
-  
+
   [ myVim myGit screen less man psmisc ];
 
   config.environment.etc = {
@@ -132,11 +132,11 @@ with lib;
    config.system.activationScripts =  {
 
     #  do this for root also???
-    myfiles = 
+    myfiles =
         ''
         echo "making local vim dirs"
-        for i in ".vim" ".vim/backup" ".vim/swap"  ".vim/undo" ".vim/autoload" ".vim/bundle"; do 
-          # echo $i; 
+        for i in ".vim" ".vim/backup" ".vim/swap"  ".vim/undo" ".vim/autoload" ".vim/bundle"; do
+          # echo $i;
           [ -d "/home/me/$i" ] || mkdir "/home/me/$i" && chown me: "/home/me/$i"
         done
         '';
@@ -146,13 +146,13 @@ with lib;
 
 
   # https://www.reddit.com/r/NixOS/comments/7e4yke/modify_etcinputrc_or_any_other_system_file/
-  # show ip address to login prompt. 
+  # show ip address to login prompt.
 
   # why doesn't this work?
   #config.services.mingetty.greetingLine = mkForce ''<<< Whoot \4 Welcome to NixOS ${config.system.nixos.label} (\m) - \l >>>'';
   config.services.mingetty.greetingLine = mkForce ''<<< Whoot \4 Welcome to NixOS (\m) - \l >>>'';
 
-  # nixpkgs.config.allowBroken = true; 
+  # nixpkgs.config.allowBroken = true;
 
   # ok this actually installs the ipfs binary.
   # but how do we write a new service...
@@ -171,6 +171,24 @@ with lib;
 #  };
 
 # systemd.services.ipfs-daemon.enable = true;
+
+  # This is pretty unbelievably good.
+  # it's just a paragraph to define new custom service.
+  # to login to the screen session. just 'screen -r irc'
+  config.systemd.services.ircSession = {
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network.target" ];
+      description = "Start the irc client of username.";
+      serviceConfig = {
+        Type = "forking";
+        # IMPORTANT - must ve valid!!!
+        User = "me";
+        ExecStart = ''${pkgs.screen}/bin/screen -dmS irc ${pkgs.irssi}/bin/irssi'';
+        ExecStop = ''${pkgs.screen}/bin/screen -S irc -X quit'';
+      };
+   };
+
+   config.environment.systemPackages = [ pkgs.screen ];
 
 
 }
