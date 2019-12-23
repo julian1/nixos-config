@@ -87,6 +87,7 @@ with lib;
     myGit =
       pkgs.git.overrideAttrs (old: {
         configureFlags = [ "--with-gitconfig=$out/etc/gitconfig" ];
+        # note that the gitconfig file must be expressed "${path}"
         postInstall = ''
           mkdir $out/etc/
           cp "${/home/me/nixos-config/dotfiles/gitconfig}" $out/etc/gitconfig
