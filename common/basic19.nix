@@ -15,8 +15,8 @@ with lib;
     consoleFont = "Lat2-Terminus16";
     consoleKeyMap = "us";
     # doesn't seem to honor this
-    # defaultLocale = "en_US.UTF-8";
-    defaultLocale = "en_AU.UTF-8";
+    defaultLocale = "en_US.UTF-8";
+    #defaultLocale = "en_AU.UTF-8";
   };
 
 
