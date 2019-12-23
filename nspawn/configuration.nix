@@ -67,7 +67,7 @@ with lib;
         # Specifies the vim binary name.
         name = "vim";
         # CHANGE this - to just read a file from dotfiles
-        vimrcConfig.customRC = builtins.readFile ( "${/home/me/nixos-config/dotfiles/vimrc}" ) ;
+        vimrcConfig.customRC = builtins.readFile ( "/home/me/nixos-config/dotfiles/vimrc" ) ;
         # dec 2019. Install dotfiles by hand
 
         vimrcConfig.packages.myVimPackage = with pkgs.vimPlugins; {
@@ -94,13 +94,6 @@ with lib;
       });
 
 
-    #myScreen = {
-    #    text = builtins.readFile ( "${/home/me/nixos-config/dotfiles/screenrc}"  ) ;
-    #    mode = "0444";
-    #  };
-
-
-
   in
 
   # note less, nc, netstat, curl, rsync are installed by default
@@ -113,16 +106,15 @@ with lib;
     # Whoot. fixed screen message. uses /etc/screenrc
     # eg. nix-repl> pkgs.screen.configureFlags
     # [ "--enable-telnet" "--enable-pam" "--with-sys-screenrc=/etc/screenrc" "--enable-colors256" ]
-    # screenrc = myScreen;
 
     screenrc = {
-        text = builtins.readFile ( "${/home/me/nixos-config/dotfiles/screenrc}"  ) ;
+        text = builtins.readFile ( "/home/me/nixos-config/dotfiles/screenrc"  ) ;
         mode = "0444";
       };
 
     # bashrc/ bash_aliases
     "bashrc.local" = {
-      text = builtins.readFile ( "${/home/me/nixos-config/dotfiles/bashrc}"  ) ;
+      text = builtins.readFile ( "/home/me/nixos-config/dotfiles/bashrc"  ) ;
       mode = "0444";
     };
 
