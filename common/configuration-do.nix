@@ -6,7 +6,7 @@
     (modulesPath + "/virtualisation/digital-ocean-config.nix")
   ] 
         ++ [ 
-                /home/me/nixos-config/common/basic20.nix  
+                /home/me/nixos-config/common/basic20.nix   # note v20
                 /home/me/nixos-config/common/keys.nix  
                 /home/me/nixos-config/common/dotfiles.nix 
         ] 

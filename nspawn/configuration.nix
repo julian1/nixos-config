@@ -109,7 +109,7 @@ with lib;
     # [ "--enable-telnet" "--enable-pam" "--with-sys-screenrc=/etc/screenrc" "--enable-colors256" ]
 
     screenrc = {
-        text = builtins.readFile ( "/home/me/nixos-config/dotfiles/screenrc"  ) ;
+        text = builtins.readFile ( "./dotfiles/screenrc"  ) ;
         mode = "0444";
       };
 
