@@ -1,5 +1,5 @@
 # actually we don't want to sym link these. because they'll be different for every node
-# unless create a node.nix instance.
+# unless create specific node.nix instances
 { config, pkgs, ... }:
 {
     imports = [ <nixpkgs/nixos/modules/virtualisation/lxc-container.nix> ]
