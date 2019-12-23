@@ -9,8 +9,6 @@ let
 in
 
 
-
-
 # hoogle db written to $HOME/.hoogle. persists through nix-shell restarts
 
 pkgs.stdenv.mkDerivation {
