@@ -4,7 +4,7 @@ with lib;
 
 {
   config.users.users.root.packages =
-            with pkgs;[ vim git screen less man psmisc ];
+            with pkgs;[ vim git screen less man psmisc glibcLocales  ];
 
 
   config.users.users.me.packages =
