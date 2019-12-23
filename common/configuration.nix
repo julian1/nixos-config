@@ -6,8 +6,8 @@
     (modulesPath + "/virtualisation/digital-ocean-config.nix")
   ] 
     ++ [ 
-    /home/me/nixos-config/digital-ocean/keys.nix  
-    /home/me/nixos-config/digital-ocean/dotfiles.nix 
+    /home/me/nixos-config/common/keys.nix  
+    /home/me/nixos-config/common/dotfiles.nix 
   ];
 }
 
