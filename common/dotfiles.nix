@@ -4,7 +4,7 @@ with lib;
 
 {
   config.users.users.root.packages =
-            with pkgs;[ vim git screen less man psmisc glibcLocales  ];
+    with pkgs;[ vim git screen less man psmisc ]; # glibcLocales  
 
 
   config.users.users.me.packages =
@@ -13,7 +13,6 @@ with lib;
   # note we symlink config files, so not really needed for root.
   # https://www.mpscholten.de/nixos/2016/04/11/setting-up-vim-on-nixos.html
   let
-
 
     myVim =
     pkgs.vim_configurable.customize {
@@ -69,7 +68,6 @@ with lib;
       text = builtins.readFile ( ../dotfiles/bashrc ) ;
       mode = "0444";
     };
-
   };
 
 
@@ -84,7 +82,6 @@ with lib;
           [ -d "/home/me/$i" ] || mkdir "/home/me/$i" && chown me: "/home/me/$i"
         done
         '';
-
     };
 }
 
