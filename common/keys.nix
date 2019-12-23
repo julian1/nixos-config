@@ -2,21 +2,6 @@
 with lib;
 {
 
-
-  # config.networking.hostName = "nixos03"; # Define your hostname.
-
-  # Select internationalisation properties.
-  #config.i18n = {
-  #  consoleFont = "Lat2-Terminus16";
-  #  consoleKeyMap = "us";
-  #  # defaultLocale = "en_US.UTF-8";
-  #  defaultLocale = "en_AU.UTF-8";
-#
-#  };
-
-  # Set your time zone.
-  # time.timeZone = "Australia/Hobart";
-
   config.networking.firewall.enable = false;
 
   # Enable the OpenSSH daemon.
