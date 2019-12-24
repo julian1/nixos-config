@@ -28,8 +28,9 @@ pkgs.stdenv.mkDerivation {
     haskellPackages.hoogle
     haskellPackages.cabal2nix
 
-    zlib
-    secp256k1
+    # dependencies of packages should be in that package
+    # zlib
+    # secp256k1
 
     # haskellPackages.hindent
     # haskellPackages.project-m36
