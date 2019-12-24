@@ -28,6 +28,9 @@ pkgs.stdenv.mkDerivation {
     haskellPackages.hoogle
     haskellPackages.cabal2nix
 
+    zlib
+    secp256k1
+
     # haskellPackages.hindent
     # haskellPackages.project-m36
     # haskellPackages.idris
