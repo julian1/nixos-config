@@ -33,7 +33,11 @@ with lib;
         };
     };
 
-    # likewise for git
+    # likewise for git gitconfig
+    # TODO - change this to use /etc/gitconfig. then change file that to read a local file .
+    # this will avoid recompilation, each time gitconfig is edited.
+    # https://stackoverflow.com/questions/1557183/is-it-possible-to-include-a-file-in-your-gitconfig#9733277
+
     # https://qnikst.github.io/posts/2018-08-22-long-live-dotfiles.html
     # https://github.com/qnikst/homster/tree/master/git
     myGit =
