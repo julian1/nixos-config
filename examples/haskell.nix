@@ -27,10 +27,11 @@ pkgs.stdenv.mkDerivation {
     ghcid
     haskellPackages.hoogle
     haskellPackages.cabal2nix
-
-    # dependencies of packages should be in that package
-    # zlib
-    # secp256k1
+      
+    # OK. so the top level script passes down the dependencies. so we need these
+    # if libraries depend on them
+    zlib
+    secp256k1
 
     # haskellPackages.hindent
     # haskellPackages.project-m36
