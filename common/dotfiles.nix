@@ -35,6 +35,7 @@ with lib;
 
     # likewise for git gitconfig
     # TODO - change this to use /etc/gitconfig. then change file that to read a local file .
+    # actually don't even need to include...  just have a separate package... that writes /etc/gitconfig
     # this will avoid recompilation, each time gitconfig is edited.
     # https://stackoverflow.com/questions/1557183/is-it-possible-to-include-a-file-in-your-gitconfig#9733277
 
@@ -42,11 +43,12 @@ with lib;
     # https://github.com/qnikst/homster/tree/master/git
     myGit =
       pkgs.git.overrideAttrs (old: {
-        configureFlags = [ "--with-gitconfig=$out/etc/gitconfig" ];
-        postInstall = ''
-          mkdir $out/etc/
-          cp "${../dotfiles/gitconfig}" $out/etc/gitconfig
-        '';
+        # configureFlags = [ "--with-gitconfig=$out/etc/gitconfig" ];
+        configureFlags = [ "--with-gitconfig=/etc/gitconfig" ];
+        #postInstall = ''
+        #  mkdir $out/etc/
+        #  cp "${../dotfiles/gitconfig}" $out/etc/gitconfig
+        #'';
       });
   in
 
@@ -61,6 +63,12 @@ with lib;
     # eg. nix-repl> pkgs.screen.configureFlags
     # [ "--enable-telnet" "--enable-pam" "--with-sys-screenrc=/etc/screenrc" "--enable-colors256" ]
     # screenrc = myScreen;
+
+    gitconfig = {
+        text = builtins.readFile ( ../dotfiles/gitconfig ) ;
+        mode = "0444";
+      };
+
 
     screenrc = {
         text = builtins.readFile ( ../dotfiles/screenrc ) ;
