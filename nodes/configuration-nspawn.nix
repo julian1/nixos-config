@@ -10,4 +10,6 @@
                 /home/me/nixos-config/common/keys.nix  
                 /home/me/nixos-config/common/dotfiles.nix 
         ]; 
+
+  networking.hostName = "nixos02";
 }
