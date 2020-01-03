@@ -11,6 +11,8 @@
                 /home/me/nixos-config/common/dotfiles.nix 
         ] 
   ;
+
+  networking.hostName = "dexter";
 }
 
 
