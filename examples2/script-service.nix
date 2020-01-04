@@ -1,15 +1,17 @@
 {config, pkgs, ... }:
 
 {
-  # You can actually remove the user, and still use it
-  # as a user if you link it in ~/.config/systemd/user/
-  # (do not forget to remove the `user` it in anything.nix
-  # as well)
+  # https://unix.stackexchange.com/questions/523454/nixos-use-services-on-non-nixos-os-eventually-with-only-user-rights
+
   config.systemd.services.mytestservice = {
 
-  #systemd.user.services.mytestservice = {   # can't manage to see this in journalctl ... 
+  #systemd.user.services.mytestservice = {   # can't manage to see this in journalctl ... . should be user.me.services ?
    description = "Mytestservice";
-   script = "while true; do echo 'YES'; echo $(date) ; sleep 300; done";
+   script = "while true; do echo YES $( whoami &&  date) ; sleep 300; done";
+
+   serviceConfig = {
+      User = "me";
+   };
 
    # script = "while true; do echo 'YES'; sleep 1; done";
 
