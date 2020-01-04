@@ -17,11 +17,10 @@ let
   in
 
 {
-  # procps for pkill
 
-  config.users.users.me.packages = [ pkgs.parity nixpkgs.procps  ] ;
+  config.users.users.me.packages = [ pkgs.parity  ] ;
 
-		config.systemd.services.parity = {						# system service
+  config.systemd.services.parity = {						# system service
 				wantedBy = [ "multi-user.target" ];
 				after = [ "network.target" ];
 				description = "Start parity session";
@@ -38,6 +37,9 @@ let
 }
 
 
+
+# procps for pkill
+#nixpkgs.procps 
 
 #Type=simple
 #ExecStart=/usr/bin/parity
