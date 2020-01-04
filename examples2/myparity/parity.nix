@@ -31,6 +31,7 @@ rustPlatform.buildRustPackage {
   nativeBuildInputs = [ cmake pkgconfig ];
 
   buildInputs = [ openssl systemd ];
+  # buildInputs = [ openssl ];
 
   cargoBuildFlags = [ "--features final" ];
 
