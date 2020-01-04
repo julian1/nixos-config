@@ -2,34 +2,24 @@
 
 with lib;
 
-  let  
+let  
+    version     = "2.5.13";
+    sha256      = "0imfdjcg42jfnm897mgjyg0lj4dffsv44z74v0ilwqwqp9g9hwvx";
+    cargoSha256 = "16nf6y0hyffwdhxn1w4ms4zycs5lkzir8sj6c2lgsabig057hb6z";  
 
-      version     = "2.5.13";
-      sha256      = "0imfdjcg42jfnm897mgjyg0lj4dffsv44z74v0ilwqwqp9g9hwvx";
-      cargoSha256 = "16nf6y0hyffwdhxn1w4ms4zycs5lkzir8sj6c2lgsabig057hb6z";  
+    nixpkgs = import <nixpkgs> {};
+ 
+    # we should be able to call this directly 
+    pkgs.parity = import ./parity.nix { inherit version sha256 cargoSha256; }
+      (with nixpkgs; { inherit lib fetchFromGitHub rustPlatform cmake openssl pkgconfig systemd ; })
+      ;
 
-      nixpkgs = import <nixpkgs> {};
-    
-      pkgs.parity = import ./parity.nix { inherit version sha256 cargoSha256; }
-        (with nixpkgs; { inherit lib fetchFromGitHub rustPlatform cmake openssl pkgconfig systemd ; })
-        ;
-
-    in
-
-
+  in
 
 {
-  
-  # why is rustPlatform in nixpkgs for nix-build and nix-env but not in pkgs for nixos-rebuild? i want to install my rust binary as service, in configuration.nix but there's no platform support to compile it.
+  # procps for pkill
 
-  # with a service compiled by rust
-
-  # environment.systemPackages = [binutils gcc gnumake openssl pkgconfig]
-  # config.environment.systemPackages = [ rustPlatform rustc cargo ];
-
-  config.users.users.me.packages =
-
-      [ pkgs.parity ] ;
+  config.users.users.me.packages = [ pkgs.parity nixpkgs.procps  ] ;
 
 		config.systemd.services.parity = {						# system service
 				wantedBy = [ "multi-user.target" ];
@@ -40,9 +30,20 @@ with lib;
 					# IMPORTANT - must ve valid!!!
 					User = "me";
 					ExecStart = ''${pkgs.parity}/bin/parity -d /home/me/data'';
-					ExecStop = "pkill parity";
+					# ExecStop = "pkill parity";
+					ExecStop = "";
 				};
 		 };
+}
+
+
+  
+  # why is rustPlatform in nixpkgs for nix-build and nix-env but not in pkgs for nixos-rebuild? i want to install my rust binary as service, in configuration.nix but there's no platform support to compile it.
+
+  # with a service compiled by rust
+
+  # environment.systemPackages = [binutils gcc gnumake openssl pkgconfig]
+  # config.environment.systemPackages = [ rustPlatform rustc cargo ];
 
 
 # in  [ pkgs.parity ] ;
@@ -59,4 +60,3 @@ in
   [ x y ] 
 */
 
-}
