@@ -4,16 +4,11 @@
 { modulesPath, lib, ... }:
 {
 
-  /*
-    options.extraOpts = {
-      parityListenAddress = lib.mkOption {
-        type = lib.types.str;
-        default = "206.189.42.212";
-        description = ''ip address.'';
-      };
-    };
-  */
 
+  # _module.args.xhostname = "ahostname";
+
+  # config.services.parity. parityListenAddress  = "206.189.42.212";
+  config.services.parity. parityListenAddress  = "all";
  
   imports = lib.optional (builtins.pathExists ./do-userdata.nix) ./do-userdata.nix ++ [
     (modulesPath + "/virtualisation/digital-ocean-config.nix")
