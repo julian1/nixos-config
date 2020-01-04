@@ -31,27 +31,6 @@ in
 
   
 
-# x has most of this stuff set. eg.  nativeBuildInputs, buildInputs  etc
-# so why doesn't it build...
-
-# see, https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/rust.section.md
-
-# we already have
-/*
-nixpkgs. stdenv.mkDerivation {
-  #name = "rust-env";
-  name = "sssss";
-  buildInputs = [
-    # Example Run-time Additional Dependencies
-    x
-  ];
-
-  # Set Environment Variables
-  RUST_BACKTRACE = 1;
-}
-*/
-
-
 # ok.   it builds a shell but doesn't build???
 # note that rustc and cargo etc. in scope...
 # but where is the source?
