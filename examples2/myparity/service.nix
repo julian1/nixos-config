@@ -13,10 +13,18 @@ let
     myParity = import ./parity.nix { inherit version sha256 cargoSha256; }
       (with nixpkgs; { inherit lib fetchFromGitHub rustPlatform cmake openssl pkgconfig systemd ; })
       ;
+
+
+    #myScript = pkgs.writeScriptBin "myScript" ''
+#
+#      ${myParity}/bin/parity -d /home/me/data
+#
+#      '';
+
 in
 {
 
-  config.users.users.me.packages = [ myParity  ] ;
+  config.users.users.me.packages = [ myParity ] ;
 
   config.systemd.services.parity = {						# system service
 				wantedBy = [ "multi-user.target" ];
@@ -24,15 +32,28 @@ in
 				description = "Start parity session";
 				serviceConfig = {
 					Type = "simple";
-					# IMPORTANT - must ve valid!!!
+					# IMPORTANT - user must be valid!!!
 					User = "me";
-					ExecStart = ''${myParity}/bin/parity -d /home/me/data'';
-					# ExecStop = "pkill parity";
-					# ExecStop = "";
+					ExecStart = ''
+            ${myParity}/bin/parity \
+              -d /home/me/data \
+              --jsonrpc-cors "all" \
+              --jsonrpc-hosts "all" \
+              --jsonrpc-interface 127.0.0.1 \
+              --ws-interface 127.0.0.1 \
+              --interface 206.189.42.212 \
+              --allow-ips=public \
+              --no-ancient-blocks \
+            '';
           KillSignal="SIGHUP";
 				};
 		 };
 }
+
+
+					#ExecStart = ''${myParity}/bin/parity -d /home/me/data'';
+					# ExecStop = "pkill parity";
+					# ExecStop = "";
 
 # systemctl status parity 
 # journalctl -uf parity.service
