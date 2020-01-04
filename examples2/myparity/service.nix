@@ -14,13 +14,6 @@ let
       (with nixpkgs; { inherit lib fetchFromGitHub rustPlatform cmake openssl pkgconfig systemd ; })
       ;
 
-
-    #myScript = pkgs.writeScriptBin "myScript" ''
-#
-#      ${myParity}/bin/parity -d /home/me/data
-#
-#      '';
-
 in
 {
 
@@ -44,6 +37,7 @@ in
               --interface 206.189.42.212 \
               --allow-ips=public \
               --no-ancient-blocks \
+
             '';
           KillSignal="SIGHUP";
 				};
@@ -51,9 +45,21 @@ in
 }
 
 
-					#ExecStart = ''${myParity}/bin/parity -d /home/me/data'';
-					# ExecStop = "pkill parity";
-					# ExecStop = "";
+
+
+#ExecStart = ''${myParity}/bin/parity -d /home/me/data'';
+# ExecStop = "pkill parity";
+# ExecStop = "";
+
+
+    #myScript = pkgs.writeScriptBin "myScript" ''
+#
+#      ${myParity}/bin/parity -d /home/me/data
+#
+#      '';
+
+
+
 
 # systemctl status parity 
 # journalctl -uf parity.service
