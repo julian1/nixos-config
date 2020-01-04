@@ -35,28 +35,28 @@ in
   config.users.users.me.packages = [ myParity ] ;
 
   config.systemd.services.parity = {
-				wantedBy = [ "multi-user.target" ];
-				after = [ "network.target" ];
-				description = "Start parity session";
-				serviceConfig = {
-					Type = "simple";
-					# IMPORTANT - user must be valid!!!
-					User = "me";
-					ExecStart = ''
-            ${myParity}/bin/parity \
-              -d /home/me/data \
-              --jsonrpc-cors "all" \
-              --jsonrpc-hosts "all" \
-              --jsonrpc-interface 127.0.0.1 \
-              --ws-interface 127.0.0.1 \
-              --interface ${cfg.listenAddress} \
-              --allow-ips=public \
-              --no-ancient-blocks \
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    description = "Start parity session";
+    serviceConfig = {
+      Type = "simple";
+      # IMPORTANT - user must be valid!!!
+      User = "me";
+      ExecStart = ''
+        ${myParity}/bin/parity \
+          -d /home/me/data \
+          --jsonrpc-cors "all" \
+          --jsonrpc-hosts "all" \
+          --jsonrpc-interface 127.0.0.1 \
+          --ws-interface 127.0.0.1 \
+          --interface ${cfg.listenAddress} \
+          --allow-ips=public \
+          --no-ancient-blocks \
 
-            '';
-          KillSignal="SIGHUP";
-				};
-		 };
+        '';
+      KillSignal="SIGHUP";
+    };
+ };
 }
 
 
