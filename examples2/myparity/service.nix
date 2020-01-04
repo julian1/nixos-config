@@ -3,22 +3,20 @@
 with lib;
 
 let  
+    nixpkgs = import <nixpkgs> {};
+
     version     = "2.5.13";
     sha256      = "0imfdjcg42jfnm897mgjyg0lj4dffsv44z74v0ilwqwqp9g9hwvx";
     cargoSha256 = "16nf6y0hyffwdhxn1w4ms4zycs5lkzir8sj6c2lgsabig057hb6z";  
-
-    nixpkgs = import <nixpkgs> {};
  
     # we should be able to call this directly 
-    pkgs.parity = import ./parity.nix { inherit version sha256 cargoSha256; }
+    myParity = import ./parity.nix { inherit version sha256 cargoSha256; }
       (with nixpkgs; { inherit lib fetchFromGitHub rustPlatform cmake openssl pkgconfig systemd ; })
       ;
-
-  in
-
+in
 {
 
-  config.users.users.me.packages = [ pkgs.parity  ] ;
+  config.users.users.me.packages = [ myParity  ] ;
 
   config.systemd.services.parity = {						# system service
 				wantedBy = [ "multi-user.target" ];
@@ -28,7 +26,7 @@ let
 					Type = "simple";
 					# IMPORTANT - must ve valid!!!
 					User = "me";
-					ExecStart = ''${pkgs.parity}/bin/parity -d /home/me/data'';
+					ExecStart = ''${myParity}/bin/parity -d /home/me/data'';
 					# ExecStop = "pkill parity";
 					# ExecStop = "";
           KillSignal="SIGHUP";
@@ -36,7 +34,9 @@ let
 		 };
 }
 
-
+# systemctl status parity 
+# journalctl -uf parity.service
+# systemctl stop parity 
 
 # procps for pkill
 #nixpkgs.procps 
