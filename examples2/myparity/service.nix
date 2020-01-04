@@ -1,4 +1,4 @@
-/*{ parityListenAddress }:*/ { lib,  pkgs,  ... }:
+/*{ parityListenAddress }:*/ { lib,  pkgs, options,  ... }:
 
 with lib;
 
@@ -14,9 +14,14 @@ let
       (with nixpkgs; { inherit lib fetchFromGitHub rustPlatform cmake openssl pkgconfig systemd ; })
       ;
 
+    # we need to inject this damn thing.
+    # we can pass the ipAddress explicitly, since  from define the
+    # I don't think this stuff is available...
+    # --interface ${options.extraOptions.parityListenAddress} \
+    parityListenAddress = "206.189.42.212";
+ 
 in
 {
-  # we can pass the ipAddress explicitly, since  from define the
 
   config.users.users.me.packages = [ myParity ] ;
 
@@ -35,7 +40,7 @@ in
               --jsonrpc-hosts "all" \
               --jsonrpc-interface 127.0.0.1 \
               --ws-interface 127.0.0.1 \
-              --interface 206.189.42.212 \
+              --interface ${parityListenAddress} \
               --allow-ips=public \
               --no-ancient-blocks \
 
