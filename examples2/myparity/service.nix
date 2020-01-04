@@ -26,15 +26,25 @@ let
 				after = [ "network.target" ];
 				description = "Start parity session";
 				serviceConfig = {
-					Type = "forking";
+					Type = "simple";
 					# IMPORTANT - must ve valid!!!
 					User = "me";
 					ExecStart = ''${pkgs.parity}/bin/parity -d /home/me/data'';
 					# ExecStop = "pkill parity";
-					ExecStop = "";
+					# ExecStop = "";
+          KillSignal="SIGHUP";
 				};
 		 };
 }
+
+
+
+#Type=simple
+#ExecStart=/usr/bin/parity
+#Restart=on-failure
+## SIGHUP gives parity time to exit cleanly before SIGKILL
+#KillSignal=SIGHUP
+
 
 
   
