@@ -9,7 +9,7 @@ let
     sha256      = "0imfdjcg42jfnm897mgjyg0lj4dffsv44z74v0ilwqwqp9g9hwvx";
     cargoSha256 = "16nf6y0hyffwdhxn1w4ms4zycs5lkzir8sj6c2lgsabig057hb6z";
 
-    # we should be able to call this directly
+    # we should be able to call ./parity.nix from nixpkgs directly
     myParity = import ./parity.nix { inherit version sha256 cargoSha256; }
       (with nixpkgs; { inherit lib fetchFromGitHub rustPlatform cmake openssl pkgconfig systemd ; })
       ;
