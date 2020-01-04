@@ -11,5 +11,5 @@
                 /home/me/nixos-config/common/dotfiles.nix 
         ]; 
 
-  networking.hostName = "nixos02";
+  networking.hostName = "nixos03";
 }
