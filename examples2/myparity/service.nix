@@ -1,4 +1,4 @@
-/*{ parityListenAddress }:*/ { lib,  pkgs, config, ... }:
+{ lib,  pkgs, config, ... }:
 
 with lib;
 
@@ -14,25 +14,22 @@ let
       (with nixpkgs; { inherit lib fetchFromGitHub rustPlatform cmake openssl pkgconfig systemd ; })
       ;
 
-    #parityListenAddress = "206.189.42.212";
-
   
   # https://nixos.org/nixos/manual/index.html#sec-writing-modules
   cfg = config.services.parity;
  
 in
 {
-  # way to have an option is here, but it's a bit complicated
 
-    options.services.parity = {
+  # declare our option
+  options.services.parity = {
 
-      parityListenAddress = lib.mkOption {
-        type = lib.types.str;
-        # default = "206.189.42.212";
-        default = "all";
-        description = ''ip address.'';
-      };
+    listenAddress = lib.mkOption {
+      type = lib.types.str;
+      default = "all";
+      description = ''ip address.'';
     };
+  };
 
 
   config.users.users.me.packages = [ myParity ] ;
@@ -52,7 +49,7 @@ in
               --jsonrpc-hosts "all" \
               --jsonrpc-interface 127.0.0.1 \
               --ws-interface 127.0.0.1 \
-              --interface ${cfg.parityListenAddress} \
+              --interface ${cfg.listenAddress} \
               --allow-ips=public \
               --no-ancient-blocks \
 

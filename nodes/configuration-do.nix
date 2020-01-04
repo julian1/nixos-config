@@ -19,8 +19,7 @@
 
   config.networking.hostName = "dexter";
 
-  config.services.parity.parityListenAddress  = "206.189.42.212";
-  # config.services.parity. parityListenAddress  = "all";
+  config.services.parity.listenAddress  = "206.189.42.212";
 
 }
 
