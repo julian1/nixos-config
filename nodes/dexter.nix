@@ -6,7 +6,7 @@
   imports = lib.optional (builtins.pathExists ./do-userdata.nix) ./do-userdata.nix ++ [
     (modulesPath + "/virtualisation/digital-ocean-config.nix") ] ++ 
   [
-    /home/me/nixos-config/common/basic20.nix   # note v20
+    /home/me/nixos-config/common/locale20.nix   # note v20
     /home/me/nixos-config/common/users.nix
     /home/me/nixos-config/common/keys-extra.nix
     /home/me/nixos-config/common/dotfiles.nix
@@ -24,7 +24,6 @@
   	enable = true;
   	wheelNeedsPassword = false;
   };
-
 
 }
 
