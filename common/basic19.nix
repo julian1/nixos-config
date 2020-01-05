@@ -2,12 +2,6 @@
 with lib;
 {
 
-  # hostname and firewall probably belong elsewhere
-  # config.networking.hostName = "nixos03"; # Define your hostname.
-
-  # Note, this is already set in keys.nix
-  # config.networking.firewall.enable = false;
-
   ############
 
   # Select internationalisation properties.
