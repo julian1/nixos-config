@@ -19,6 +19,13 @@
   config.networking.firewall.enable = false;
 
   config.services.parity.listenAddress  = "206.189.42.212";
+
+  config.security.sudo = {
+  	enable = true;
+  	wheelNeedsPassword = false;
+  };
+
+
 }
 
 
