@@ -1,7 +1,7 @@
 { lib,  pkgs, ... }:
 with lib;
 {
-
+  # so it's interesting. lists appear to get concatted <> on merge of modules.
 
   config.users.extraUsers.me =
     { 
