@@ -12,5 +12,9 @@
                 /home/me/nixos-config/examples2/script-service.nix 
         ]; 
 
+
+
   networking.hostName = "nixos03";
+
+  config.networking.firewall.enable = false;
 }

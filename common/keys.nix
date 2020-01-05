@@ -2,8 +2,6 @@
 with lib;
 {
 
-  config.networking.firewall.enable = false;
-
   # Enable the OpenSSH daemon.
   config.services.openssh.enable = true;
   config.services.openssh.permitRootLogin = "without-password";
