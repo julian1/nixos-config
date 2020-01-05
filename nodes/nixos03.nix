@@ -13,7 +13,7 @@
   ]; 
 
 
-  networking.hostName = "nixos03";
+  config.networking.hostName = "nixos03";
 
   config.networking.firewall.enable = false;
 }
