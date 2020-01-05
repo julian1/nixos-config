@@ -10,8 +10,8 @@
   ]
     ++ [
         /home/me/nixos-config/common/basic20.nix   # note v20
-        /home/me/nixos-config/common/keys.nix
-        /home/me/nixos-config/common/keys2.nix
+        /home/me/nixos-config/common/users.nix
+        /home/me/nixos-config/common/keys-extra.nix
         /home/me/nixos-config/common/dotfiles.nix
         /home/me/nixos-config/examples2/myparity/service.nix
     ]
