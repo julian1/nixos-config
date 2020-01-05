@@ -3,6 +3,7 @@
 with lib;
 
 let
+    # we need full package set to get rustPlatform etc
     nixpkgs = import <nixpkgs> {};
 
     version     = "2.5.13";
@@ -14,10 +15,10 @@ let
       (with nixpkgs; { inherit lib fetchFromGitHub rustPlatform cmake openssl pkgconfig systemd ; })
       ;
 
-  
+
   # https://nixos.org/nixos/manual/index.html#sec-writing-modules
   cfg = config.services.parity;
- 
+
 in
 {
 
