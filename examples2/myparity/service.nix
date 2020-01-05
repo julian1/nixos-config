@@ -44,7 +44,7 @@ in
       User = "me";
       ExecStart = ''
         ${myParity}/bin/parity \
-          -d /home/me/data \
+          -d /home/me/parity-data \
           --jsonrpc-cors "all" \
           --jsonrpc-hosts "all" \
           --jsonrpc-interface 127.0.0.1 \
@@ -54,6 +54,8 @@ in
           --no-ancient-blocks \
 
         '';
+
+      #    -d /home/me/data \
       KillSignal="SIGHUP";
     };
  };
