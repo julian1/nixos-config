@@ -16,4 +16,7 @@
   config.networking.hostName = "nixos03";
 
   config.networking.firewall.enable = false;
+
+  # show ip address,
+  config.services.mingetty.greetingLine = pkgs.lib.mkForce ''<<< \4, Welcome to NixOS, (\m) - \l >>>'';
 }
