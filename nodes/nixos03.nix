@@ -11,6 +11,8 @@
     /home/me/nixos-config/examples2/irc.nix
   ];
 
+	
+  # config.allowUnfree = true;
 
   config.networking.hostName = "nixos03";
 

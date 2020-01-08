@@ -11,6 +11,8 @@
     /home/me/nixos-config/examples2/myparity/service.nix
   ];
 
+  
+	# config.allowUnfree = true;
 
   config.networking.hostName = "dexter";
 
