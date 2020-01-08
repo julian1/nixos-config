@@ -14,7 +14,6 @@ pkgs.symlinkJoin {
   postBuild =
     ''
     wrapProgram "$out/bin/bash" --add-flags "--rcfile ${../dotfiles/bashrc}"
-
     '';
 }
 
