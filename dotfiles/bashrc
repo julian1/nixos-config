@@ -28,9 +28,10 @@ alias iftop='iftop -B -P -N'
 # shortcuts
 alias g=git
 alias s=sudo
-alias c=clear
 alias l=ls
 
+# alias c=clear   use ctrl-L instead
+alias f='find . -iname'
 
 
 # OLD
@@ -55,10 +56,11 @@ alias jc=journalctl
 alias mc=machinectl
 alias lc=loginctl
 
-# useful to decode nix paths
-alias path='for i in $( echo "$PATH" | sed "s/\:/ /g" ) ; do echo $i; done'
+# useful to decode and list nix paths, and assign them etc
+# dirs=$(path)
+alias path='for i in $( echo "$PATH" | sed "s/\:/ /g" ); do echo $i; done'
 
-# just use  cd $(mktemp -d )
+# just use  cd $(mktemp -d ) if really needed
 # alias tmp='export T=$(mktemp -d); pushd $T'
 
 # figure out ip doing nat
