@@ -30,8 +30,10 @@ pkgs.stdenv.mkDerivation {
       
     # OK. so the top level script passes down the dependencies. so we need these
     # if libraries depend on them
-    zlib
-    secp256k1
+
+    # No. should set these up independently if needed
+    #zlib
+    #secp256k1
 
     # haskellPackages.hindent
     # haskellPackages.project-m36

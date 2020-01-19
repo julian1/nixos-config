@@ -22,6 +22,11 @@ set novisualbell
 " ruler at lower rhs, reporting position in file
 set ruler
 
+" don't do auto commenting , better copy pasting
+set paste
+
+
+
 " tell us when anything is changed via :...
 set report=0
 
