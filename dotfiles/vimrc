@@ -1,9 +1,7 @@
 " deployed by ansible!
 
 " :inoremap <C-i>   <ESC>
-
-" *********** TOGGLE INSERT/MODE ****************
-" Must use the Ctrl otherwise it will screw up copy and paste into buffer,
+" *********** TOGGLE INSERT/MODE **************** " Must use the Ctrl otherwise it will screw up copy and paste into buffer,
 " i to insert, ii to escape
 " inoremap ii <Esc>   " ii key is <Esc> setting
 
@@ -30,31 +28,31 @@ set report=0
 " need doc on all other keys
 " C u - up
 " C d - down
-" C j - join lower line with current line 
+" C j - join lower line with current line
 " C i - seems not to be overloadable as interferes with tab expansion
 " C n	next tab
 " C p	prev tab
 " C m	buffer menu
 
 " this is really nice for fast navigating, duplicates existing keys
-:noremap <C-L> 4l
-:noremap <C-H> 4h
-:noremap <C-K> 4k
-:noremap <C-J> 4j
+":noremap <C-L> 4l
+":noremap <C-H> 4h
+":noremap <C-K> 4k
+":noremap <C-J> 4j
 
 
 " shortcut to fix all trailing space
-:noremap <C-X> :%s/\s\+$//<CR>
+:noremap <C-x> :%s/\s\+$//<CR>
 
 " provide buffer menu, to select buffer
-:nnoremap <C-M> :buffers<CR>:buffer<Space>
+:nnoremap <C-m> :buffers<CR>:buffer<Space>
 
 " TODO should consolidate under ctrl character
 " Toggle numbers in lhs margin
-:noremap L :set number!<CR>
+:noremap <c-j> :set number!<CR>
 
 " toggle display of formatting characters
-:noremap K :set list!<CR>
+:noremap <c-k> :set list!<CR>
 
 
 " ctrl i to escape edit mode - actually pretty nice
@@ -160,7 +158,11 @@ function! TabToggle()
     echo "tabstop=2, expand tab"
   endif
 endfunction
-nmap <C-o> mz:execute TabToggle()<CR>
+
+:noremap <C-l> mz:execute TabToggle()<CR>
+"nmap <C-o> mz:execute TabToggle()<CR>
+"map <C-o> mz:execute TabToggle()<CR>
+"imap <C-o> mz:execute TabToggle()<CR>
 
 " *************** SYNTAX HIGHLIGHTING *******
 
