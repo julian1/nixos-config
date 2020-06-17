@@ -1,4 +1,6 @@
-##!/bin/bash
+#!/bin/bash
+
+# OK. there's an issue. that this replaces bashrc for nixos. but debian we want bashaliases
 
 for i in "bashrc" "vimrc" "screenrc"  "gitconfig" ; do 
   echo $i; 
