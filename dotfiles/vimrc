@@ -8,6 +8,10 @@
 "ctrl-i is a lot easier than ctrl-c since uses two hands and is symetrical with i for insert mode
 
 
+" avoid creating backup files... still does undo, and swap
+" set nobackup nowritebackup
+
+
 " *********** MISC ****************
 
 " disable mouse, which interferes with copy/paste from terminal

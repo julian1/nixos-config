@@ -109,9 +109,11 @@ alias cap="scrot -d 5"
 # tzselect
 alias frtime='TZ=Europe/Paris date'
 alias uktime='TZ=Europe/London date'
-alias nytime='TZ=America/New_York date'
+# broken, ny gives aest time?
+# alias nytime='TZ=America/New_York date'
 alias latime='TZ=America/Los_Angeles date'
 alias autime='TZ=Australia/Hobart date'
+alias hcmtime='TZ=Asia/Ho_Chi_Minh date'
 alias utctime='date --utc'
 
 
