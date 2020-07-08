@@ -190,6 +190,12 @@ set backupdir=~/.vim/backup//
 set directory=~/.vim/swap//
 set undodir=~/.vim/undo//
 
+" https://vi.stackexchange.com/questions/21708/how-do-i-disable-vim-from-producing-backup-files
+" create dirs if necessary
+" TODO should do autoload and bundle also
+if !isdirectory(&undodir) | call mkdir(&undodir, "p") | endif
+if !isdirectory(&backupdir) | call mkdir(&backupdir, "p") | endif
+if !isdirectory(&directory) | call mkdir(&directory, "p") | endif
 
 
 " idris specific?
