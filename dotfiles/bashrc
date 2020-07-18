@@ -84,6 +84,7 @@ function pdns() {
   dns=$( grep '^nameserver' /etc/resolv.conf | head -n 1 | cut -d ' ' -f 2 )
   ping -i 0.7  $dns
 }
+
 # ping google
 alias p8="ping -i 0.7 8.8.8.8"
 # ping opendns
@@ -92,7 +93,7 @@ alias p9="ping -i 0.7 208.67.222.222"
 # watch ping google
 alias wp8='watch -n 0.7 ping -i 0.7 -c 1 8.8.8.8'
 
-# generate a password. change name mkpass
+# generate a password
 alias mkpass="cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 18 | head -n 1"
 
 # print text doc
@@ -133,8 +134,8 @@ function ls2() {
 
 
 # format in columns really useful for reading output of 'ip route'
-# eg. ip route | ct
-ct() {
+# eg. ip route | cols
+cols() {
     column -t $1
 }
 
@@ -159,9 +160,9 @@ mkcd() {
     cd $1
 }
 
-# cd up n directory levels using numerical argument
-# change name from cdu to up?
-cdup() {
+# cd n directory levels up using numerical argument
+# change name from cdup to up?
+up() {
     if [ -z "$1" ]; then
       cd ..
     else
