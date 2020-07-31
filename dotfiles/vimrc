@@ -50,6 +50,12 @@ set report=0
 ":noremap <C-J> 4j
 
 
+
+" put text select into the command line
+" https://stackoverflow.com/questions/4878980/vim-insert-selected-text-into-command-line 
+vnoremap : y:<C-r>"<C-b>
+
+
 " shortcut to fix all trailing space
 :noremap <C-x> :%s/\s\+$//<CR>
 
