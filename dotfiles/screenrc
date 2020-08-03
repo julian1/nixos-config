@@ -1,8 +1,0 @@
-# deployed by ansible!
-
-# Don't display the copyright page
-startup_message off           # default: on
-
-# keep scrollback n lines
-defscrollback 2000 
-
