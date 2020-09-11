@@ -1,8 +1,19 @@
 # change name environment... since this configures default packages
-{ lib,  pkgs, ... }:
+{ /*fetchurl,*/ lib,  pkgs, ... }:
+
+let
+  # see, https://nixos.wiki/wiki/How_to_fetch_Nixpkgs_with_an_empty_NIX_PATH
+  dotfilesSrc = builtins.fetchTarball {
+    url = "https://github.com/julian1/dotfiles/archive/master.tar.gz";
+    #inherit sha256;
+  };
+
+in
+
 with lib;
 
 {
+  
   config.users.users.root.packages =
     with pkgs;[ vim git screen less man psmisc ]; # glibcLocales  
 
@@ -14,12 +25,14 @@ with lib;
   # https://www.mpscholten.de/nixos/2016/04/11/setting-up-vim-on-nixos.html
   let
 
+
+
     myVim =
     pkgs.vim_configurable.customize {
         # Specifies the vim binary name.
         name = "vim";
         # CHANGE this - to just read a file from dotfiles
-        vimrcConfig.customRC = builtins.readFile ( ../dotfiles/vimrc ) ;
+        vimrcConfig.customRC = builtins.readFile ( "${dotfilesSrc}/vimrc" ) ;
         # dec 2019. Install dotfiles by hand
 
         vimrcConfig.packages.myVimPackage = with pkgs.vimPlugins; {
@@ -53,7 +66,7 @@ with lib;
   # note less, nc, netstat, curl, rsync are installed by default
   with pkgs;
 
-  [ myVim myGit screen less man psmisc ];
+  [  myVim myGit screen less man psmisc ];
 
   config.environment.etc = {
 
@@ -63,19 +76,19 @@ with lib;
     # screenrc = myScreen;
 
     gitconfig = {
-        text = builtins.readFile ( ../dotfiles/gitconfig ) ;
+        text = builtins.readFile ( "${dotfilesSrc}/gitconfig" ) ;
         mode = "0444";
       };
 
 
     screenrc = {
-        text = builtins.readFile ( ../dotfiles/screenrc ) ;
+        text = builtins.readFile ( "${dotfilesSrc}/screenrc" ) ;
         mode = "0444";
       };
 
     # bashrc/ bash_aliases
     "bashrc.local" = {
-      text = builtins.readFile ( ../dotfiles/bashrc ) ;
+      text = builtins.readFile ( "${dotfilesSrc}/bashrc"  ) ;
       mode = "0444";
     };
   };
@@ -83,15 +96,15 @@ with lib;
 
   config.system.activationScripts =  {
 
-    #  should do root also???
-    myfiles =
-        ''
-        echo "making local vim dirs"
-        for i in ".vim" ".vim/backup" ".vim/swap"  ".vim/undo" ".vim/autoload" ".vim/bundle"; do
-          # echo $i;
-          [ -d "/home/me/$i" ] || mkdir "/home/me/$i" && chown me: "/home/me/$i"
-        done
-        '';
+    ##  should do root also???
+    #myfiles =
+    #    ''
+    #    echo "making local vim dirs"
+    #    for i in ".vim" ".vim/backup" ".vim/swap"  ".vim/undo" ".vim/autoload" ".vim/bundle"; do
+    #      # echo $i;
+    #      [ -d "/home/me/$i" ] || mkdir "/home/me/$i" && chown me: "/home/me/$i"
+    #    done
+    #    '';
     };
 }
 
