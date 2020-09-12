@@ -14,7 +14,7 @@ callPackage ({ stdenv,   maven, makeWrapper,  jdk,  javaPackages  }: stdenv.mkDe
   version = "1.0.0";
 
   nativeBuildInputs = [ maven jdk ];   # needed
-  buildInputs = [ jdk ];                # needed, must be here...
+  buildInputs = [ jdk ];                # needed
 } ) {} 
 
 

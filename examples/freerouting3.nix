@@ -16,7 +16,6 @@
 org.apache.maven.plugin.PluginResolutionException: Plugin org.apache.maven.plugins:maven-javadoc-plugin:3.2.0 or one of its dependencies could not be resolved: Failed to read artifact descriptor for org.apache.maven.plugins:maven-javadoc-plugin:jar:3.2.0
 
 
-
 */
 
 with import <nixpkgs> {}; 
