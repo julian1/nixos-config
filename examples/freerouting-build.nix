@@ -2,7 +2,7 @@
 /*
   following works,
 
-  nix-build ~/nixos-config/examples/freerouting2.nix
+  nix-build ~/nixos-config/examples/freerouting-build.nix
   export DISPLAY=:0
   /nix/store/i9jdbzs59hq6jx3w3jp4dz91dwmj3dn2-maven-application-1.0.0/bin/maven-application
 */
@@ -98,9 +98,6 @@ in mkDerivation rec {
 
     makeWrapper ${jdk}/bin/java $out/bin/${pname} \
           --add-flags "-jar $out/bin/$x"
-
-
-
   '';
 }
 
