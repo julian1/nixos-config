@@ -1,16 +1,21 @@
-
+# build.nix
 /*
   following works,
 
-  nix-build ~/nixos-config/examples/freerouting-build.nix
-  export DISPLAY=:0
-  /nix/store/i9jdbzs59hq6jx3w3jp4dz91dwmj3dn2-maven-application-1.0.0/bin/maven-application
+  $ nix-build ~/nixos-config/examples/freerouting-build.nix
+  $ export DISPLAY=:0
+  $ /nix/store/n06g9vp3r58bjykz9fqv41w1lb7ncnrm-freerouting-1.0.0/bin/freerouting
+
+  Based on approach here,
+
+    https://fzakaria.com/2020/07/20/packaging-a-maven-application-with-nix.html
+  
+  Using FOD output hashes
 */
 
 
 with import <nixpkgs> {};
 
-#{ stdenv, jdk11_headless, maven, makeWrapper }:
 with stdenv;
 let dependencies =
 
@@ -45,14 +50,13 @@ let dependencies =
       outputHashMode = "recursive";
       outputHash = "125pz9c0rca1hf0a7n5pgj6r1pvmp4sbj659dk61x32kkqmk6x5g";
 
-}) {}
+}) {};
 
-;
+in 
 
-app = 
 
 mkDerivation rec {
-  pname = "maven-application";
+  pname = "freerouting";
   version = "1.0.0";
   #inherit version;
   #JA
@@ -100,17 +104,6 @@ mkDerivation rec {
     makeWrapper ${jdk}/bin/java $out/bin/${pname} \
           --add-flags "-jar $out/bin/$x"
   '';
-};
-
-## ok this works to use it in a shell...
-in
-pkgs.mkShell {
-  buildInputs = [
-    app 
-  ];
 }
-
-## and this will just build it
-# in app
 
 
