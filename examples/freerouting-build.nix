@@ -47,10 +47,11 @@ let dependencies =
 
 }) {}
 
-
-
 ;
-in mkDerivation rec {
+
+app = 
+
+mkDerivation rec {
   pname = "maven-application";
   version = "1.0.0";
   #inherit version;
@@ -99,6 +100,17 @@ in mkDerivation rec {
     makeWrapper ${jdk}/bin/java $out/bin/${pname} \
           --add-flags "-jar $out/bin/$x"
   '';
+};
+
+## ok this works to use it in a shell...
+in
+pkgs.mkShell {
+  buildInputs = [
+    app 
+  ];
 }
+
+## and this will just build it
+# in app
 
 
