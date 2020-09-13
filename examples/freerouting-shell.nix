@@ -15,10 +15,11 @@ pkgs.mkShell {
 
   buildInputs = [
     # notice how mkShell interprets arguments,
-    # if it's a binary, then it will directly launch the binary
+
+    # if reference a binary, it will directly launch the binary
     #''${sources}/bin/freerouting''
 
-    # else if referencing a derivation, it will bring the binaries from ${sources}/bin into shell scope,
+    # else if referencing a derivation, it knows to look in ${sources}/bin and bring binaries into shell scope,
     ''${sources}''
   ];
 }
