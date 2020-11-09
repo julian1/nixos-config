@@ -1,3 +1,5 @@
+# ln -s $(pwd)/aws-nixos-01.nix  /etc/nixos/configuration.nix
+
 { config, pkgs, ... }:
 
 {
