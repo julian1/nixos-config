@@ -22,7 +22,7 @@
 	
   # config.allowUnfree = true;
 
-  config.networking.hostName = "nixos03";
+  config.networking.hostName = "aws-nixos-01";
 
   config.networking.firewall.enable = false;
 
