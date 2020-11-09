@@ -1,5 +1,8 @@
 # note that xeyes is now available to install as a package
 
+# Nov 2020, AWS, works out of the box, over an ssh -Y session
+# as long as X11 forwarding is configured in users.nix 
+
 { pkgs ? import <nixpkgs> {} }:
 with pkgs;
 
