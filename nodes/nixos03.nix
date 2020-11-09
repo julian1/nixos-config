@@ -7,8 +7,8 @@
     /home/me/nixos-config/common/locale19.nix   # note. v19
     /home/me/nixos-config/common/users.nix
     /home/me/nixos-config/common/dotfiles.nix
-    /home/me/nixos-config/examples2/script-service.nix
-    /home/me/nixos-config/examples2/irc.nix
+    # /home/me/nixos-config/examples2/script-service.nix
+    # /home/me/nixos-config/examples2/irc.nix
   ];
 
 	
