@@ -1,15 +1,23 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ <nixpkgs/nixos/modules/virtualisation/lxc-container.nix> ] ++
+
+  # imports = [ <nixpkgs/nixos/modules/virtualisation/lxc-container.nix> ] ++
+
+  # AWS
+  imports = [ <nixpkgs/nixos/modules/virtualisation/amazon-image.nix> ] ++
   [
-    # /home/me/nixos-config/common/multi-glibc-locale-paths.nix
-    /home/me/nixos-config/common/locale19.nix   # note. v19
-    /home/me/nixos-config/common/users.nix
-    /home/me/nixos-config/common/dotfiles.nix
-    # /home/me/nixos-config/examples2/script-service.nix
-    # /home/me/nixos-config/examples2/irc.nix
+    /root/nixos-config/common/multi-glibc-locale-paths.nix
+    /root/nixos-config/common/locale19.nix   # note. v19
+    /root/nixos-config/common/users.nix
+    /root/nixos-config/common/dotfiles.nix
+    # /root/nixos-config/examples2/script-service.nix
+    # /root/nixos-config/examples2/irc.nix
   ];
+
+  # AWS
+  config.ec2.hvm = true;
+
 
 	
   # config.allowUnfree = true;
@@ -39,4 +47,5 @@
 # interfaces.host0.ip4.addresses = [{
 
 # interfaces.host0.ip4 = [{
+
 

@@ -4,7 +4,11 @@ with lib;
 
   # Enable the OpenSSH daemon.
   config.services.openssh.enable = true;
-  config.services.openssh.permitRootLogin = "without-password";
+  # config.services.openssh.permitRootLogin = "without-password";
+
+  # Nov 2020. AWS conflict.
+  config.services.openssh.permitRootLogin = "prohibit-password";
+
   # JA usePAM is default
   # think would need the %u is user, %h is home /root/.ssh...
   # services.openssh.authorizedKeysFiles = ["%h/.ssh/authorized_keys"];
