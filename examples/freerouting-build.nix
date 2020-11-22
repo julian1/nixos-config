@@ -48,7 +48,10 @@ let dependencies =
 
         outputHashAlgo = "sha256";
       outputHashMode = "recursive";
-      outputHash = "125pz9c0rca1hf0a7n5pgj6r1pvmp4sbj659dk61x32kkqmk6x5g";
+    # have to update on each install.
+      # outputHash = "125pz9c0rca1hf0a7n5pgj6r1pvmp4sbj659dk61x32kkqmk6x5g";
+      outputHash = "00sv4awj7fklcimrfm7hkqnnix09g3zs583rhsd173cf7p6h6ac8";
+      
 
 }) {};
 
