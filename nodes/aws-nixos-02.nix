@@ -4,17 +4,16 @@
 
 {
 
-  # imports = [ <nixpkgs/nixos/modules/virtualisation/lxc-container.nix> ] ++
-
   # AWS
   imports = [ <nixpkgs/nixos/modules/virtualisation/amazon-image.nix> ] ++
   [
     /root/nixos-config/common/multi-glibc-locale-paths.nix
     /root/nixos-config/common/locale19.nix   # note. v19
     /root/nixos-config/common/users.nix
+    # to force dotfiles upgrade,  
+    # nixos-rebuild  switch --upgrade  --option tarball-ttl 0
+
     /root/nixos-config/common/dotfiles.nix
-    # /root/nixos-config/examples2/script-service.nix
-    # /root/nixos-config/examples2/irc.nix
   ];
 
   # AWS
@@ -28,18 +27,32 @@
 
   config.networking.firewall.enable = false;
 
-  # static ip address
-  #config.networking = {
-  #  interfaces.host0.ipv4.addresses = [{
-  #    address = "10.3.0.31";
-  #    prefixLength = 24;
-  #  }];
-  #  defaultGateway = "10.3.0.1";
-  #  nameservers = [ "8.8.8.8" ];
-  #};
 
   # show ip address,
   config.services.mingetty.greetingLine = pkgs.lib.mkForce ''<<< \4, Welcome to NixOS, (\m) - \l >>>'';
+
+
+  ########################
+  # copied out of users
+
+  # Enable the OpenSSH daemon.
+  config.services.openssh.enable = true;
+  # config.services.openssh.permitRootLogin = "without-password";
+
+  # Nov 2020. AWS conflict.
+  config.services.openssh.permitRootLogin = "prohibit-password";
+
+  # NEED TO DISABLE IN ORDER TO UPGRADE
+  # Nov 2020 for AWS
+  config.services.openssh.forwardX11 = true;
+
+  # ssh will set the display var. etc.
+  # xhost + local:   and restart term.
+  # ssh -Y aws-nixos-02
+  # $ echo $DISPLAY
+  # localhost:10.0
+
+
 }
 
 

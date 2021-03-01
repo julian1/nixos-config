@@ -2,6 +2,7 @@
 with lib;
 {
 
+<<<<<<< HEAD
   # Enable the OpenSSH daemon.
   config.services.openssh.enable = true;
   # config.services.openssh.permitRootLogin = "without-password";
@@ -15,6 +16,8 @@ with lib;
 =======
   config.services.openssh.forwardX11 = true;
 >>>>>>> 2be4d40... x11forwarding
+=======
+>>>>>>> 985546f... parent c13cb057ee9f0088717e35dd421ff69eb4e2235d
 
   # JA usePAM is default
   # think would need the %u is user, %h is home /root/.ssh...
