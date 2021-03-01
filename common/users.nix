@@ -10,7 +10,11 @@ with lib;
   config.services.openssh.permitRootLogin = "prohibit-password";
 
   # Nov 2020 for AWS
+<<<<<<< HEAD
   services.openssh.forwardX11 = true
+=======
+  config.services.openssh.forwardX11 = true;
+>>>>>>> 2be4d40... x11forwarding
 
   # JA usePAM is default
   # think would need the %u is user, %h is home /root/.ssh...
