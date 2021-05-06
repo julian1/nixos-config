@@ -50,8 +50,10 @@ let dependencies =
       outputHashMode = "recursive";
     # have to update on each install.
       # outputHash = "125pz9c0rca1hf0a7n5pgj6r1pvmp4sbj659dk61x32kkqmk6x5g";
-      outputHash = "00sv4awj7fklcimrfm7hkqnnix09g3zs583rhsd173cf7p6h6ac8";
+      #outputHash = "00sv4awj7fklcimrfm7hkqnnix09g3zs583rhsd173cf7p6h6ac8";
+      outputHash = "0ksb4rpxz3xydn0x5z6a8q08gk5p6hqc3zrkqwkjv4rrhnk0vc5r";
       
+    
 
 }) {};
 

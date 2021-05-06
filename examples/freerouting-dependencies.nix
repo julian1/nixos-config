@@ -1,6 +1,6 @@
 
 /*
-  get maven dependencies
+  test code, to  get maven dependencies
 
   nix-build  ~/nixos-config/examples/freerouting.nix
 
