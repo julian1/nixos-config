@@ -1,11 +1,16 @@
 # shell.nix
 /*
   eg.
-  $ nix-shell ~/nixos-config/examples/freerouting-shell.nix 
+  $ nix-shell ~/nixos-config/examples/freerouting-shell.nix
   $ freerouting
 
   IMPORTANT this is incorrectly organized.
   The callPackage() in freerouting-build should be here.
+
+  see
+    kicad-shell.nix for correct example,
+  ref,
+    https://stackoverflow.com/questions/44088192/when-and-how-should-default-nix-shell-nix-and-release-nix-be-used
 */
 
 with import <nixpkgs> {};
