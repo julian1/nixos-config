@@ -3,6 +3,9 @@
   eg.
   $ nix-shell ~/nixos-config/examples/freerouting-shell.nix 
   $ freerouting
+
+  IMPORTANT this is incorrectly organized.
+  The callPackage() in freerouting-build should be here.
 */
 
 with import <nixpkgs> {};
