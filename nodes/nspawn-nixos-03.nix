@@ -4,7 +4,7 @@
   imports = [ <nixpkgs/nixos/modules/virtualisation/lxc-container.nix> ] ++
   [
     # /home/me/nixos-config/common/multi-glibc-locale-paths.nix
-    /home/me/nixos-config/common/locale19.nix   # note. v19
+    /home/me/nixos-config/common/locale20.nix   # note. v19
     /home/me/nixos-config/common/users.nix
 
     # to force dotfiles upgrade,  
@@ -12,8 +12,17 @@
     /home/me/nixos-config/common/dotfiles.nix
   ];
 
+
+  # running in a nspawn container, upgrade from 19 to 20.06
+  # https://github.com/NixOS/nixpkgs/issues/119841
+  # config.environment.noXlibs = pkgs.lib.mkForce false;
+  config.environment.noXlibs = false;
 	
   # config.allowUnfree = true;
+
+  # dconf, needed by kicad. nope. doesn't work. since gnome only.
+  # config.programs.dconf.enable = true;
+  # config.services.dbus.packages = [ pkgs.gnome3.dconf ];
 
   config.networking.hostName = "nspawn-nixos-03";
 
