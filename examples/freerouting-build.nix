@@ -27,7 +27,8 @@ let dependencies =
 
     src = fetchurl {
         url = "https://github.com/nick-less/freerouting/archive/master.tar.gz";
-        sha256 = "0b7s78fg70avh2bqqvwpfz2b4vv0ys79nncgg5q2svsf4jczsv03";
+        #sha256 = "0b7s78fg70avh2bqqvwpfz2b4vv0ys79nncgg5q2svsf4jczsv03";
+        sha256 = "1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb";  # 15 may 2021
 
       };
 
@@ -51,8 +52,9 @@ let dependencies =
     # have to update on each install.
       # outputHash = "125pz9c0rca1hf0a7n5pgj6r1pvmp4sbj659dk61x32kkqmk6x5g";
       #outputHash = "00sv4awj7fklcimrfm7hkqnnix09g3zs583rhsd173cf7p6h6ac8";
-      outputHash = "0ksb4rpxz3xydn0x5z6a8q08gk5p6hqc3zrkqwkjv4rrhnk0vc5r";
-      
+      # outputHash = "0ksb4rpxz3xydn0x5z6a8q08gk5p6hqc3zrkqwkjv4rrhnk0vc5r";
+      outputHash = "0zz53grdv3qalj7fir0ylbaafh8pxc2njy3j1i7irzdlp2y37w2h";   # 15 may 2021
+
     
 
 }) {};
@@ -71,10 +73,9 @@ mkDerivation rec {
   # should not have to specify twice...
   src = fetchurl {
       url = "https://github.com/nick-less/freerouting/archive/master.tar.gz";
-      sha256 = "0b7s78fg70avh2bqqvwpfz2b4vv0ys79nncgg5q2svsf4jczsv03";
-
+      # sha256 = "0b7s78fg70avh2bqqvwpfz2b4vv0ys79nncgg5q2svsf4jczsv03";
+      sha256 = "1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb";  # 15 may 2021
     };
-
 
 
   buildInputs = [ jdk maven makeWrapper ];
