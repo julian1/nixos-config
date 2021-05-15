@@ -1,15 +1,20 @@
 
 /*
-  test code, to  get maven dependencies
+  Use this first, as a build pre-step to download maven dependencies.
+  Can then use freerouting-build in a sandboxed environment without network access
 
-  nix-build  ~/nixos-config/examples/freerouting.nix
+  USE.
+  > nix-build examples/freerouting-dependencies.nix
 
   See. relies on FOD. to allow making networking calls.
   https://fzakaria.com/2020/07/20/packaging-a-maven-application-with-nix.html
+  -----------
+
+  If nothing happens, and it doesn't start download. then change the outputHash to force it to download.
 
 */
 
-with import <nixpkgs> {}; 
+with import <nixpkgs> {};
 
 callPackage ({ stdenv,  fetchurl,  maven,  jdk,  javaPackages }: stdenv.mkDerivation rec {
 
@@ -19,8 +24,8 @@ callPackage ({ stdenv,  fetchurl,  maven,  jdk,  javaPackages }: stdenv.mkDeriva
 
   src = fetchurl {
       url = "https://github.com/nick-less/freerouting/archive/master.tar.gz";
-      sha256 = "0b7s78fg70avh2bqqvwpfz2b4vv0ys79nncgg5q2svsf4jczsv03";
-
+      # sha256 = "0b7s78fg70avh2bqqvwpfz2b4vv0ys79nncgg5q2svsf4jczsv03";
+      sha256 = "1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb";  # 15 may 2021
     };
 
   nativeBuildInputs = [ maven ];
@@ -40,8 +45,9 @@ callPackage ({ stdenv,  fetchurl,  maven,  jdk,  javaPackages }: stdenv.mkDeriva
 
       outputHashAlgo = "sha256";
     outputHashMode = "recursive";
-    outputHash = "125pz9c0rca1hf0a7n5pgj6r1pvmp4sbj659dk61x32kkqmk6x5g";
+    #outputHash = "125pz9c0rca1hf0a7n5pgj6r1pvmp4sbj659dk61x32kkqmk6x5g";
+    outputHash = "1icph2pvl5m437cprsk2mrjiwblk6q4cqlzrcx465lcj2spam139";   # 15 may 2021
 
-}) {} 
+}) {}
 
 
