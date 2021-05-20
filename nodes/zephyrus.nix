@@ -21,10 +21,12 @@
       ! disable capslock
       ! remove Lock = Caps_Lock
     '';
-  in
-    let myXResources = pkgs.writeText "xresources" ''
-      XTerm*VT100*selectToClipboard: true
-    '';
+
+  # don't think required. key is just to select text, not use shift-insert
+  #in
+  #  let myXResources = pkgs.writeText "xresources" ''
+  #    XTerm*VT100*selectToClipboard: true
+  #  '';
 in
  
 
