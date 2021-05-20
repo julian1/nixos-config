@@ -22,6 +22,10 @@
       ! remove Lock = Caps_Lock
     '';
   in
+    let myXResources = pkgs.writeText "xresources" ''
+      XTerm*VT100*selectToClipboard: true
+    '';
+in
  
 
 {
@@ -75,8 +79,13 @@
 
 
  
-  services.xserver.displayManager.sessionCommands = "${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}";
+  services.xserver.displayManager.sessionCommands = ''
+    ${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}
+    
+  '';
 
+#    "${pkgs.xorg.xrdb}/bin/xrdb --merge ${myXResources}
+  
 
 
 

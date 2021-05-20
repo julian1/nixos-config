@@ -14,8 +14,38 @@ with lib;
 
 {
   
-  config.users.users.root.packages =
-    with pkgs;[ vim git screen less man psmisc ]; # glibcLocales  
+  #config.users.users.root.packages =
+  #  with pkgs;[ vim git screen less man psmisc ]; # glibcLocales  
+  #
+  config.users.users.root.packages = 
+  let
+    myVim =
+    pkgs.vim_configurable.customize {
+        # Specifies the vim binary name.
+        name = "vim";
+        # CHANGE this - to just read a file from dotfiles
+        vimrcConfig.customRC = builtins.readFile ( "${dotfilesSrc}/vimrc" ) ;
+        # dec 2019. Install dotfiles by hand
+
+        vimrcConfig.packages.myVimPackage = with pkgs.vimPlugins; {
+          # loaded on launch
+          start = [ vim-nix  ];
+          };
+    };
+
+      myGit =
+      pkgs.git.overrideAttrs (old: {
+        # configureFlags = [ "--with-gitconfig=$out/etc/gitconfig" ];
+        configureFlags = [ "--with-gitconfig=/etc/gitconfig" ];
+      });
+  in
+  # note less, nc, netstat, curl, rsync are installed by default
+  with pkgs;
+  [  myVim myGit screen less man psmisc ];
+
+
+
+
 
 
   config.users.users.me.packages =
@@ -24,9 +54,6 @@ with lib;
   # note we symlink config files, so not really needed for root.
   # https://www.mpscholten.de/nixos/2016/04/11/setting-up-vim-on-nixos.html
   let
-
-
-
     myVim =
     pkgs.vim_configurable.customize {
         # Specifies the vim binary name.
