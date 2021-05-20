@@ -4,6 +4,26 @@
 
 { config, pkgs, ... }:
 
+   # JA
+  let
+    myCustomLayout = pkgs.writeText "xkb-layout" ''
+      ! Map umlauts to RIGHT ALT + <key>
+
+      keycode 96 = Insert Insert
+
+      !keysym e = e E EuroSign
+      !keysym c = c C cent
+      !keysym a = a A adiaeresis Adiaeresis
+      !keysym o = o O odiaeresis Odiaeresis
+      !keysym u = u U udiaeresis Udiaeresis
+      !keysym s = s S ssharp
+    
+      ! disable capslock
+      ! remove Lock = Caps_Lock
+    '';
+  in
+ 
+
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -23,6 +43,9 @@
   # networking.hostName = "nixos"; # Define your hostname.
   # JA
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  #networking.wireless.networks = { 
+#
+#  }
 
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
@@ -49,6 +72,12 @@
   # JA
   services.xserver.enable = true;
   services.xserver.windowManager.xmonad.enable = true;
+
+
+ 
+  services.xserver.displayManager.sessionCommands = "${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}";
+
+
 
 
   nixpkgs.config.allowUnfree = true;
@@ -89,6 +118,8 @@
      vim
      git
      pciutils
+     xorg.xev    # for keycodes
+     xorg.xmodmap  # to experiment with remapping
      #  lspci   ???
      #firefox
   ];
