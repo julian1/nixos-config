@@ -7,7 +7,8 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+      #./hardware-configuration.nix
+      /etc/nixos/hardware-configuration.nix
 
       /root/nixos-config/common/users.nix
       /root/nixos-config/common/dotfiles.nix
