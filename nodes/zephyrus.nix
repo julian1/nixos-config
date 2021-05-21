@@ -80,9 +80,9 @@ in
   services.xserver.enable = true;
 
 
-  #services.xserver.windowManager.xmonad.enable = true;
 
   services.xserver = {
+
     windowManager.xmonad = {
       enable = true;
       enableContribAndExtras = true;
@@ -92,7 +92,9 @@ in
         haskellPackages.xmonad
       ];
     };
-    windowManager.default = "xmonad";
+
+    # windowManager.default = "xmonad";
+    displayManager.defaultSession = "none+xmonad";
   };
 
   services.xserver.displayManager.sessionCommands = ''
@@ -160,13 +162,13 @@ in
     haskellPackages.xmobar   # A Minimalistic Text Based Status Bar
     ###############################
 
-     #wget
-     #
 
-
+    firefox
     # scrot
     # feh
-    firefox
+    # wget use curl instead
+    #
+
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
