@@ -12,6 +12,11 @@
 
   If nothing happens, and it doesn't start download. then change the outputHash to force it to download.
 
+  then run 
+  nix-build examples/freerouting-build.nix
+
+  then run,
+  ./result/bin/freerouting
 */
 
 with import <nixpkgs> {};
@@ -46,7 +51,8 @@ callPackage ({ stdenv,  fetchurl,  maven,  jdk,  javaPackages }: stdenv.mkDeriva
       outputHashAlgo = "sha256";
     outputHashMode = "recursive";
     #outputHash = "125pz9c0rca1hf0a7n5pgj6r1pvmp4sbj659dk61x32kkqmk6x5g";
-    outputHash = "1icph2pvl5m437cprsk2mrjiwblk6q4cqlzrcx465lcj2spam139";   # 15 may 2021
+    # outputHash = "1icph2pvl5m437cprsk2mrjiwblk6q4cqlzrcx465lcj2spam139";   # 15 may 2021
+    outputHash = "0bkf5f4vz4m6px2s6n9ylym8c226bszxdlsr7x2jq8fskq9kn82g";   # 21 may 2021
 
 }) {}
 
