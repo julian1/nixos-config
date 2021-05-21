@@ -22,8 +22,8 @@
       ! remove Lock = Caps_Lock
     '';
 
-  # don't think required. key is just to select text, not use shift-insert
-      # XTerm*VT100*selectToClipboard: true
+
+  # this doesn't work. need to copy Xresources to $HOME
   in
     let myXResources = pkgs.writeText "xresources" ''
       XTerm*selectToClipboard: true
