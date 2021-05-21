@@ -155,7 +155,10 @@ in
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  # JA
+  services.openssh.enable = true;
+
+  services.openssh.permitRootLogin = "prohibit-password";
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
