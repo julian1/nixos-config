@@ -78,13 +78,28 @@ in
   # Enable the X11 windowing system.
   # JA
   services.xserver.enable = true;
-  services.xserver.windowManager.xmonad.enable = true;
+  
 
+  #services.xserver.windowManager.xmonad.enable = true;
+
+  services.xserver = {
+    windowManager.xmonad = {
+      enable = true;
+      enableContribAndExtras = true;
+      extraPackages = haskellPackages: [
+        haskellPackages.xmonad-contrib
+        haskellPackages.xmonad-extras
+        haskellPackages.xmonad
+      ];
+    };
+    windowManager.default = "xmonad";
+  };
  
   services.xserver.displayManager.sessionCommands = ''
     
     ${pkgs.xorg.xrdb}/bin/xrdb --merge ${myXResources};
 
+    # doesn't work need to copy Xresources
     ${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout};
 
     # keyboard repeat rate
@@ -139,6 +154,14 @@ in
      xorg.xmodmap  # to experiment with remapping
     # xrdb is installed by default
      xclip
+
+
+
+    dmenu                    # A menu for use with xmonad
+    #haskellPackages.libmpd   # Shows MPD status in xmobar
+    haskellPackages.xmobar   # A Minimalistic Text Based Status Bar
+
+    #feh                      # A light-weight image viewer to set backgrounds
 
      #  lspci   ???
      #firefox
