@@ -17,7 +17,7 @@
       !keysym o = o O odiaeresis Odiaeresis
       !keysym u = u U udiaeresis Udiaeresis
       !keysym s = s S ssharp
-    
+
       ! disable capslock
       ! remove Lock = Caps_Lock
     '';
@@ -29,7 +29,7 @@
       XTerm*selectToClipboard: true
     '';
 in
- 
+
 
 {
   imports =
@@ -50,7 +50,7 @@ in
   # networking.hostName = "nixos"; # Define your hostname.
   # JA
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  #networking.wireless.networks = { 
+  #networking.wireless.networks = {
 #
 #  }
 
@@ -78,7 +78,7 @@ in
   # Enable the X11 windowing system.
   # JA
   services.xserver.enable = true;
-  
+
 
   #services.xserver.windowManager.xmonad.enable = true;
 
@@ -94,9 +94,9 @@ in
     };
     windowManager.default = "xmonad";
   };
- 
+
   services.xserver.displayManager.sessionCommands = ''
-    
+
     ${pkgs.xorg.xrdb}/bin/xrdb --merge ${myXResources};
 
     # doesn't work need to copy Xresources
@@ -104,20 +104,20 @@ in
 
     # keyboard repeat rate
     ${pkgs.xorg.xset}/bin/xset r rate 200 ;
-    
+
   '';
 
 #    ${pkgs.xorg.xrdb}/bin/xrdb --merge ${myXResources}
-  
+
 
 
 
   nixpkgs.config.allowUnfree = true;
-  
-  # JA 
+
+  # JA
   # nvidia build fails against latest kernel.
   # services.xserver.videoDrivers = [ "nvidia" ];
-  
+
 
   # Configure keymap in X11
   # services.xserver.layout = "us";
@@ -143,28 +143,30 @@ in
   # $ nix search wget
   # JA
   environment.systemPackages = with pkgs; [
-     #wget 
-     #
      wpa_supplicant
      screen
      vim
      git
      pciutils
-     xorg.xev    # for keycodes
+     xorg.xev      # for keycodes
      xorg.xmodmap  # to experiment with remapping
-    # xrdb is installed by default
-     xclip
+     # xrdb is installed by default
+     # xclip   for copying into a shell
 
 
-
+    ###############################
     dmenu                    # A menu for use with xmonad
     #haskellPackages.libmpd   # Shows MPD status in xmobar
     haskellPackages.xmobar   # A Minimalistic Text Based Status Bar
+    ###############################
 
-    #feh                      # A light-weight image viewer to set backgrounds
+     #wget
+     #
 
-     #  lspci   ???
-     #firefox
+
+    # scrot
+    # feh
+    firefox
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
