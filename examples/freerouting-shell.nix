@@ -1,4 +1,12 @@
 # shell.nix
+
+# DONT USE. just run
+# ./result/bin/freerouting
+# after running,
+# nix-build examples/freerouting-build.nix
+
+DEPRECATED
+
 /*
   eg.
   $ nix-shell ~/nixos-config/examples/freerouting-shell.nix
