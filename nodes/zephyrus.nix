@@ -23,10 +23,11 @@
     '';
 
   # don't think required. key is just to select text, not use shift-insert
-  #in
-  #  let myXResources = pkgs.writeText "xresources" ''
-  #    XTerm*VT100*selectToClipboard: true
-  #  '';
+      # XTerm*VT100*selectToClipboard: true
+  in
+    let myXResources = pkgs.writeText "xresources" ''
+      XTerm*selectToClipboard: true
+    '';
 in
  
 
@@ -79,14 +80,19 @@ in
   services.xserver.enable = true;
   services.xserver.windowManager.xmonad.enable = true;
 
-
  
   services.xserver.displayManager.sessionCommands = ''
-    ${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}
+    
+    ${pkgs.xorg.xrdb}/bin/xrdb --merge ${myXResources};
+
+    ${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout};
+
+    # keyboard repeat rate
+    ${pkgs.xorg.xset}/bin/xset r rate 200 ;
     
   '';
 
-#    "${pkgs.xorg.xrdb}/bin/xrdb --merge ${myXResources}
+#    ${pkgs.xorg.xrdb}/bin/xrdb --merge ${myXResources}
   
 
 
@@ -131,6 +137,9 @@ in
      pciutils
      xorg.xev    # for keycodes
      xorg.xmodmap  # to experiment with remapping
+    # xrdb is installed by default
+     xclip
+
      #  lspci   ???
      #firefox
   ];
