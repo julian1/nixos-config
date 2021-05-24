@@ -47,6 +47,27 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  #####
+  boot.loader.grub = {
+    enable = true;
+    version = 2;
+    efiSupport = true;
+    enableCryptodisk = true;
+    device = "nodev";
+  };
+
+
+  boot.initrd.luks.devices = {
+    crypted = {
+      device = "/dev/disk/by-uuid/b74944f9-895e-44d0-aaea-006d10f22af7";
+      # preLVM = true;
+      #preLVM = false;
+    };
+  };
+  #####
+
+
+
   # networking.hostName = "nixos"; # Define your hostname.
   # JA
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -203,4 +224,5 @@ in
   system.stateVersion = "20.09"; # Did you read the comment?
 
 }
+
 
