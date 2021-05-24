@@ -52,7 +52,9 @@ callPackage ({ stdenv,  fetchurl,  maven,  jdk,  javaPackages }: stdenv.mkDeriva
     outputHashMode = "recursive";
     #outputHash = "125pz9c0rca1hf0a7n5pgj6r1pvmp4sbj659dk61x32kkqmk6x5g";
     # outputHash = "1icph2pvl5m437cprsk2mrjiwblk6q4cqlzrcx465lcj2spam139";   # 15 may 2021
-    outputHash = "0bkf5f4vz4m6px2s6n9ylym8c226bszxdlsr7x2jq8fskq9kn82g";   # 21 may 2021
+    # outputHash = "0bkf5f4vz4m6px2s6n9ylym8c226bszxdlsr7x2jq8fskq9kn82g";   # 21 may 2021
+    outputHash =   "0vqgyr490np4wi05ngc7ry93p34qb0488z19c6dyy86am2ga7frk";   
+
 
 }) {}
 
