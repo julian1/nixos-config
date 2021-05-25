@@ -9,11 +9,15 @@
 
 	/root/nixos-config/common/users.nix
 	/root/nixos-config/common/dotfiles.nix
+
+	/root/nixos-config/common/selinux.nix
 ];
   ec2.hvm = true;
 
 
   networking.hostName = "aws3"; # Define your hostname.
+
+  time.timeZone = "Australia/Hobart";
 
   
 }
