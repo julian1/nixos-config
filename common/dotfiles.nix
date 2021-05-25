@@ -132,7 +132,20 @@ with lib;
         [ -d "/home/me/$i" ] || mkdir "/home/me/$i" && chown me: "/home/me/$i"
         [ -d "/root/$i" ] || mkdir "/root/$i" && chown root: "/root/$i"
       done
+
+      # better way?
+      # this won't remove the file
+      [ -d "/home/me/.xmonad" ] ||  mkdir /home/me/.xmonad
+      cat "${dotfilesSrc}/xmonad.hs"   > /home/me/.xmonad/xmonad.hs
+      cat "${dotfilesSrc}/xmobarrc"    > /home/me/.xmobarrc
+      cat "${dotfilesSrc}/Xresources"  > /home/me/.Xresources
+
       '';
     };
 }
+
+
+
+
+
 
