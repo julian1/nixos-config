@@ -1,3 +1,9 @@
+/*
+  note. not for nano isntance.
+  tested on 4GB to build stuff, and 20GN storage.
+  else oom.
+
+*/
 { modulesPath, ... }: {
   imports = [ "${modulesPath}/virtualisation/amazon-image.nix" 
 
