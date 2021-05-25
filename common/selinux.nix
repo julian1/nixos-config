@@ -28,9 +28,13 @@ with lib;
       ''
                ;
          } ];
+
+  # for some reason the below doesn't work. 
+  # the kernel recom
+
   # policycoreutils is for load_policy, fixfiles, setfiles, setsebool, semodile, and sestatus.
-  environment.systemPackages = with pkgs; [ policycoreutils ];
+  #environment.systemPackages = with pkgs; [ policycoreutils ];
   # build systemd with SE Linux support so it loads policy at boot and supports file labelling
-  systemd.package = pkgs.systemd.override { withSelinux = true; };
+  #systemd.package = pkgs.systemd.override { withSelinux = true; };
 }
 
