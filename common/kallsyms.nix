@@ -2,6 +2,7 @@
 /*
   https://blog.trailofbits.com/2019/01/17/how-to-write-a-rootkit-without-really-trying/
 
+<<<<<<< HEAD
   searchable index,
     https://filippo.io/linux-syscall-table/
 
@@ -10,6 +11,19 @@
   CONFIG_KALLSYMS y
   CONFIG_KALLSYMS_ALL y
   CONFIG_KALLSYMS_EXTRA_PASS y
+=======
+  cat /proc/kallsyms | grep sys_call_table
+
+                 CONFIG_KALLSYMS=1
+
+                 CONFIG_KALLSYMS y
+CONFIG_KALLSYMS_ALL=y
+
+
+CONFIG_KALLSYMS=y
+CONFIG_KALLSYMS_ALL=y
+CONFIG_KALLSYMS_EXTRA_PASS=y
+>>>>>>> origin/master
 */
 
 { lib,  pkgs, ... }:
@@ -24,8 +38,12 @@ with lib;
          extraConfig =  ''
 
               KALLSYMS y
+<<<<<<< HEAD
               KALLSYMS_ALL y
               # KALLSYMS_EXTRA_PASS y
+=======
+
+>>>>>>> origin/master
 
       ''
                ;
