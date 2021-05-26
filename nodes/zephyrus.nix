@@ -186,6 +186,7 @@ in
 
 
     firefox
+    evince
     # scrot
     # feh
     # wget use curl instead
