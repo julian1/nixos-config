@@ -191,8 +191,9 @@ in
 
     firefox
     evince
+    thunderbird
+    feh
     # scrot
-    # feh
     # wget use curl instead
     #
 
