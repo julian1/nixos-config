@@ -13,11 +13,11 @@ in
 with lib;
 
 {
-  
+
   #config.users.users.root.packages =
-  #  with pkgs;[ vim git screen less man psmisc ]; # glibcLocales  
+  #  with pkgs;[ vim git screen less man psmisc ]; # glibcLocales
   #
-  config.users.users.root.packages = 
+  config.users.users.root.packages =
   let
     myVim =
     pkgs.vim_configurable.customize {
@@ -123,15 +123,29 @@ with lib;
 
   config.system.activationScripts =  {
 
-    ##  should do root also???
-    #myfiles =
-    #    ''
-    #    echo "making local vim dirs"
-    #    for i in ".vim" ".vim/backup" ".vim/swap"  ".vim/undo" ".vim/autoload" ".vim/bundle"; do
-    #      # echo $i;
-    #      [ -d "/home/me/$i" ] || mkdir "/home/me/$i" && chown me: "/home/me/$i"
-    #    done
-    #    '';
+    # vim dirs for me and root
+    myfiles =
+    ''
+      echo "making local vim dirs"
+      for i in ".vim" ".vim/backup" ".vim/swap"  ".vim/undo" ".vim/autoload" ".vim/bundle"; do
+        # echo $i;
+        [ -d "/home/me/$i" ] || mkdir "/home/me/$i" && chown me: "/home/me/$i"
+        [ -d "/root/$i" ] || mkdir "/root/$i" && chown root: "/root/$i"
+      done
+
+      # better way?
+      # this won't remove the file
+      [ -d "/home/me/.xmonad" ] ||  mkdir /home/me/.xmonad
+      cat "${dotfilesSrc}/xmonad.hs"   > /home/me/.xmonad/xmonad.hs
+      cat "${dotfilesSrc}/xmobarrc"    > /home/me/.xmobarrc
+      cat "${dotfilesSrc}/Xresources"  > /home/me/.Xresources
+
+      '';
     };
 }
+
+
+
+
+
 
