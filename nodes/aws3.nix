@@ -10,7 +10,8 @@
 	/root/nixos-config/common/users.nix
 	/root/nixos-config/common/dotfiles.nix
 
-	/root/nixos-config/common/selinux.nix
+	# /root/nixos-config/common/selinux.nix
+	/root/nixos-config/common/kallsyms.nix
 ];
   ec2.hvm = true;
 
@@ -38,5 +39,9 @@
 #  #       targeted - Targeted processes are protected,
 #  #       mls - Multi Level Security protection.
 #  SELINUXTYPE=targeted
+
+  # have load_policy,setfiles,  sestatus, semodule, secon
+
+  #https://wiki.gentoo.org/wiki/SELinux/Tutorials/Creating_your_own_policy_module_file
 
 }
