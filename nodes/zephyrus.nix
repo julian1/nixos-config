@@ -214,6 +214,13 @@ in
 
   services.openssh.permitRootLogin = "prohibit-password";
 
+  networking.extraHosts =
+    ''
+      127.0.0.2 other-localhost
+      192.168.0.4   dell
+      3.25.161.11   aws3
+    '';
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
