@@ -24,7 +24,8 @@ with lib;
          extraConfig =  ''
 
               KALLSYMS y
-
+              KALLSYMS_ALL y
+              # KALLSYMS_EXTRA_PASS y
 
       ''
                ;
