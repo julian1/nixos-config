@@ -22,11 +22,9 @@ with lib;
          name = "kallsyms-config";
          patch = null;
          extraConfig =  ''
-
               KALLSYMS y
               KALLSYMS_ALL y
               # KALLSYMS_EXTRA_PASS y
-
       ''
                ;
          } ];
