@@ -171,6 +171,7 @@ in
      screen
      vim
      git
+     file
      pciutils
      xorg.xev      # for keycodes
      xorg.xmodmap  # to experiment with remapping
