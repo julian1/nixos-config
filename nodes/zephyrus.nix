@@ -177,7 +177,7 @@ in
       #####
      xorg.xev      # for keycodes
      xorg.xmodmap  # to experiment with remapping
-     xorg.xhost   # to allow other sessions access
+     xorg.xhost   # change persmissions, to permit other sessions
      # xrdb is installed by default
      # xclip   for copying into a shell
 
