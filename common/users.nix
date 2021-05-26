@@ -27,13 +27,14 @@ with lib;
    };
 
 
+  # probably need a reboot to fix the group...
 
-  config.users.extraGroups.secure .gid = 1001;
-  config.users.extraUsers.secure =
+  config.users.extraGroups.trusted .gid = 1001;
+  config.users.extraUsers.trusted =
    { isNormalUser = true;
-     home = "/home/secure";
+     home = "/home/trusted";
      description = "my description";
-     extraGroups = [ "secure" "wheel" "networkmanager" ];
+     extraGroups = [ "trusted" "wheel" "networkmanager" ];
      openssh.authorizedKeys.keys = [ pubkey ];
    };
 
