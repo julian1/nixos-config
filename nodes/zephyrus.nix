@@ -139,7 +139,8 @@ in
   nixpkgs.config.allowUnfree = true;
 
   # JA
-  # nvidia build fails against latest kernel.
+  # fails to build. may 28, 2021 
+  # https://discourse.nixos.org/t/nixos-config-build-failes-with-latest-kernel/12273
   # services.xserver.videoDrivers = [ "nvidia" ];
 
 
