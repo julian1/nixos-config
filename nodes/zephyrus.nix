@@ -140,6 +140,7 @@ in
 
   # JA
   # nvidia build fails against latest kernel.
+  # https://discourse.nixos.org/t/nixos-config-build-failes-with-latest-kernel/12273
   services.xserver.videoDrivers = [ "nvidia" ];
 
 
