@@ -93,7 +93,7 @@ with lib;
   # note less, nc, netstat, curl, rsync are installed by default
   with pkgs;
 
-  [  myVim myGit screen less man psmisc ];
+  [  myVim myGit screen less man psmisc ];  # add bash??  so bang patterns in scripts work?
 
   config.environment.etc = {
 

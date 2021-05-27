@@ -193,6 +193,8 @@ in
     evince
     thunderbird
     feh
+    openssl     # backup/restore
+    zip  unzip
     # scrot
     # wget use curl instead
     #
