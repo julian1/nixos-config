@@ -47,7 +47,28 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # networking.hostName = "nixos"; # Define your hostname.
+  #####
+  boot.loader.grub = {
+    enable = true;
+    version = 2;
+    efiSupport = true;
+    enableCryptodisk = true;
+    device = "nodev";
+  };
+
+
+  boot.initrd.luks.devices = {
+    crypted = {
+      device = "/dev/disk/by-uuid/b74944f9-895e-44d0-aaea-006d10f22af7";
+      # preLVM = true;
+      #preLVM = false;
+    };
+  };
+  #####
+
+
+
+  networking.hostName = "zephyrus"; # Define your hostname.
   # JA
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   #networking.wireless.networks = {
@@ -119,7 +140,7 @@ in
 
   # JA
   # nvidia build fails against latest kernel.
-  # services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
 
   # Configure keymap in X11
@@ -150,9 +171,13 @@ in
      screen
      vim
      git
+     file
      pciutils
+
+      #####
      xorg.xev      # for keycodes
      xorg.xmodmap  # to experiment with remapping
+     xorg.xhost   # change persmissions, to permit other sessions
      # xrdb is installed by default
      # xclip   for copying into a shell
 
@@ -165,10 +190,18 @@ in
 
 
     firefox
+    evince
+    thunderbird
+    feh
+    openssl     # backup/restore
+    zip  unzip
     # scrot
-    # feh
     # wget use curl instead
     #
+
+    # can remove later
+    linuxPackages.cpupower 
+    lm_sensors
 
   ];
 
@@ -188,6 +221,13 @@ in
 
   services.openssh.permitRootLogin = "prohibit-password";
 
+  networking.extraHosts =
+    ''
+      127.0.0.2 other-localhost
+      192.168.0.4   dell
+      3.25.161.11   aws3
+    '';
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
@@ -203,4 +243,5 @@ in
   system.stateVersion = "20.09"; # Did you read the comment?
 
 }
+
 
