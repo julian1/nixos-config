@@ -139,9 +139,24 @@ in
   nixpkgs.config.allowUnfree = true;
 
   # JA
-  # nvidia build fails against latest kernel.
+  # fails to build. may 28, 2021 
   # https://discourse.nixos.org/t/nixos-config-build-failes-with-latest-kernel/12273
-  services.xserver.videoDrivers = [ "nvidia" ];
+  # services.xserver.videoDrivers = [ "nvidia" ];
+
+
+#  # Example for NixOS 20.09/unstable
+#  services.xserver.videoDrivers = [ "nvidia" ];
+#
+#  hardware.nvidia.prime = {
+#    sync.enable = true;
+#
+#    # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
+#    nvidiaBusId = "PCI:1:0:0";
+#
+#    # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
+#    intelBusId = "PCI:0:2:0";
+#  };
+
 
 
   # Configure keymap in X11
