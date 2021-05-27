@@ -167,20 +167,17 @@ FAN
 
     $ cat /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy
 
-    0 seems slightly better.
+    0 is default.
+    0 seems slightly better. despite name suggesting 2 would be best.
 
 
-
-
-  That being said, I run PRIME offloading with my current setup. I have an bash
   function called nvidia-run, that will offload the graphics rendering to the
   Nvidia card for any gaming or rendering workloads I have. I also pass it
   through enough into my Windows VM, 
 
 
-
   =====================
-  could try gluing bottom copper strip. and using thermal glue?
+  COULD TRY gluing bottom copper strip. and using thermal glue?
 
   # using sensors 
   sensors | grep -A5 amdgpu
