@@ -47,6 +47,24 @@ WORKING
 -------------------
 FAN
 
+  
+  ---------
+  You can read a file like 
+
+    /sys/class/drm/card0/device/hwmon/hwmon0/temp1_input
+
+  to find out the GPU’s current temperature (in millidegrees Celsius, eg: 51000
+  for 51°C), and you can write a number to a file like
+
+  /sys/class/drm/card0/device/hwmon/hwmon0/pwm1 
+
+  to set the fan speed (as an 8-bit binary number, so 0 for fans completely off,
+  up to 255 for fans completely on).
+
+
+  But we don't have any pwm  fields...
+  ---------
+
   should try disabling, gpu in bios.
 
   # enabling cpus on / off 
