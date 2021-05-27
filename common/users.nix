@@ -22,7 +22,7 @@ with lib;
    { isNormalUser = true;
      home = "/home/me";
      description = "my description";
-     extraGroups = [ "me" "wheel" "networkmanager" ];
+     extraGroups = [ "me" "wheel" "networkmanager" "trusted" ];
      openssh.authorizedKeys.keys = [ pubkey ];
    };
 
@@ -34,7 +34,7 @@ with lib;
    { isNormalUser = true;
      home = "/home/trusted";
      description = "my description";
-     extraGroups = [ "trusted" "wheel" "networkmanager" ];
+     extraGroups = [ "trusted" "wheel" "networkmanager" "me" ];     # note add me.
      openssh.authorizedKeys.keys = [ pubkey ];
    };
 

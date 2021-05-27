@@ -199,6 +199,10 @@ in
     # wget use curl instead
     #
 
+    # can remove later
+    linuxPackages.cpupower 
+    lm_sensors
+
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
