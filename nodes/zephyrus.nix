@@ -188,7 +188,6 @@ in
      vim
      git
      file
-     pciutils
 
       #####
      xorg.xev      # for keycodes
@@ -218,6 +217,8 @@ in
     # can remove later
     linuxPackages.cpupower 
     lm_sensors
+    lshw
+    pciutils
 
   ];
 
