@@ -1,0 +1,530 @@
+
+
+
+
+
+trusted
+  ssh keys.
+  mozilla session / logged in
+  aws
+  thunderbird email passwords.
+
+  could use separate account for each. simple with nixos. ie firefox/thunderbird/ssh/aws accounts.
+  for more separation.
+
+how to deal with scripts and no bash,
+  https://discourse.nixos.org/t/add-bin-bash-to-avoid-unnecessary-pain/5673/2
+
+  /run/current-system/sw/bin/bash
+  me@zephyrus:~/devel$ /usr/bin/env bash
+
+  NO. for local scripts - in a shell  - just bring bash into sceop as well.
+  bash *is* available. just not
+
+  Just use the /usr/bin/env trampoline.
+  eg.
+  /usb/bin/env bash
+
+  Nixos Running scripts problem
+  https://www.reddit.com/r/NixOS/comments/k8ja54/nixos_running_scripts_problem/
+
+  Instead, the best way to run bash scripts, in any system, is to use
+  #!/usr/bin/env bash as shebang.
+
+  env bash simply is a way to search the PATH variable for the bash
+  interpreter; you can use it env to find any interpreter on your PATH when the
+  absolute location isn’t apparent. this is a common situation with
+  interpreters such as with Python
+
+  # env is the only command in /usb/bin or /bin
+  $ ls /usr/bin/
+  env
+
+WORKING
+  trackpad, keyboard, sound. display . super quick.
+
+
+-------------------
+FAN
+
+  should try disabling, gpu in bios.
+
+  # enabling cpus on / off 
+  # doesn't seem to affect fan - eg. same workload gets distributed
+    root@zephyrus:~/nixos-config$ echo 0 >  /sys/devices/system/cpu/cpu3/online
+    root@zephyrus:~/nixos-config$ cat /sys/devices/system/cpu/cpu3/online
+    0
+    root@zephyrus:~/nixos-config$ echo 0 >  /sys/devices/system/cpu/cpu4/online
+
+  can see that it works in top.
+
+
+  root@zephyrus:~/nixos-config$ nix-shell -p linuxPackages.cpupower
+
+  [nix-shell:~/nixos-config]# cpupower frequency-info
+  ...
+
+  [nix-shell:~/nixos-config]# cpupower frequency-set -g powersave
+  Setting cpu: 0
+  Setting cpu: 1
+
+  [nix-shell:~/nixos-config]# cpupower frequency-info
+
+  cpupower doc, very good and powerful
+    https://documentation.suse.com/sled/15-SP1/html/SLED-all/cha-tuning-power.html
+
+  cpupower frequency-set -u 1.2GHz
+
+  this works eg. 
+  # cat /proc/cpuinfo  | grep MH
+  cpu MHz         : 1200.000
+  cpu MHz         : 1200.000
+  cpu MHz         : 1200.000
+
+
+  but doesn't affect fan too much
+
+  # shows all settings and current power
+  cpupower monitor
+  ...
+  [nix-shell:~/nixos-config]# sensors
+  amdgpu-pci-0600
+  Adapter: PCI adapter
+  vddgfx:        1.43 V
+  vddnb:       918.00 mV
+  edge:         +57.0°C
+  power1:       19.00 W
+
+  lmsenseors shos gpu running at 19W. is that the source of heat.
+  -----
+
+  see, https://wiki.archlinux.org/title/fan_speed_control#ASUS_laptops
+
+  # wow turns on full fan speed
+  echo 0 >  /sys/devices/platform/asus-nb-wmi/hwmon/hwmon4/pwm1_enable
+
+  # this is original value 2 = automatic,
+  echo 2 >   /sys/devices/platform/asus-nb-wmi/hwmon/hwmon4/pwm1_enable
+
+  # echo 1 > /sys/devices/platform/asus-nb-wmi/hwmon/hwmon4/pwm1_enable
+  should be manual but doesn't accept it
+  bash: echo: write error: Invalid argumen
+
+  # found this,
+  # ok. this is weird. turned off, then hard on.
+  # echo 1 >    /sys/devices/platform/asus-nb-wmi/hwmon/hwmon4/device/throttle_thermal_policy 
+  default is 2.
+  0  turns off fans....  think only bbecause run after fans run at full. but maybe less.  *think its less*
+  2  turns on again. 
+
+  0 definitely seems less.
+
+  Instead of manually controlling fan speed using asus-nb-wmi, it is also
+  possible to set the thermal throttling policy to have a more or less aggressive
+  fan control policy. Possible values are 0 (default), 1 (overboost) and 2
+  (silent). 
+
+  # temp of amdgpu graphics, and other stuff. eg. 54000 = 54 degC.
+  cat /sys/class/drm/card0/device/hwmon/hwmon6/temp1_inpu
+
+  In Kernel 5.6 there is a fan mode for asus laptops, check if you have
+  /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy
+    2 - Silent,
+    0 - Balance,
+    1 - Turbo, similar to the modes in armoury crate on windows.
+
+    $ cat /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy
+
+    0 seems slightly better.
+
+
+
+
+  That being said, I run PRIME offloading with my current setup. I have an bash
+  function called nvidia-run, that will offload the graphics rendering to the
+  Nvidia card for any gaming or rendering workloads I have. I also pass it
+  through enough into my Windows VM, 
+
+
+
+  =====================
+  could try gluing bottom copper strip. and using thermal glue?
+
+  # using sensors 
+  sensors | grep -A5 amdgpu
+  amdgpu-pci-0600
+  Adapter: PCI adapter
+  vddgfx:        1.44 V  
+  vddnb:       924.00 mV 
+  edge:         +55.0°C  
+  power1:       20.00 W   <- too much??
+
+
+  # this is the best way to monitor gpu
+   watch -n 0.5  cat /sys/kernel/debug/dri/0/amdgpu_pm_info
+  GFX Clocks and Power:
+          1600 MHz (MCLK)
+          400 MHz (SCLK)
+          0 MHz (PSTATE_SCLK)
+          0 MHz (PSTATE_MCLK)
+          1443 mV (VDDGFX)
+          918 mV (VDDNB)
+          12.0 W (average GPU)
+
+  GPU Temperature: 55 C
+
+  GA503 
+  GA503Q 
+
+
+
+  The files in /dev are actual devices files which UDEV creates at run time. The
+  directory /sys/class is exported by the kernel at run time, exposing the
+  hierarchy of the hardware through sysfs.
+
+  might be useful, 
+    https://github.com/dominiksalvet/asus-fan-control
+    no. should be able to do stuff - with kernel interffacces 
+
+  $ uname -a
+  Linux zephyrus 5.11.21 #1-NixOS SMP Fri May 14 08:50:20 UTC 2021 x86_64 GNU/Linux
+
+  $ cat /sys/class/drm/card0/device/hwmon/hwmon6/name 
+  amdgpu
+
+  root@zephyrus:~$ cat /sys/class/drm/card0/device/hwmon/hwmon6/temp1_input 
+  55000
+  54000
+  etc
+
+  root@zephyrus:~$ cat /sys/class/drm/card0/device/hwmon/hwmon6/temp1_label 
+  edge
+
+  ===================
+  Ok. monitoring shows gpu at 55C. 
+  and the input says 55C. so that's probably the threshold for turning on. 
+  ===================
+
+
+  # eg. 11 watts.
+  $ cat /sys/class/drm/card0/device/hwmon/hwmon6/power1_average 
+  11000000
+
+  for i in $( find  /sys/class/drm/card0/device/hwmon/hwmon6/ -type f) ; do echo $i; cat $i; done
+
+  -------------
+
+  maybe have to try and get nvidia card to work
+  -----------
+
+  turned off all cores except two. and then limited cpufreq to lowest possible. confirm in top. no change in fan behavior. 
+
+  nvida drivers don't build against latest kernel. that's ok. the amd ok.
+
+  looking at amdgpu with sensors, shows it's drawing 20W, and 12W average
+
+  I can find ways to turn the fan up, 
+  but no way to 
+
+
+===============================
+-----------------------
+
+kicad
+  setting hotkey for leave sheet to f3 works very well with f1 and f2 for zoom/unzoom.
+
+  can plot pcb to pdf. to check footprint size.
+  use same name convention as spectra gerber dirs
+
+
+laptop zephyrus
+  5900 is zen3. good. 7nm.
+  audio sound is crazily good. 3d.
+  much less fan noise compared to dell, when running freerouting, even though much faster. better fan, and better thermals.
+
+
+
+nixos
+  If nix configurations can be likened to distros, then I have the power to build an entire distribution from a single short command.
+  nixos = build your own distro.
+  nixos = meta distro.
+
+  amazing, zero cost installs. without root. just create shell. played with glxgears first time in 20 years. in 20 seconds.
+
+  everything in software is/has dependencies.
+    - firefox has extensions/add ons,
+    - vim has plugins,
+    - java has library dependencies, multiple incompatible management systems - maven, ant, gradle ,
+    - haskell, node, etc do too, all have transitive dependencies.
+    - kernel has drivers. proprietary / open/ free.
+    - git code has git/ git code submodules.
+
+    they're all managed with separate/independent systems.
+    dependency management is still the unsolved problem. nixos
+
+    containers/docker/flatpack. yet another approach.
+
+  nixos. "It's like Gentoo, but for adults".
+
+
+nixos = second order linux system. meta linux.  can be shaped into anything, with a single command and declaration.
+
+-------
+
+Asus Zephyrus G15, AMD 5900HS,
+https://askubuntu.com/questions/1317259/brightness-and-volume-control-not-working-on-ubuntu-20-04
+
+
+
+-----------
+ https://old.reddit.com/r/linuxhardware/comments/g2n8wn/asus_zephyrus_g14_the_first_few_hours_on_linux/
+
+
+----
+
+strange, after having a sleep, the keyboard lights are off, and screen is dim
+  because disconnected power after boot?
+  or maybe it is after installing?
+
+increased screen brightness.
+
+root@nixos:~$ echo 22 >  /sys/class/backlight/amdgpu_bl0/brightness
+root@nixos:~$ echo /sys/class/backlight/amdgpu_bl0/brightness
+/sys/class/backlight/amdgpu_bl0/brightness
+root@nixos:~$ cat /sys/class/backlight/amdgpu_bl0/brightness
+
+
+---------------
+
+use cases
+  - nothing should be able to read users mozilla session keys.c or ssh keys. or other private files.  except exempted processes, ssh, firefox.
+  - nothing should be able to call out. eg. typical trojan code. except ssh, git, firefox. etc.
+
+  Only option is trusted (ssh, firefox) and untrusted. software development. should be users.
+  and try to change permissions.
+
+search trojan. intrusion detection.
+  It's trivial to put a watch on ~/.ssh/id_rsa with auditd to detect trojan. but so hard to prevent access - with selinux or apparmor.
+
+=========================
+SELinux and AppArmor exist for prevention of trojan / rootkit and other
+infections. I tell the case for SELinux, which I know better. With SELinux
+enabled, you give a context to all the process (daemon included) you install on
+the machine. You also label the file system to work with the context, matching
+them. When a process tries to do something not within its context, you receive
+a message, and, if SELinux is in enforcing mode, the action cannot complete.
+This way, if your ircd trojan was willing to overwrite the ps command or
+something else (common strategy for trojans / rootkits / worms to avoid
+detection), i would not be allowed to do that. And you would be informed.  I
+knkow it's difficult to configure, but my machines are working with SELinux
+enforced right now, and my (two) Fedora laptops can do anything a desktop needs
+without too much hassle.  Even my home server is now in enforcing mode.
+Another strategy is a regular run of rootkit detectors which calculate a
+checksum for the cirtical commands, and inform you regarding changes in the
+basic commands.  I work with both the SELinux and the rkhunter enabled (plus a
+clamav antivirus).
+
+Regards
+=========================
+
+
+
+what we want is all access allowed. but blacklist some items.
+  but i dont think thats possible in apparmor for most processes which are unconfined.
+
+apparmor issues.
+  everythign runs unconfined.  it's not whether it's blacklist or whitelist first. its that there is no poliy.
+  and everything is process based.
+  path based mac.
+
+selinux.
+
+  Guy wants to limit internet to firefox - calling out.
+    https://old.reddit.com/r/linux/comments/5b25yv/between_apparmor_and_selinux_which_one_is_easier/
+
+
+
+
+  very good article - on need for whitelist. for both
+  https://security.stackexchange.com/questions/239436/linux-whitelist-based-mandatory-access-control-instead-of-a-blacklist-based-mode
+    actually think it may be incorrect.
+
+  "SELinux behaves the way you expect (white list). All access is denied by
+  default. The other three points you expect also apply to SELinux."
+
+  "SELinux uses a whitelist approach, meaning all access must be explicitly
+  allowed in policy in order to be granted. "
+
+  "SELinux is based upon the M4 computer language and therefore supports a
+  variety of macros to save time."
+
+  "SELinux is basically a whitelist for your entire system. AFAIK every file,
+  directory or process gets an additional SELinux label which act like control
+  lists."
+
+  apparmor is unconfined by default, but it seems you can lock everything down:
+  http://wiki.apparmor.net/index.php/FullSystemPolicy and then start whitelisting
+
+
+  cannot search on 'whitelist'
+  so the thing is how to whitelist everything - except a couple of dirs/files.
+
+  https://source.android.com/security/selinux/customize
+
+  100 canned tutorials on protecting services from reading files.
+
+
+--------------
+apparmor alternative
+  smack. but have to mount. and then it's attributes on files. not very good.
+
+  selinux config,
+  https://nixos.wiki/wiki/Workgroup:SELinux
+
+  Good selinux tutorial,
+  https://wiki.gentoo.org/wiki/SELinux/Tutorials/How_SELinux_controls_file_and_directory_accesses
+
+  https://opensource.com/article/18/7/sysadmin-guide-selinux
+
+
+smack alternative -
+
+  The Simplified Mandatory Access Control Kernel (Smack)
+
+  https://en.wikipedia.org/wiki/Smack_(software)
+
+  https://lwn.net/Articles/244531/
+
+  kernel LVM.
+
+  https://help.ubuntu.com/community/SmackConfiguration
+
+  uses ext4 extended attributes.
+
+  smack in nixos is something else,
+  https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/libraries/java/smack/default.nix
+
+
+------------------
+
+kernel syscall intercepting,
+
+https://kernelnewbies.org/FAQ/SyscallTrace
+
+doesn't work. hotpatch sys_call_table
+  what's good for rootkit - is also good for monitoring and denying trojans.
+
+https://www.programmersought.com/article/92585228350/
+  Linux hook kernel function
+
+https://www.oreilly.com/library/view/linux-device-drivers/0596000081/ch03s03.html
+  file operations.
+
+
+for 2.6 calls,
+
+  kernel patch export sys_call_table
+
+  defined here,
+    https://elixir.bootlin.com/linux/latest/source/arch/x86/entry/syscall_64.c#L20
+    ?
+
+  https://stackoverflow.com/questions/1586481/sys-call-table-in-linux-kernel-2-6-18
+
+
+  https://habr.com/en/post/437182/
+
+  kvm to get the kernel sys_call_table,
+  https://github.com/ultral/linux-keylogger
+
+  /nix/store/756m17qx5jdsxc4a5g7c3ib3qz286s0i-linux-5.4.119/lib/modules/5.4.119/kernel/kernel/kheaders.ko.xz
+
+
+  See here, example to export for 2.6
+  https://0x657573.wordpress.com/2010/11/30/fiddling-with-sys_call_table-in-linux-kernel-2-6-21-5/
+
+  ===
+
+  IMPORTANT,
+  another way to get access to sys_call_table from inside a kernel module,
+
+
+    see intercept_open.c
+    http://books.gigatux.nl/mirror/networksecuritytools/0596007949/networkst-CHP-7-SECT-2.html
+
+
+    and here,
+    https://stackoverflow.com/questions/59812156/how-can-i-override-a-system-call-table-entry-with-my-own-function
+
+    not must disable write protection. see examples
+
+
+    2019.
+      and another approach,
+      https://blog.trailofbits.com/2019/01/17/how-to-write-a-rootkit-without-really-trying/
+
+      OK.  So just need this kernel overide.
+      Of course, this only works if your Linux kernel was compiled with CONFIG_KALLSYMS=1.
+
+      GREAT!!.
+
+      Of course, this only works if your Linux kernel was compiled with
+      CONFIG_KALLSYMS=1. Debian and Ubuntu provide this, but you may need to test in
+      other distros.
+
+       cat /proc/kallsyms       <- whoot.
+
+      used in here, https://github.com/trailofbits/krf
+        Because it intercepts raw syscalls and not their libc wrappers, it can inject faults into calls made by syscall(3) or inline assembly.
+
+        It probably only works on x86(_64), since it twiddles cr0 manually.
+
+
+      searchable index,
+      https://filippo.io/linux-syscall-table/
+
+
+
+
+--------------
+
+WOW kernel hacking - unpacking kernel and building stuff - this looks good.
+
+  https://nixos.org/manual/nixos/stable/index.html#sec-linux-config-developing-modules
+  https://github.com/NixOS/nixpkgs/issues/14721
+  https://github.com/NixOS/nixpkgs/commit/2d6d731f246fa93ce89cac8bd4c78f45c15a38fe
+
+  root@aws3:~$ nix-build '<nixpkgs>' -A linuxPackages.kernel.dev
+  /nix/store/p1bdjjlj1y1cm2hdgr54ijxydkzxahvl-linux-5.4.119-dev
+
+  root@aws3:~$ ls /nix/store/p1bdjjlj1y1cm2hdgr54ijxydkzxahvl-linux-5.4.119-dev
+  lib  nix-support  vmlinux
+
+  root@aws3:~$ nix-shell '<nixpkgs>' -A linuxPackages.kernel
+  these paths will be fetched (0.04 MiB download, 0.21 MiB unpacked):
+    /nix/store/ly8yybbng510a3gcpak0pai9v18yh1xv-linux-config-5.4.119
+  copying path '/nix/store/ly8yybbng510a3gcpak0pai9v18yh1xv-linux-config-5.4.119' from 'https://cache.nixos.org'...
+
+  [nix-shell:~]# unpackPhase
+  unpacking source archive /nix/store/npzfn6z2bmfdlix0nmjyj7ln8fvxsc2a-linux-5.4.119.tar.xz
+  source root is linux-5.4.119
+  setting SOURCE_DATE_EPOCH to timestamp 1620978273 of file linux-5.4.119/virt/Makefile
+
+  [nix-shell:~]# ls
+  linux-5.4.119  ...
+
+  [nix-shell:~]# ls linux-5.4.119/
+  arch   certs   Documentation  fs       init  kernel  LICENSES  net      scripts   sound  usr   COPYING  Kbuild   MAINTAINERS  README
+  block  crypto  drivers        include  ipc   lib     mm        samples  security  tools  virt  CREDITS  Kconfig  Makefile
+
+  -----------
+
+  To compile the kernel, menu config etc.
+  https://nixos.wiki/wiki/Linux_kernel
+
+  $ nix-shell -E 'with import <nixpkgs> {}; linux.overrideAttrs (o: {nativeBuildInputs=o.nativeBuildInputs ++ [ pkg-config ncurses ];})'
+  [nix-shell] $ unpackPhase && cd linux-*
+  [nix-shell] $ patchPhase
+  [nix-shell] $ make menuconfig
+
+
