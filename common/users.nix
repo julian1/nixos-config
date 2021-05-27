@@ -22,18 +22,19 @@ with lib;
    { isNormalUser = true;
      home = "/home/me";
      description = "my description";
-     extraGroups = [ "me" "wheel" "networkmanager" ];
+     extraGroups = [ "me" "wheel" "networkmanager" "trusted" ];
      openssh.authorizedKeys.keys = [ pubkey ];
    };
 
 
+  # probably need a reboot to fix the group...
 
-  config.users.extraGroups.secure .gid = 1001;
-  config.users.extraUsers.secure =
+  config.users.extraGroups.trusted .gid = 1001;
+  config.users.extraUsers.trusted =
    { isNormalUser = true;
-     home = "/home/secure";
+     home = "/home/trusted";
      description = "my description";
-     extraGroups = [ "secure" "wheel" "networkmanager" ];
+     extraGroups = [ "trusted" "wheel" "networkmanager" "me" ];     # note add me.
      openssh.authorizedKeys.keys = [ pubkey ];
    };
 
