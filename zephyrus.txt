@@ -49,6 +49,7 @@ FAN
 
   
   ---------
+
   You can read a file like 
 
     /sys/class/drm/card0/device/hwmon/hwmon0/temp1_input
@@ -60,6 +61,19 @@ FAN
 
   to set the fan speed (as an 8-bit binary number, so 0 for fans completely off,
   up to 255 for fans completely on).
+    https://zarino.co.uk/post/amp-gpu-fan-curve-pop-os-ubuntu/
+
+
+  bios updater. windows.
+  https://rog.asus.com/laptops/rog-zephyrus/2021-rog-zephyrus-g15-series/helpdesk_bios
+   Version 407 2021/05/19 
+
+    we have, version 400 i think. according to lshw.
+
+    OK. think can do it by just copying onto a thumb drive.
+    ok. upgraded to 407. by copying into /boot 
+
+    seems a bit better
 
 
   But we don't have any pwm  fields...
