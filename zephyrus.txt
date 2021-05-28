@@ -51,7 +51,20 @@ WORKING
 
 -------------------
 FAN
-  
+
+  if got windows - then could at least test - power draw. 
+ 
+  use usb-C to power peltier - to cool the top?
+
+  laptop is using 33-e6W. according to external meter before AC adapter.  will cpu and gpu clocks down.
+  reboot, and normal clocks and 33-38W.  weird.
+    is nivida card using power.
+
+  ac adapter is relatively warm. really need to find out what power its drawing.
+  is the nvidia card
+
+
+  --------- 
   ok setting lower frequency does reduce power 20W -> 5W. albeit not any change in fan. 
   so something else is using power/ and generating heat?
 
@@ -67,6 +80,8 @@ FAN
 
     in windows - cannot control fan speed, in armory crate
       https://www.youtube.com/watch?v=RaD9L4IGVwY
+
+    55°C is normal for normal usage. My zephyrus M hits 95+ while gaming
 
 
   https://github.com/search?q=ga503&type=commits
@@ -214,6 +229,13 @@ FAN
   through enough into my Windows VM,
 
 
+  radeon
+    use radeon-profile 
+      performance 2100/1600Mhz   to low - 200/400Mhz battery.
+      on performance, then fan constantly runs.
+      
+      note. tabs along bottom. although fan control is greyed out.
+    
   nvidea
   RTX 3060
 
