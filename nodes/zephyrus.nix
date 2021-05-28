@@ -158,27 +158,36 @@ in
   #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable_460;
 
 
+  # This builds on master branch of nixpkgs, eg. pulls in nvidea 460
+  # nixos-rebuild build -I nixpkgs=/home/me/devel/nixpkgs/  switch
+  # <S-F12> 
+  # eg. incorporates,  nixos-rebuild build -I nixpkgs=/home/me/devel/nixpkgs/
+  services.xserver.videoDrivers = [ "nvidia" ];
   #services.xserver.videoDrivers = [ "modsetting" "nvidia" ];
 
   # we need this.
   # https://github.com/NixOS/nixpkgs/pull/116816
 
-#  hardware.nvidia.prime = {
-#    sync.enable = true;
+  # deprecated but might help
+  # https://old.reddit.com/r/NixOS/comments/kzrloo/powering_nvidia_card_on_and_off/
+  # hardware.bumblebee.enable = true;
+
+  hardware.nvidia.prime = {
+    sync.enable = true;
 #
 #    # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
-#    nvidiaBusId = "PCI:1:0:0";
+    nvidiaBusId = "PCI:1:0:0";
 ###
 ###    # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
 ###    intelBusId = "PCI:0:2:0";
 ##
 ##    # //  06:00.0
-##    #amdgpuBusId  = "PCI:6:0:0";
+    amdgpuBusId  = "PCI:6:0:0";
 ##
 #    #amdgpuBusId = "PCI:6:0:0";
 ##    package = config.boot.kernelPackages.nvidiaPackages.stable_460;
 #
-#  };
+  };
 
 
 
@@ -218,6 +227,7 @@ in
      xorg.xhost   # change persmissions, to permit other sessions
      # xrdb is installed by default
      # xclip   for copying into a shell
+     glxinfo
 
 
     ###############################
