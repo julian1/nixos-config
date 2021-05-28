@@ -187,7 +187,7 @@ in
      screen
      vim
      git
-     file
+     file tree
 
       #####
      xorg.xev      # for keycodes
@@ -199,10 +199,9 @@ in
 
     ###############################
     dmenu                    # A menu for use with xmonad
-    #haskellPackages.libmpd   # Shows MPD status in xmobar
     haskellPackages.xmobar   # A Minimalistic Text Based Status Bar
+    #haskellPackages.libmpd   # Shows MPD status in xmobar
     ###############################
-
 
     firefox
     evince
