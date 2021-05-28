@@ -41,6 +41,9 @@ in
       /root/nixos-config/common/dotfiles.nix
     ];
 
+  #OK. nvidia does compile against non latest. but xorg won't start.
+  # against non latest kernel.
+
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Use the systemd-boot EFI boot loader.
@@ -144,17 +147,25 @@ in
   # services.xserver.videoDrivers = [ "nvidia" ];
 
 
-#  # Example for NixOS 20.09/unstable
-#  services.xserver.videoDrivers = [ "nvidia" ];
-#
+  # Example for NixOS 20.09/unstable
+  # build fails against recent 5.11.21 kernel. missing asm/kmap_types.h:
+  #services.xserver.videoDrivers = [ "modsetting" "nvidia" ];
+
 #  hardware.nvidia.prime = {
 #    sync.enable = true;
 #
 #    # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
 #    nvidiaBusId = "PCI:1:0:0";
+##
+##    # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
+##    intelBusId = "PCI:0:2:0";
 #
-#    # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
-#    intelBusId = "PCI:0:2:0";
+#    # //  06:00.0
+#    #amdgpuBusId  = "PCI:6:0:0";
+#
+#    amdgpuBusId = "PCI:6:0:0";
+#
+#
 #  };
 
 
@@ -218,6 +229,7 @@ in
     lm_sensors
     lshw
     pciutils
+    # radeon-profile gui app. works.
 
   ];
 
