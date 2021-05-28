@@ -41,23 +41,52 @@ how to deal with scripts and no bash,
   env
 
 WORKING
-  trackpad, keyboard, sound. display . super quick.
+  ga503 in linux  trackpad, keyboard, sound. display, brightness, super quick. great.
+  stiff, and rugged.
+  thermals very good, fans smooth quiet and effective under load.
+  but have fan cycling under no load.
+
+
 
 
 -------------------
 FAN
-
   
+  ok setting lower frequency does reduce power 20W -> 5W. albeit not any change in fan. 
+  so something else is using power/ and generating heat?
+
+  -------
+  issue is fans cycling
+  
+  in windows its ok,
+
+    "Actually whats amazing about this laptop over the G14 is they auto turn off
+    :) Super awesome, because the G14 did not let them turn off. So if your in
+    silent mode and working, they stay off automatically. I feel like Asus is
+    actually listening to people haha."
+
+    in windows - cannot control fan speed, in armory crate
+      https://www.youtube.com/watch?v=RaD9L4IGVwY
+
+
+  https://github.com/search?q=ga503&type=commits
+
+  ----
+
+  Run windows in VM and armory crate. to adjust curves?
+    VM is likely to prevent access.
+
+
   ---------
 
-  You can read a file like 
+  You can read a file like
 
     /sys/class/drm/card0/device/hwmon/hwmon0/temp1_input
 
   to find out the GPU’s current temperature (in millidegrees Celsius, eg: 51000
   for 51°C), and you can write a number to a file like
 
-  /sys/class/drm/card0/device/hwmon/hwmon0/pwm1 
+  /sys/class/drm/card0/device/hwmon/hwmon0/pwm1
 
   to set the fan speed (as an 8-bit binary number, so 0 for fans completely off,
   up to 255 for fans completely on).
@@ -66,22 +95,19 @@ FAN
 
   bios updater. windows.
   https://rog.asus.com/laptops/rog-zephyrus/2021-rog-zephyrus-g15-series/helpdesk_bios
-   Version 407 2021/05/19 
+   Version 407 2021/05/19
 
     we have, version 400 i think. according to lshw.
 
-    OK. think can do it by just copying onto a thumb drive.
-    ok. upgraded to 407. by copying into /boot 
-
-    seems a bit better
-
+    - while in linux, copy to /boot which is the efi boot partition.
+    and then reboot go into bios, and update
 
   But we don't have any pwm  fields...
   ---------
 
   should try disabling, gpu in bios.
 
-  # enabling cpus on / off 
+  # enabling cpus on / off
   # doesn't seem to affect fan - eg. same workload gets distributed
     root@zephyrus:~/nixos-config$ echo 0 >  /sys/devices/system/cpu/cpu3/online
     root@zephyrus:~/nixos-config$ cat /sys/devices/system/cpu/cpu3/online
@@ -105,9 +131,21 @@ FAN
   cpupower doc, very good and powerful
     https://documentation.suse.com/sled/15-SP1/html/SLED-all/cha-tuning-power.html
 
+  ========================
   cpupower frequency-set -u 1.2GHz
+  
+  OK. this did not change fan but did change power, from 20W to 5-6W.
 
-  this works eg. 
+      $ sensors
+    amdgpu-pci-0600
+    Adapter: PCI adapter
+    vddgfx:      731.00 mV 
+    vddnb:       924.00 mV 
+    edge:         +54.0°C  
+    power1:        5.00 W
+  ========================
+
+  this works eg.
   # cat /proc/cpuinfo  | grep MH
   cpu MHz         : 1200.000
   cpu MHz         : 1200.000
@@ -144,17 +182,17 @@ FAN
 
   # found this,
   # ok. this is weird. turned off, then hard on.
-  # echo 1 >    /sys/devices/platform/asus-nb-wmi/hwmon/hwmon4/device/throttle_thermal_policy 
+  # echo 1 >    /sys/devices/platform/asus-nb-wmi/hwmon/hwmon4/device/throttle_thermal_policy
   default is 2.
   0  turns off fans....  think only bbecause run after fans run at full. but maybe less.  *think its less*
-  2  turns on again. 
+  2  turns on again.
 
   0 definitely seems less.
 
   Instead of manually controlling fan speed using asus-nb-wmi, it is also
   possible to set the thermal throttling policy to have a more or less aggressive
   fan control policy. Possible values are 0 (default), 1 (overboost) and 2
-  (silent). 
+  (silent).
 
   # temp of amdgpu graphics, and other stuff. eg. 54000 = 54 degC.
   cat /sys/class/drm/card0/device/hwmon/hwmon6/temp1_inpu
@@ -173,19 +211,33 @@ FAN
 
   function called nvidia-run, that will offload the graphics rendering to the
   Nvidia card for any gaming or rendering workloads I have. I also pass it
-  through enough into my Windows VM, 
+  through enough into my Windows VM,
 
+
+  nvidea
+  RTX 3060
+
+    nvidia blocks nouveau from working properly, since they a) require firmware
+    generated from nvidia. And b) refuse to let at least their firmware be
+    distributed by e.g. the linux-firmware.  Anything newer than the 700 series of
+    nvidia isn't working properly anymore on nouveau. So the additional limitations
+    won't change anything.
+
+      https://old.reddit.com/r/linux/comments/lo5pwg/will_nvidias_cryptocurrency_limiter_interfere/
+
+      root@zephyrus:~$ dmesg | grep -i chipset.
+      [Fri May 28 09:38:32 2021] nouveau 0000:01:00.0: unknown chipset (b76000a1)
 
   =====================
   COULD TRY gluing bottom copper strip. and using thermal glue?
 
-  # using sensors 
+  # using sensors
   sensors | grep -A5 amdgpu
   amdgpu-pci-0600
   Adapter: PCI adapter
-  vddgfx:        1.44 V  
-  vddnb:       924.00 mV 
-  edge:         +55.0°C  
+  vddgfx:        1.44 V
+  vddnb:       924.00 mV
+  edge:         +55.0°C
   power1:       20.00 W   <- too much??
 
 
@@ -202,8 +254,8 @@ FAN
 
   GPU Temperature: 55 C
 
-  GA503 
-  GA503Q 
+  GA503
+  GA503Q
 
 
 
@@ -211,32 +263,32 @@ FAN
   directory /sys/class is exported by the kernel at run time, exposing the
   hierarchy of the hardware through sysfs.
 
-  might be useful, 
+  might be useful,
     https://github.com/dominiksalvet/asus-fan-control
-    no. should be able to do stuff - with kernel interffacces 
+    no. should be able to do stuff - with kernel interffacces
 
   $ uname -a
   Linux zephyrus 5.11.21 #1-NixOS SMP Fri May 14 08:50:20 UTC 2021 x86_64 GNU/Linux
 
-  $ cat /sys/class/drm/card0/device/hwmon/hwmon6/name 
+  $ cat /sys/class/drm/card0/device/hwmon/hwmon6/name
   amdgpu
 
-  root@zephyrus:~$ cat /sys/class/drm/card0/device/hwmon/hwmon6/temp1_input 
+  root@zephyrus:~$ cat /sys/class/drm/card0/device/hwmon/hwmon6/temp1_input
   55000
   54000
   etc
 
-  root@zephyrus:~$ cat /sys/class/drm/card0/device/hwmon/hwmon6/temp1_label 
+  root@zephyrus:~$ cat /sys/class/drm/card0/device/hwmon/hwmon6/temp1_label
   edge
 
   ===================
-  Ok. monitoring shows gpu at 55C. 
-  and the input says 55C. so that's probably the threshold for turning on. 
+  Ok. monitoring shows gpu at 55C.
+  and the input says 55C. so that's probably the threshold for turning on.
   ===================
 
 
   # eg. 11 watts.
-  $ cat /sys/class/drm/card0/device/hwmon/hwmon6/power1_average 
+  $ cat /sys/class/drm/card0/device/hwmon/hwmon6/power1_average
   11000000
 
   for i in $( find  /sys/class/drm/card0/device/hwmon/hwmon6/ -type f) ; do echo $i; cat $i; done
@@ -246,14 +298,14 @@ FAN
   maybe have to try and get nvidia card to work
   -----------
 
-  turned off all cores except two. and then limited cpufreq to lowest possible. confirm in top. no change in fan behavior. 
+  turned off all cores except two. and then limited cpufreq to lowest possible. confirm in top. no change in fan behavior.
 
   nvida drivers don't build against latest kernel. that's ok. the amd ok.
 
   looking at amdgpu with sensors, shows it's drawing 20W, and 12W average
 
-  I can find ways to turn the fan up, 
-  but no way to 
+  I can find ways to turn the fan up,
+  but no way to
 
 
 ===============================
@@ -310,6 +362,9 @@ https://askubuntu.com/questions/1317259/brightness-and-volume-control-not-workin
 
 
 ----
+BRIGHTNESS
+  - ok. i think when it goes into screensaver - for a while it might diminish
+      eg. after cooking dinner.
 
 strange, after having a sleep, the keyboard lights are off, and screen is dim
   because disconnected power after boot?
