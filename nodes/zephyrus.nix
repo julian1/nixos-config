@@ -141,6 +141,7 @@ in
 
   nixpkgs.config.allowUnfree = true;
 
+  ############################################
   # JA
   # fails to build. may 28, 2021 
   # https://discourse.nixos.org/t/nixos-config-build-failes-with-latest-kernel/12273
@@ -149,22 +150,33 @@ in
 
   # Example for NixOS 20.09/unstable
   # build fails against recent 5.11.21 kernel. missing asm/kmap_types.h:
+  # report.  https://www.linuxtoday.com/developer/nvidia-460.67-graphics-driver-released-with-better-support-for-linux-5.11-bug-fixes-210318111002.html
+  # we need,  NVIDIA 460.67 
+
+  #   version = "460.73.01"; 
+  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable_390;
+  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable_460;
+
+
   #services.xserver.videoDrivers = [ "modsetting" "nvidia" ];
+
+  # we need this.
+  # https://github.com/NixOS/nixpkgs/pull/116816
 
 #  hardware.nvidia.prime = {
 #    sync.enable = true;
 #
 #    # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
 #    nvidiaBusId = "PCI:1:0:0";
+###
+###    # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
+###    intelBusId = "PCI:0:2:0";
 ##
-##    # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
-##    intelBusId = "PCI:0:2:0";
-#
-#    # //  06:00.0
-#    #amdgpuBusId  = "PCI:6:0:0";
-#
-#    amdgpuBusId = "PCI:6:0:0";
-#
+##    # //  06:00.0
+##    #amdgpuBusId  = "PCI:6:0:0";
+##
+#    #amdgpuBusId = "PCI:6:0:0";
+##    package = config.boot.kernelPackages.nvidiaPackages.stable_460;
 #
 #  };
 
