@@ -28,6 +28,16 @@
     let myXResources = pkgs.writeText "xresources" ''
       XTerm*selectToClipboard: true
     '';
+  in
+ 
+let
+  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
+    export __NV_PRIME_RENDER_OFFLOAD=1
+    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
+    export __GLX_VENDOR_LIBRARY_NAME=nvidia
+    export __VK_LAYER_NV_optimus=NVIDIA_only
+    exec -a "$0" "$@"
+  '';
 in
 
 
@@ -141,6 +151,24 @@ in
 
   nixpkgs.config.allowUnfree = true;
 
+
+
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia.prime = {
+    offload.enable = true;
+
+    # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
+    #intelBusId = "PCI:0:2:0";
+
+    # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
+    #nvidiaBusId = "PCI:1:0:0";
+
+    nvidiaBusId = "PCI:1:0:0";
+#   # //  06:00.0
+    amdgpuBusId  = "PCI:6:0:0";
+
+  };
+
   ############################################
   # JA
   # fails to build. may 28, 2021 
@@ -162,8 +190,8 @@ in
   # nixos-rebuild build -I nixpkgs=/home/me/devel/nixpkgs/  switch
   # <S-F12> 
   # eg. incorporates,  nixos-rebuild build -I nixpkgs=/home/me/devel/nixpkgs/
-  services.xserver.videoDrivers = [ "nvidia" ];
-  #services.xserver.videoDrivers = [ "modsetting" "nvidia" ];
+  # services.xserver.videoDrivers = [ "nvidia" ];
+  # services.xserver.videoDrivers = [ "modsetting" "nvidia" ];
 
   # we need this.
   # https://github.com/NixOS/nixpkgs/pull/116816
@@ -172,22 +200,15 @@ in
   # https://old.reddit.com/r/NixOS/comments/kzrloo/powering_nvidia_card_on_and_off/
   # hardware.bumblebee.enable = true;
 
-  hardware.nvidia.prime = {
-    sync.enable = true;
+#  hardware.nvidia.prime = {
+#    sync.enable = true;
 #
 #    # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
-    nvidiaBusId = "PCI:1:0:0";
-###
-###    # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
-###    intelBusId = "PCI:0:2:0";
-##
-##    # //  06:00.0
-    amdgpuBusId  = "PCI:6:0:0";
-##
-#    #amdgpuBusId = "PCI:6:0:0";
-##    package = config.boot.kernelPackages.nvidiaPackages.stable_460;
+#    nvidiaBusId = "PCI:1:0:0";
+#   # //  06:00.0
+#    amdgpuBusId  = "PCI:6:0:0";
 #
-  };
+#  };
 
 
 
@@ -228,6 +249,7 @@ in
      # xrdb is installed by default
      # xclip   for copying into a shell
      glxinfo
+     nvidia-offload
 
 
     ###############################
