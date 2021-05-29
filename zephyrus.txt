@@ -361,17 +361,17 @@ FAN.
   issue is that xorg starts, and no errors. but does not display properly.  solved by using an offload configuration.
 
   # must use against master, to pick up latest nvidia driver, othewise compile bugs with latest kernel needed for other stuff.
-  nixos-rebuild build -I nixpkgs=/home/me/devel/nixpkgs/ switch 
+  nixos-rebuild build -I nixpkgs=/home/me/devel/nixpkgs/ switch
 
   rtx 3060
-  ----------- 
+  -----------
 
   Yes. got it. drawing 20W but using amd gpu.
-  but nvidia drivers are loaded.  
+  but nvidia drivers are loaded.
 
-  ACTUALLY looks like offload works...!!!. although there's 
-  
+  ACTUALLY looks like offload works...!!!. it glxinfo sees NVIDIA whether offload runs or not.
 
+  # eg. reports nvivia
   me@zephyrus:~$ nvidia-offload glxinfo | grep NVI
   server glx vendor string: NVIDIA Corporation
   client glx vendor string: NVIDIA Corporation
@@ -383,9 +383,11 @@ FAN.
   OpenGL ES profile version string: OpenGL ES 3.2 NVIDIA 460.73.01
 
   me@zephyrus:~$ glxinfo | grep NVI
-  me@zephyrus:~$ 
+  me@zephyrus:~$
 
-  ----------- 
+  note frame rate - appears to be display frame rate. eg. 145fps = 144Hz of screen presumably.
+
+  -----------
   git log. this is revision.
 
   commit 881ebaacf820f728f4814ae0782ffcbe3c495239 (HEAD -> master, origin/master, origin/HEAD)
@@ -394,10 +396,11 @@ FAN.
   Date:   Fri May 28 18:25:05 2021 -0400
 
       Merge pull request #124749 from mnacamura/feedgnuplot
-      
+
       feedgnuplot: fix perl shebang and bump version
 
-
+  me@zephyrus:~/devel/nixpkgs$ uname -a
+  Linux zephyrus 5.11.22 #1-NixOS SMP Wed May 19 08:30:06 UTC 2021 x86_64 GNU/Linux
 
 
 
@@ -408,8 +411,8 @@ FAN.
 FAN OLD
 -------------------
 
-  if got windows - then could at least test - power draw. 
- 
+  if got windows - then could at least test - power draw.
+
   use usb-C to power peltier - to cool the top?
 
   laptop is using 33-e6W. according to external meter before AC adapter.  will cpu and gpu clocks down.
@@ -420,13 +423,13 @@ FAN OLD
   is the nvidia card
 
 
-  --------- 
-  ok setting lower frequency does reduce power 20W -> 5W. albeit not any change in fan. 
+  ---------
+  ok setting lower frequency does reduce power 20W -> 5W. albeit not any change in fan.
   so something else is using power/ and generating heat?
 
   -------
   issue is fans cycling
-  
+
   in windows its ok,
 
     "Actually whats amazing about this laptop over the G14 is they auto turn off
@@ -504,15 +507,15 @@ FAN OLD
 
   ========================
   cpupower frequency-set -u 1.2GHz
-  
+
   OK. this did not change fan but did change power, from 20W to 5-6W.
 
       $ sensors
     amdgpu-pci-0600
     Adapter: PCI adapter
-    vddgfx:      731.00 mV 
-    vddnb:       924.00 mV 
-    edge:         +54.0°C  
+    vddgfx:      731.00 mV
+    vddnb:       924.00 mV
+    edge:         +54.0°C
     power1:        5.00 W
   ========================
 
@@ -586,12 +589,12 @@ FAN OLD
 
 
   radeon
-    use radeon-profile 
+    use radeon-profile
       performance 2100/1600Mhz   to low - 200/400Mhz battery.
       on performance, then fan constantly runs.
-      
+
       note. tabs along bottom. although fan control is greyed out.
-    
+
   nvidea
   RTX 3060
 
