@@ -1,3 +1,8 @@
+/*
+  must use master branch of pkgs, for latest nvidia driver.
+
+   nixos-rebuild build -I nixpkgs=/home/me/devel/nixpkgs/ switch
+*/
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
@@ -29,7 +34,7 @@
       XTerm*selectToClipboard: true
     '';
   in
- 
+
 let
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
     export __NV_PRIME_RENDER_OFFLOAD=1
@@ -171,7 +176,7 @@ in
 
   ############################################
   # JA
-  # fails to build. may 28, 2021 
+  # fails to build. may 28, 2021
   # https://discourse.nixos.org/t/nixos-config-build-failes-with-latest-kernel/12273
   # services.xserver.videoDrivers = [ "nvidia" ];
 
@@ -179,16 +184,16 @@ in
   # Example for NixOS 20.09/unstable
   # build fails against recent 5.11.21 kernel. missing asm/kmap_types.h:
   # report.  https://www.linuxtoday.com/developer/nvidia-460.67-graphics-driver-released-with-better-support-for-linux-5.11-bug-fixes-210318111002.html
-  # we need,  NVIDIA 460.67 
+  # we need,  NVIDIA 460.67
 
-  #   version = "460.73.01"; 
+  #   version = "460.73.01";
   # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable_390;
   #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable_460;
 
 
   # This builds on master branch of nixpkgs, eg. pulls in nvidea 460
   # nixos-rebuild build -I nixpkgs=/home/me/devel/nixpkgs/  switch
-  # <S-F12> 
+  # <S-F12>
   # eg. incorporates,  nixos-rebuild build -I nixpkgs=/home/me/devel/nixpkgs/
   # services.xserver.videoDrivers = [ "nvidia" ];
   # services.xserver.videoDrivers = [ "modsetting" "nvidia" ];
@@ -269,7 +274,7 @@ in
     #
 
     # can remove later
-    linuxPackages.cpupower 
+    linuxPackages.cpupower
     lm_sensors
     lshw
     pciutils
