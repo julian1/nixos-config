@@ -634,3 +634,20 @@ WOW kernel hacking - unpacking kernel and building stuff - this looks good.
   [nix-shell] $ make menuconfig
 
 
+-------------------------
+
+  OK.  fan issue is the nvidia card. which sucks power. even when not configured.
+  if use nvida drivers power goes 33W -> 20W and even 15W .
+
+  issue is that xorg starts, and no errors. but does not display properly.  
+
+  rtx 3060
+  ----------- 
+
+  Yes. got it. drawing 20W but using amd gpu.
+  but nvidia drivers are loaded.  
+  
+
+
+
+
