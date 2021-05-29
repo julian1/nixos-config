@@ -371,19 +371,16 @@ FAN.
 
   ACTUALLY looks like offload works...!!!. it glxinfo sees NVIDIA whether offload runs or not.
 
-  # eg. reports nvivia
-  me@zephyrus:~$ nvidia-offload glxinfo | grep NVI
+  me@zephyrus:~/devel/nixpkgs$ glxinfo | grep -i vendor
+  server glx vendor string: SGI
+  client glx vendor string: Mesa Project and SGI
+      Vendor: AMD (0x1002)
+  OpenGL vendor string: AMD
+
+  me@zephyrus:~/devel/nixpkgs$ nvidia-offload glxinfo | grep -i vendor
   server glx vendor string: NVIDIA Corporation
   client glx vendor string: NVIDIA Corporation
   OpenGL vendor string: NVIDIA Corporation
-  OpenGL core profile version string: 4.6.0 NVIDIA 460.73.01
-  OpenGL core profile shading language version string: 4.60 NVIDIA
-  OpenGL version string: 4.6.0 NVIDIA 460.73.01
-  OpenGL shading language version string: 4.60 NVIDIA
-  OpenGL ES profile version string: OpenGL ES 3.2 NVIDIA 460.73.01
-
-  me@zephyrus:~$ glxinfo | grep NVI
-  me@zephyrus:~$
 
   note frame rate - appears to be display frame rate. eg. 145fps = 144Hz of screen presumably.
 
