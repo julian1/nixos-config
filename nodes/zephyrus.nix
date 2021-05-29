@@ -1,5 +1,6 @@
 /*
   must use master branch of pkgs, for latest nvidia driver.
+  commit 881ebaacf820f72
 
    nixos-rebuild build -I nixpkgs=/home/me/devel/nixpkgs/ switch
 */
