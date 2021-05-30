@@ -47,12 +47,19 @@ WORKING
   but have fan cycling under no load.
 
 
-
+pcbway weekend. fri mon, 26% 73%. 
 
 ===============================
 -----------------------
 
 kicad
+
+  Using local nixpkgs version,
+
+  nix-shell -p kicad  -I nixpkgs=/home/me/devel/nixpkgs/
+
+    - note that the 3d viewer works in this version.
+
   setting hotkey for leave sheet to f3 works very well with f1 and f2 for zoom/unzoom.
 
   can plot pcb to pdf. to check footprint size.
