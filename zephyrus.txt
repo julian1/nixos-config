@@ -46,9 +46,6 @@ WORKING
   thermals very good, fans smooth quiet and effective under load.
   but have fan cycling under no load.
 
-
-pcbway weekend. fri mon, 26% 73%. 
-
 ===============================
 -----------------------
 
@@ -74,6 +71,12 @@ laptop zephyrus
 
 
 nixos
+  pkg overlays,
+    https://old.reddit.com/r/NixOS/comments/nok2wj/when_will_nixpkgs_master_be_brought_to/h033rgl/
+
+    ie. run more recent version in configuration.
+
+  ---------
   If nix configurations can be likened to distros, then I have the power to build an entire distribution from a single short command.
   nixos = build your own distro.
   nixos = meta distro.
