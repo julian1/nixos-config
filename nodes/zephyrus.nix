@@ -1,44 +1,14 @@
+/*
+  must use master branch of pkgs, for latest nvidia driver.
+  commit 881ebaacf820f72
+
+   nixos-rebuild build -I nixpkgs=/home/me/devel/nixpkgs/ switch
+*/
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
-   # JA
-  let
-    myCustomLayout = pkgs.writeText "xkb-layout" ''
-      ! Map umlauts to RIGHT ALT + <key>
-
-      keycode 96 = Insert Insert
-
-      !keysym e = e E EuroSign
-      !keysym c = c C cent
-      !keysym a = a A adiaeresis Adiaeresis
-      !keysym o = o O odiaeresis Odiaeresis
-      !keysym u = u U udiaeresis Udiaeresis
-      !keysym s = s S ssharp
-
-      ! disable capslock
-      ! remove Lock = Caps_Lock
-    '';
-
-
-  # this doesn't work. need to copy Xresources to $HOME
-  in
-    let myXResources = pkgs.writeText "xresources" ''
-      XTerm*selectToClipboard: true
-    '';
-  in
-
-let
-  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
-    export __NV_PRIME_RENDER_OFFLOAD=1
-    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
-    export __GLX_VENDOR_LIBRARY_NAME=nvidia
-    export __VK_LAYER_NV_optimus=NVIDIA_only
-    exec -a "$0" "$@"
-  '';
-in
 
 
 {
@@ -160,7 +130,31 @@ in
     displayManager.defaultSession = "none+xmonad";
   };
 
-  services.xserver.displayManager.sessionCommands = ''
+  services.xserver.displayManager.sessionCommands =
+     # JA
+    let
+      myCustomLayout = pkgs.writeText "xkb-layout" ''
+        ! Map umlauts to RIGHT ALT + <key>
+
+        keycode 96 = Insert Insert
+
+        !keysym e = e E EuroSign
+        !keysym c = c C cent
+        !keysym a = a A adiaeresis Adiaeresis
+        !keysym o = o O odiaeresis Odiaeresis
+        !keysym u = u U udiaeresis Udiaeresis
+        !keysym s = s S ssharp
+
+        ! disable capslock
+        ! remove Lock = Caps_Lock
+      '';
+    # this doesn't work. need to copy Xresources to $HOME
+    in
+      let myXResources = pkgs.writeText "xresources" ''
+        XTerm*selectToClipboard: true
+      '';
+    in
+  ''
 
     ${pkgs.xorg.xrdb}/bin/xrdb --merge ${myXResources};
 
@@ -263,7 +257,19 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   # JA
-  environment.systemPackages = with pkgs; [
+
+
+  environment.systemPackages = with pkgs;
+    let
+      nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
+        export __NV_PRIME_RENDER_OFFLOAD=1
+        export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
+        export __GLX_VENDOR_LIBRARY_NAME=nvidia
+        export __VK_LAYER_NV_optimus=NVIDIA_only
+        exec -a "$0" "$@"
+      '';
+    in
+  [
      wpa_supplicant
      screen
      vim
@@ -289,7 +295,6 @@ in
     firefox
     evince
     thunderbird
-    # hexchat
     feh
     openssl     # backup/restore
     zip  unzip
