@@ -290,6 +290,7 @@
     dmenu                    # A menu for use with xmonad
     haskellPackages.xmobar   # A Minimalistic Text Based Status Bar
     #haskellPackages.libmpd   # Shows MPD status in xmobar
+    xtrlock-pam
     ###############################
 
     firefox
