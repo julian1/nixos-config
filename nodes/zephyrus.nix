@@ -116,6 +116,34 @@ in
   #   keyMap = "us";
   # };
 
+
+
+  services.udev = {
+      extraRules = ''
+        # SUBSYSTEM=="usb", ACTION=="add|remove", ENV{ID_VENDOR}=="Lenovo", ENV{ID_MODEL}=="Lenovo_ThinkPad_Dock", RUN+="${pkgs.bash}/bin/bash /home/hoodoo/.local/bin/dock_handler.sh"
+
+        # JA old. from ansible.
+        # thumb drive?
+        # SUBSYSTEM=="block", ATTRS{idVendor}=="058f", ATTRS{idProduct}=="6387", MODE="0666", OWNER="me"
+
+        # JA ftdi
+        # https://stackoverflow.com/questions/36633819/iceprog-cant-find-ice-ftdi-usb-device-linux-permission-issue
+        # ACTION=="add", ATTR{idVendor}=="0403", ATTR{idProduct}=="6010", MODE:="666", OWNER="me"
+
+
+        # doesn't appear to be needed for ftdi.
+        # Bus 001 Device 039: ID 0403:6001 Future Technology Devices International, Ltd FT232 Serial (UART) IC
+        # ACTION=="add", ATTR{idVendor}=="0403", ATTR{idProduct}=="6001", MODE:="666", OWNER="me"
+
+        # Bus 001 Device 040: ID 0403:6014 Future Technology Devices International, Ltd FT232H Single HS USB-UART/FIFO IC
+        ACTION=="add", ATTR{idVendor}=="0403", ATTR{idProduct}=="6014", MODE:="666", OWNER="me"
+
+      '';
+  };
+
+
+
+  ###############################################
   # Enable the X11 windowing system.
   # JA
   services.xserver.enable = true;
@@ -279,6 +307,7 @@ in
     lm_sensors
     lshw
     pciutils
+    usbutils
     # radeon-profile gui app. works.
 
   ];
