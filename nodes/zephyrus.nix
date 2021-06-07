@@ -1,9 +1,3 @@
-/*
-  must use master branch of pkgs, for latest nvidia driver.
-  commit 881ebaacf820f72
-
-   nixos-rebuild build -I nixpkgs=/home/me/devel/nixpkgs/ switch
-*/
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
@@ -295,6 +289,7 @@ in
     firefox
     evince
     thunderbird
+    # hexchat
     feh
     openssl     # backup/restore
     zip  unzip

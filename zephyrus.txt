@@ -46,13 +46,17 @@ WORKING
   thermals very good, fans smooth quiet and effective under load.
   but have fan cycling under no load.
 
-
-
-
 ===============================
 -----------------------
 
 kicad
+
+  Using local nixpkgs version,
+
+  nix-shell -p kicad  -I nixpkgs=/home/me/devel/nixpkgs/
+
+    - note that the 3d viewer works in this version.
+
   setting hotkey for leave sheet to f3 works very well with f1 and f2 for zoom/unzoom.
 
   can plot pcb to pdf. to check footprint size.
@@ -67,6 +71,12 @@ laptop zephyrus
 
 
 nixos
+  pkg overlays,
+    https://old.reddit.com/r/NixOS/comments/nok2wj/when_will_nixpkgs_master_be_brought_to/h033rgl/
+
+    ie. run more recent version in configuration.
+
+  ---------
   If nix configurations can be likened to distros, then I have the power to build an entire distribution from a single short command.
   nixos = build your own distro.
   nixos = meta distro.
