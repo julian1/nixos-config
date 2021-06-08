@@ -258,6 +258,7 @@
   # $ nix search wget
   # JA
 
+  environment.shellAliases = { xtrlock = "xtrlock-pam"; };
 
   environment.systemPackages = with pkgs;
     let
@@ -268,6 +269,9 @@
         export __VK_LAYER_NV_optimus=NVIDIA_only
         exec -a "$0" "$@"
       '';
+
+
+      xtrlock = pkgs.writeShellScriptBin "xtrlock" "exec -a $0 ${xtrlock-pam}/bin/xtrlock-pam $@";
     in
   [
      wpa_supplicant
@@ -291,6 +295,7 @@
     haskellPackages.xmobar   # A Minimalistic Text Based Status Bar
     #haskellPackages.libmpd   # Shows MPD status in xmobar
     xtrlock-pam
+    xtrlock
     ###############################
 
     firefox
