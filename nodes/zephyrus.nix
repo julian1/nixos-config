@@ -93,10 +93,15 @@
        
         # for /dev/ttyUSB0 eg. usb to uart, use group 'dialout'. changing device ownwer doesn't appear to work.  
 
-        # ice40 / fpga
+        # ice40 / fpga works!
         # https://stackoverflow.com/questions/36633819/iceprog-cant-find-ice-ftdi-usb-device-linux-permission-issue
         # Bus 001 Device 040: ID 0403:6014 Future Technology Devices International, Ltd FT232H Single HS USB-UART/FIFO IC
         ACTION=="add", ATTR{idVendor}=="0403", ATTR{idProduct}=="6014", MODE:="666", OWNER="me"
+
+
+        # stlink works!
+        ACTION=="add", ATTR{idVendor}=="0483", ATTR{idProduct}=="3748", MODE:="666", OWNER="me"
+
 
       '';
   };
