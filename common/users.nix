@@ -17,12 +17,14 @@ with lib;
   config.users.extraUsers.root.openssh.authorizedKeys.keys = [ pubkey ];
 
 
+  # need to restart Xorg to get effect.
+
   config.users.extraGroups.me.gid = 1000;
   config.users.extraUsers.me =
    { isNormalUser = true;
      home = "/home/me";
      description = "my description";
-     extraGroups = [ "me" "wheel" "networkmanager" "trusted" ];
+     extraGroups = [ "me" "wheel" "networkmanager"  "dialout" ];
      openssh.authorizedKeys.keys = [ pubkey ];
    };
 

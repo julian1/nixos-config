@@ -90,15 +90,11 @@
         # thumb drive?
         # SUBSYSTEM=="block", ATTRS{idVendor}=="058f", ATTRS{idProduct}=="6387", MODE="0666", OWNER="me"
 
-        # JA ftdi
+       
+        # for /dev/ttyUSB0 eg. usb to uart, use group 'dialout'. changing device ownwer doesn't appear to work.  
+
+        # ice40 / fpga
         # https://stackoverflow.com/questions/36633819/iceprog-cant-find-ice-ftdi-usb-device-linux-permission-issue
-        # ACTION=="add", ATTR{idVendor}=="0403", ATTR{idProduct}=="6010", MODE:="666", OWNER="me"
-
-
-        # doesn't appear to be needed for ftdi.
-        # Bus 001 Device 039: ID 0403:6001 Future Technology Devices International, Ltd FT232 Serial (UART) IC
-        # ACTION=="add", ATTR{idVendor}=="0403", ATTR{idProduct}=="6001", MODE:="666", OWNER="me"
-
         # Bus 001 Device 040: ID 0403:6014 Future Technology Devices International, Ltd FT232H Single HS USB-UART/FIFO IC
         ACTION=="add", ATTR{idVendor}=="0403", ATTR{idProduct}=="6014", MODE:="666", OWNER="me"
 
@@ -258,7 +254,8 @@
   # $ nix search wget
   # JA
 
-  environment.shellAliases = { xtrlock = "xtrlock-pam"; };
+  # neat
+  # environment.shellAliases = { xtrlock = "xtrlock-pam"; };
 
   environment.systemPackages = with pkgs;
     let
@@ -270,7 +267,7 @@
         exec -a "$0" "$@"
       '';
 
-
+      # can store.../ xtrlock-pam be referenced before use?
       xtrlock = pkgs.writeShellScriptBin "xtrlock" "exec -a $0 ${xtrlock-pam}/bin/xtrlock-pam $@";
     in
   [
