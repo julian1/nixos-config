@@ -1,5 +1,11 @@
 
 
+speaker issue.
+  mechanical fix - using tape.
+  1mm foam tape.
+  several people saying did not work.
+  https://www.reddit.com/r/ZephyrusG15/comments/m4ul7y/permanently_fixed_2021_asus_zephyrus_g15_speaker/
+
 
 
 
@@ -45,6 +51,7 @@ WORKING
   stiff, and rugged.
   thermals very good, fans smooth quiet and effective under load.
   but have fan cycling under no load.
+
 
 ===============================
 -----------------------
@@ -695,5 +702,7 @@ FAN OLD
   I can find ways to turn the fan up,
   but no way to
 
+
+  mechanical
 
 

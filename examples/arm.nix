@@ -13,6 +13,9 @@ pkgs.stdenv.mkDerivation {
 
     gnumake
 
+    # man memcpy, sprintf etc
+    manpages    
+
     # gcc-arm-embedded-9-2019-q4-major    jun 8, 2021
     gcc-arm-embedded
     
