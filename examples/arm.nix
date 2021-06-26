@@ -14,19 +14,26 @@ pkgs.stdenv.mkDerivation {
     gnumake
 
     # man memcpy, sprintf etc
-    manpages    
+    manpages
 
     # gcc-arm-embedded-9-2019-q4-major    jun 8, 2021
     gcc-arm-embedded
-    
-    # libopencm3 uses pythong to do something. 
+
+    # libopencm3 uses pythong to do something.
     python3
 
-    # openocd-0.10.0    jun 8, 2021. 
+    # openocd-0.10.0    jun 8, 2021.
     openocd
+
+    # for both picocom and nc
     rlwrap
-    # nc comes from somewherei 
+
+    # nc comes from somewherei  to connect to openocd port
+    # think this is traditional
     netcat
+
+    # to connect to uart
+    picocom
   ];
 
 }

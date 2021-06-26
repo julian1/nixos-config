@@ -19,8 +19,11 @@ pkgs.stdenv.mkDerivation {
     lolcat
 
     # include gcc,g++, stdlib
-    gcc8
-      
+    gcc9
+
+
+    manpages
+
   ];
 
 }
