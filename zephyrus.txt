@@ -370,6 +370,11 @@ WOW kernel hacking - unpacking kernel and building stuff - this looks good.
   [nix-shell] $ make menuconfig
 
 
+WIRELESS
+  # wpa_passphrase essid pass > /etc/wpa_supplicant.conf
+  # leave wireless networking on
+  networking.wireless.enable = true;
+
 -------------------------
 FAN.
   OK.  fan issue is the nvidia card. which sucks power. even when no driver/ unconfigured.
