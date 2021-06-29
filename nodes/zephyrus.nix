@@ -53,6 +53,7 @@
 
   networking.hostName = "zephyrus"; # Define your hostname.
   # JA
+  # wpa_passphrase essid pass > /etc/wpa_supplicant.conf
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   #networking.wireless.networks = {
 #
@@ -102,6 +103,8 @@
         # stlink works!
         ACTION=="add", ATTR{idVendor}=="0483", ATTR{idProduct}=="3748", MODE:="666", OWNER="me"
 
+        # tzrd
+        ACTION=="add", ATTR{idVendor}=="534c", ATTR{idProduct}=="0001", MODE:="666", OWNER="trusted"
 
       '';
   };
