@@ -121,6 +121,13 @@ https://askubuntu.com/questions/1317259/brightness-and-volume-control-not-workin
 
 ----
 BRIGHTNESS
+
+  jul 1. 2021. update 
+
+    echo 45 >  /sys/class/backlight/amdgpu_bl1/brightness
+
+    xrandr --output eDP --brightness .65
+
   - ok. i think when it goes into screensaver - for a while it might diminish
       eg. after cooking dinner.
 
