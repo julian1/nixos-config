@@ -20,10 +20,14 @@ pkgs.stdenv.mkDerivation {
 
     # include gcc,g++, stdlib
     gcc9
-
-
     manpages
 
+
+    
+    # add ncurses headers and lib to scope
+    # eg. gcc main11.c  -lncurses
+    ncurses
   ];
+
 
 }
