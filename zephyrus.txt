@@ -128,6 +128,11 @@ BRIGHTNESS
 
     xrandr --output eDP --brightness .65
 
+    now
+    echo 85 >  /sys/class/backlight/amdgpu_bl1/brightness
+    value note not 8 bit. eg. this works.
+    echo 185 >  /sys/class/backlight/amdgpu_bl1/brightness
+
   - ok. i think when it goes into screensaver - for a while it might diminish
       eg. after cooking dinner.
 
