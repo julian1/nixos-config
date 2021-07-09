@@ -34,6 +34,8 @@ pkgs.stdenv.mkDerivation {
 
     # to connect to uart
     picocom
+
+    # ncurses or ncurses-dev ??? compiled under arm?
   ];
 
 }
