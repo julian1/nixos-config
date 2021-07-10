@@ -1,3 +1,10 @@
+/*
+
+  https://nixos.wiki/wiki/Cross_Compiling
+  https://rzetterberg.github.io/teensy-development-on-nixos.html
+
+
+*/
 
 { pkgs ? import <nixpkgs> {} }:
 with pkgs;
