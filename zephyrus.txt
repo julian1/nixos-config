@@ -121,6 +121,18 @@ https://askubuntu.com/questions/1317259/brightness-and-volume-control-not-workin
 
 ----
 BRIGHTNESS
+
+  jul 1. 2021. update 
+
+    echo 45 >  /sys/class/backlight/amdgpu_bl1/brightness
+
+    xrandr --output eDP --brightness .65
+
+    now
+    echo 85 >  /sys/class/backlight/amdgpu_bl1/brightness
+    value note not 8 bit. eg. this works.
+    echo 185 >  /sys/class/backlight/amdgpu_bl1/brightness
+
   - ok. i think when it goes into screensaver - for a while it might diminish
       eg. after cooking dinner.
 
@@ -369,6 +381,11 @@ WOW kernel hacking - unpacking kernel and building stuff - this looks good.
   [nix-shell] $ patchPhase
   [nix-shell] $ make menuconfig
 
+
+WIRELESS
+  # wpa_passphrase essid pass > /etc/wpa_supplicant.conf
+  # leave wireless networking on
+  networking.wireless.enable = true;
 
 -------------------------
 FAN.

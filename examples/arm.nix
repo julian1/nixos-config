@@ -1,3 +1,10 @@
+/*
+
+  https://nixos.wiki/wiki/Cross_Compiling
+  https://rzetterberg.github.io/teensy-development-on-nixos.html
+
+
+*/
 
 { pkgs ? import <nixpkgs> {} }:
 with pkgs;
@@ -34,6 +41,8 @@ pkgs.stdenv.mkDerivation {
 
     # to connect to uart
     picocom
+
+    # ncurses or ncurses-dev ??? compiled under arm?
   ];
 
 }
