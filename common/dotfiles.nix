@@ -6,6 +6,13 @@ let
   dotfilesSrc = builtins.fetchTarball {
     url = "https://github.com/julian1/dotfiles/archive/master.tar.gz";
     #inherit sha256;
+
+
+    prePatch = ''
+      substituteInPlace gitconfig \
+          --replace 'mail@julian1' 'git@julian1'
+    '';
+
   };
 
 in
@@ -82,7 +89,7 @@ with lib;
     myGit =
       pkgs.git.overrideAttrs (old: {
         # configureFlags = [ "--with-gitconfig=$out/etc/gitconfig" ];
-        configureFlags = [ "--with-gitconfig=/etc/gitconfig" ];
+nckkkkkkkkkkkkk        configureFlags = [ "--with-gitconfig=/etc/gitconfig" ];
         #postInstall = ''
         #  mkdir $out/etc/
         #  cp "${../dotfiles/gitconfig}" $out/etc/gitconfig
