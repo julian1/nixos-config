@@ -7,12 +7,6 @@ let
     url = "https://github.com/julian1/dotfiles/archive/master.tar.gz";
     #inherit sha256;
 
-    # doesn't work
-    #prePatch = ''
-    #  substituteInPlace gitconfig \
-    #      --replace 'mail@julian1' 'git@julian1'
-    #'';
-
   };
 
 in
