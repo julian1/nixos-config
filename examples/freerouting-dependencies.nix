@@ -20,9 +20,11 @@
   then run,
   ./result/bin/freerouting
 
-hash mismatch in fixed-output derivation '/nix/store/6fxq4c012plfqid4djkv73aqywvmbdwp-master.tar.gz':
-  wanted: sha256:1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb
-  got:    sha256:0divpa8pslw047xgakzcbnh3rjkwpn31pixh6scm0v27lx8sp3pw
+  OK. THIS WORKED!!.   downloading an old version.
+  nix-build ~/devel/nixos-config/examples/freerouting-dependencies.nix   2>&1  | tee freerouting.log
+
+  BUT THIS DOESN'T
+  nix-build ~/devel/nixos-config/examples/freerouting-dependencies.nix  -I nixpkgs=/home/me/devel/nixpkgs/ 2>&1  | tee freerouting.log
 
 */
 
@@ -46,7 +48,12 @@ callPackage ({ stdenv,  fetchurl,  maven,  jdk,  javaPackages }: stdenv.mkDeriva
       owner = "nick-less";
       repo = "freerouting";
       # rev = "master";
-      rev = "ff48e2e670c3";
+      #rev = "ff48e2e670c3"; // master 25 jul 2021
+      # rev = "41ad87fd5e5";
+      # rev = "13e3c27148d0a2a37f3ad0058af6753a2caa61a7";
+      rev = "c85175f8a58570a331ba67155437a33791b20823a";  # Mar 18, 2020
+
+ 
 
       sha256 = "0pl986ljv8qc3hmfswjb9l6pkpil15lnizhjkw31a4l1h0kz0phl";
       fetchSubmodules = true; # needed to use fetchgit internally

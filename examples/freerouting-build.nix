@@ -8,6 +8,28 @@
 with import <nixpkgs> {};
 
 with stdenv;
+
+
+let
+  src1 = (fetchFromGitHub {
+      owner = "nick-less";
+      repo = "freerouting";
+      # rev = "master";
+      rev = "ff48e2e670c3";
+
+      sha256 = "0pl986ljv8qc3hmfswjb9l6pkpil15lnizhjkw31a4l1h0kz0phl";
+      fetchSubmodules = true; # needed to use fetchgit internally
+    #  leaveDotGit = true; # needed to preserve the .git dir
+    #  postFetch = ''
+    #    git lfs init
+    #    git lfs fetch
+    #    # anything else needed to check out lfs files
+    #    # possibly delete .git now
+    #  '';
+    });
+
+in
+
 let dependencies =
 
   callPackage ({ stdenv,  fetchurl,  maven,  jdk,  javaPackages }: stdenv.mkDerivation rec {
@@ -15,15 +37,16 @@ let dependencies =
 
     pname = "maven-dependencies";
     version = "1.0.0";
-
-    src = fetchurl {
-        url = "https://github.com/nick-less/freerouting/archive/master.tar.gz";
-        #sha256 = "0b7s78fg70avh2bqqvwpfz2b4vv0ys79nncgg5q2svsf4jczsv03";
-        #sha256 = "1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb";  # 15 may 2021
-
-        sha256 = "0divpa8pslw047xgakzcbnh3rjkwpn31pixh6scm0v27lx8sp3pw";  # 25 jul 2021
-
-      };
+  
+    src = src1;
+    #src = fetchurl {
+    #    url = "https://github.com/nick-less/freerouting/archive/master.tar.gz";
+    #    #sha256 = "0b7s78fg70avh2bqqvwpfz2b4vv0ys79nncgg5q2svsf4jczsv03";
+    #    #sha256 = "1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb";  # 15 may 2021
+#
+#        sha256 = "0divpa8pslw047xgakzcbnh3rjkwpn31pixh6scm0v27lx8sp3pw";  # 25 jul 2021
+#
+#      };
 
     nativeBuildInputs = [ maven ];
     buildInputs = [ jdk ];
@@ -66,13 +89,14 @@ mkDerivation rec {
   #src = ./.;
 
   # should not have to specify twice...
-  src = fetchurl {
-      url = "https://github.com/nick-less/freerouting/archive/master.tar.gz";
-      # sha256 = "0b7s78fg70avh2bqqvwpfz2b4vv0ys79nncgg5q2svsf4jczsv03";
-      #sha256 = "1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb";  # 15 may 2021
-      sha256 = "0divpa8pslw047xgakzcbnh3rjkwpn31pixh6scm0v27lx8sp3pw";  # 25 jul 2021
-    };
+ #src = fetchurl {
+#      url = "https://github.com/nick-less/freerouting/archive/master.tar.gz";
+ #     # sha256 = "0b7s78fg70avh2bqqvwpfz2b4vv0ys79nncgg5q2svsf4jczsv03";
+ #     #sha256 = "1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb";  # 15 may 2021
+ #     sha256 = "0divpa8pslw047xgakzcbnh3rjkwpn31pixh6scm0v27lx8sp3pw";  # 25 jul 2021
+  #  };
 
+    src = src1;
 
   buildInputs = [ jdk maven makeWrapper ];
   buildPhase = ''
