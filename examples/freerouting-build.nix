@@ -9,21 +9,9 @@ with import <nixpkgs> {};
 
 with stdenv;
 
-
-let
-#  src1 = (fetchFromGitHub {
-#      owner = "nick-less";
-#      repo = "freerouting";
-#
-#      rev = "ff48e2e670c39ee4fe503bc363da6420e399e69f";  # 21 jul 2021   most recent commit
-#
-#      sha256 = "0pl986ljv8qc3hmfswjb9l6pkpil15lnizhjkw31a4l1h0kz0phl";   # appears unused... no it needed weird.
-#      fetchSubmodules = true; # needed to use fetchgit internally
-#    });
-
-
-
-in
+/*
+  This code should be identifical, so we should read freerouting-dependencies file
+*/
 
 let dependencies =
 
@@ -40,8 +28,6 @@ let dependencies =
       sha256 = "0divpa8pslw047xgakzcbnh3rjkwpn31pixh6scm0v27lx8sp3pw";  # 25 jul 2021
 
     };
-
-
 
     nativeBuildInputs = [ maven ];
     buildInputs = [ jdk ];
@@ -85,13 +71,17 @@ mkDerivation rec {
   name = "${pname}-${version}";
   #src = ./.;
 
-   src = fetchurl {
-      url = "https://github.com/nick-less/freerouting/archive/master.tar.gz";
-#      # sha256 = "0b7s78fg70avh2bqqvwpfz2b4vv0ys79nncgg5q2svsf4jczsv03";
-      #sha256 = "1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb";  # 15 may 2021
-      sha256 = "0divpa8pslw047xgakzcbnh3rjkwpn31pixh6scm0v27lx8sp3pw";  # 25 jul 2021
 
-    };
+    src  = dependencies.src ;
+
+#
+#   src = fetchurl {
+#      url = "https://github.com/nick-less/freerouting/archive/master.tar.gz";
+##      # sha256 = "0b7s78fg70avh2bqqvwpfz2b4vv0ys79nncgg5q2svsf4jczsv03";
+#      #sha256 = "1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb";  # 15 may 2021
+#      sha256 = "0divpa8pslw047xgakzcbnh3rjkwpn31pixh6scm0v27lx8sp3pw";  # 25 jul 2021
+#
+#    };
 
 
 
