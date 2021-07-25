@@ -20,6 +20,7 @@
   then run,
   ./result/bin/freerouting
 
+  Ok. most recent commit 25 jul 2021 works.
   OK. THIS WORKED!!.   downloading an old version.
   nix-build ~/devel/nixos-config/examples/freerouting-dependencies.nix   2>&1  | tee freerouting.log
 
@@ -47,15 +48,10 @@ callPackage ({ stdenv,  fetchurl,  maven,  jdk,  javaPackages }: stdenv.mkDeriva
   src = (fetchFromGitHub {
       owner = "nick-less";
       repo = "freerouting";
-      # rev = "master";
-      #rev = "ff48e2e670c3"; // master 25 jul 2021
-      # rev = "41ad87fd5e5";
-      # rev = "13e3c27148d0a2a37f3ad0058af6753a2caa61a7";
-      rev = "c85175f8a58570a331ba67155437a33791b20823a";  # Mar 18, 2020
 
- 
-
-      sha256 = "0pl986ljv8qc3hmfswjb9l6pkpil15lnizhjkw31a4l1h0kz0phl";
+      rev = "ff48e2e670c39ee4fe503bc363da6420e399e69f";  # 21 jul 2021   most recent commit
+    
+      sha256 = "0pl986ljv8qc3hmfswjb9l6pkpil15lnizhjkw31a4l1h0kz0phl";   # appears unused... no it needed weird.
       fetchSubmodules = true; # needed to use fetchgit internally
     #  leaveDotGit = true; # needed to preserve the .git dir
     #  postFetch = ''
@@ -86,7 +82,8 @@ callPackage ({ stdenv,  fetchurl,  maven,  jdk,  javaPackages }: stdenv.mkDeriva
     #outputHash = "125pz9c0rca1hf0a7n5pgj6r1pvmp4sbj659dk61x32kkqmk6x5g";
     # outputHash = "1icph2pvl5m437cprsk2mrjiwblk6q4cqlzrcx465lcj2spam139";   # 15 may 2021
     # outputHash = "0bkf5f4vz4m6px2s6n9ylym8c226bszxdlsr7x2jq8fskq9kn82g";   # 21 may 2021
-    outputHash =   "0vqgyr490np4wi05ngc7ry93p34qb0488z19c6dyy86am2ga7frk";   
+
+    outputHash =   "1pj9r9l5lqld2jimxhc6wr7aqxfhhkrf5jc1yg6cz8zyvzr19pym";    # 21 jul.
 
 
 }) {}
