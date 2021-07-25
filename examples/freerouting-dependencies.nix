@@ -4,7 +4,9 @@
   Can then use freerouting-build in a sandboxed environment without network access
 
   USE.
-  > nix-build examples/freerouting-dependencies.nix
+  > nix-build ~/devel/nixos-config/examples/freerouting-dependencies.nix  -I nixpkgs=/home/me/devel/nixpkgs/
+
+  > nix-build ~/devel/nixos-config/examples/freerouting-dependencies.nix  -I nixpkgs=/home/me/devel/nixpkgs/ 2>&1  | tee freerouting.log
 
   See. relies on FOD. to allow making networking calls.
   https://fzakaria.com/2020/07/20/packaging-a-maven-application-with-nix.html
@@ -17,6 +19,11 @@
 
   then run,
   ./result/bin/freerouting
+
+hash mismatch in fixed-output derivation '/nix/store/6fxq4c012plfqid4djkv73aqywvmbdwp-master.tar.gz':
+  wanted: sha256:1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb
+  got:    sha256:0divpa8pslw047xgakzcbnh3rjkwpn31pixh6scm0v27lx8sp3pw
+
 */
 
 with import <nixpkgs> {};
@@ -27,11 +34,30 @@ callPackage ({ stdenv,  fetchurl,  maven,  jdk,  javaPackages }: stdenv.mkDeriva
   pname = "maven-dependencies";
   version = "1.0.0";
 
-  src = fetchurl {
-      url = "https://github.com/nick-less/freerouting/archive/master.tar.gz";
-      # sha256 = "0b7s78fg70avh2bqqvwpfz2b4vv0ys79nncgg5q2svsf4jczsv03";
-      sha256 = "1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb";  # 15 may 2021
-    };
+#  src = fetchurl {
+#      url = "https://github.com/nick-less/freerouting/archive/master.tar.gz";
+#      # sha256 = "0b7s78fg70avh2bqqvwpfz2b4vv0ys79nncgg5q2svsf4jczsv03";
+#      # sha256 = "1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb";  # 15 may 2021
+#      sha256 = "0divpa8pslw047xgakzcbnh3rjkwpn31pixh6scm0v27lx8sp3pw";  # 25 jul 2021
+#
+#    };
+
+  src = (fetchFromGitHub {
+      owner = "nick-less";
+      repo = "freerouting";
+      # rev = "master";
+      rev = "ff48e2e670c3";
+
+      sha256 = "0pl986ljv8qc3hmfswjb9l6pkpil15lnizhjkw31a4l1h0kz0phl";
+      fetchSubmodules = true; # needed to use fetchgit internally
+    #  leaveDotGit = true; # needed to preserve the .git dir
+    #  postFetch = ''
+    #    git lfs init
+    #    git lfs fetch
+    #    # anything else needed to check out lfs files
+    #    # possibly delete .git now
+    #  '';
+    });
 
   nativeBuildInputs = [ maven ];
   buildInputs = [ jdk ];

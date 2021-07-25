@@ -1,16 +1,7 @@
 # build.nix
 /*
-  following works,
 
-  $ nix-build ~/nixos-config/examples/freerouting-build.nix
-  $ export DISPLAY=:0
-  $ /nix/store/n06g9vp3r58bjykz9fqv41w1lb7ncnrm-freerouting-1.0.0/bin/freerouting
-
-  Based on approach here,
-
-    https://fzakaria.com/2020/07/20/packaging-a-maven-application-with-nix.html
-
-  Using FOD output hashes
+  see freerouting-dependencies.nix first,
 */
 
 
@@ -28,7 +19,9 @@ let dependencies =
     src = fetchurl {
         url = "https://github.com/nick-less/freerouting/archive/master.tar.gz";
         #sha256 = "0b7s78fg70avh2bqqvwpfz2b4vv0ys79nncgg5q2svsf4jczsv03";
-        sha256 = "1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb";  # 15 may 2021
+        #sha256 = "1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb";  # 15 may 2021
+
+        sha256 = "0divpa8pslw047xgakzcbnh3rjkwpn31pixh6scm0v27lx8sp3pw";  # 25 jul 2021
 
       };
 
@@ -76,7 +69,8 @@ mkDerivation rec {
   src = fetchurl {
       url = "https://github.com/nick-less/freerouting/archive/master.tar.gz";
       # sha256 = "0b7s78fg70avh2bqqvwpfz2b4vv0ys79nncgg5q2svsf4jczsv03";
-      sha256 = "1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb";  # 15 may 2021
+      #sha256 = "1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb";  # 15 may 2021
+      sha256 = "0divpa8pslw047xgakzcbnh3rjkwpn31pixh6scm0v27lx8sp3pw";  # 25 jul 2021
     };
 
 
