@@ -11,22 +11,17 @@ with stdenv;
 
 
 let
-  src1 = (fetchFromGitHub {
-      owner = "nick-less";
-      repo = "freerouting";
-      # rev = "master";
-      rev = "ff48e2e670c3";
+#  src1 = (fetchFromGitHub {
+#      owner = "nick-less";
+#      repo = "freerouting";
+#
+#      rev = "ff48e2e670c39ee4fe503bc363da6420e399e69f";  # 21 jul 2021   most recent commit
+#
+#      sha256 = "0pl986ljv8qc3hmfswjb9l6pkpil15lnizhjkw31a4l1h0kz0phl";   # appears unused... no it needed weird.
+#      fetchSubmodules = true; # needed to use fetchgit internally
+#    });
 
-      sha256 = "0pl986ljv8qc3hmfswjb9l6pkpil15lnizhjkw31a4l1h0kz0phl";
-      fetchSubmodules = true; # needed to use fetchgit internally
-    #  leaveDotGit = true; # needed to preserve the .git dir
-    #  postFetch = ''
-    #    git lfs init
-    #    git lfs fetch
-    #    # anything else needed to check out lfs files
-    #    # possibly delete .git now
-    #  '';
-    });
+
 
 in
 
@@ -37,16 +32,16 @@ let dependencies =
 
     pname = "maven-dependencies";
     version = "1.0.0";
-  
-    src = src1;
-    #src = fetchurl {
-    #    url = "https://github.com/nick-less/freerouting/archive/master.tar.gz";
-    #    #sha256 = "0b7s78fg70avh2bqqvwpfz2b4vv0ys79nncgg5q2svsf4jczsv03";
-    #    #sha256 = "1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb";  # 15 may 2021
-#
-#        sha256 = "0divpa8pslw047xgakzcbnh3rjkwpn31pixh6scm0v27lx8sp3pw";  # 25 jul 2021
-#
-#      };
+
+    src = fetchurl {
+      url = "https://github.com/nick-less/freerouting/archive/master.tar.gz";
+#      # sha256 = "0b7s78fg70avh2bqqvwpfz2b4vv0ys79nncgg5q2svsf4jczsv03";
+      #sha256 = "1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb";  # 15 may 2021
+      sha256 = "0divpa8pslw047xgakzcbnh3rjkwpn31pixh6scm0v27lx8sp3pw";  # 25 jul 2021
+
+    };
+
+
 
     nativeBuildInputs = [ maven ];
     buildInputs = [ jdk ];
@@ -56,8 +51,6 @@ let dependencies =
         echo "timeout, restart maven to continue downloading"
       done
     '';
-
-
 
     installPhase = ''
         find $out/.m2 -type f -regex '.+\\(\\.lastUpdated\\|resolver-status\\.properties\\|_remote\\.repositories\\)' -delete
@@ -71,9 +64,13 @@ let dependencies =
       # outputHash = "0ksb4rpxz3xydn0x5z6a8q08gk5p6hqc3zrkqwkjv4rrhnk0vc5r";
       # outputHash = "0zz53grdv3qalj7fir0ylbaafh8pxc2njy3j1i7irzdlp2y37w2h";   # 15 may 2021
       #outputHash = "13gmf97yqc3cjxg9bjy6llzfwxg3x5mv2lx3qbmidhrhg33p0sdf";   # 21 may 2021
-      outputHash = "11r4hmd5c3kxxfd8dyikfx6hz0qvrnl5ig3pdc5c6mb63s3hfs05";
+      #outputHash = "11r4hmd5c3kxxfd8dyikfx6hz0qvrnl5ig3pdc5c6mb63s3hfs05";
 
-
+    /*
+      This has *must* be the same as in freerouting dependencies.
+      In fact all of this code. must be the same, so that it looks for dependencies under the same hash
+    */
+     outputHash =   "1ynlr9ggyrp49cx8d4lyg43yz4adapjg0vnl1lkya5ny6p61l25r";  # 25 jul 2021
 
 }) {};
 
@@ -88,15 +85,15 @@ mkDerivation rec {
   name = "${pname}-${version}";
   #src = ./.;
 
-  # should not have to specify twice...
- #src = fetchurl {
-#      url = "https://github.com/nick-less/freerouting/archive/master.tar.gz";
- #     # sha256 = "0b7s78fg70avh2bqqvwpfz2b4vv0ys79nncgg5q2svsf4jczsv03";
- #     #sha256 = "1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb";  # 15 may 2021
- #     sha256 = "0divpa8pslw047xgakzcbnh3rjkwpn31pixh6scm0v27lx8sp3pw";  # 25 jul 2021
-  #  };
+   src = fetchurl {
+      url = "https://github.com/nick-less/freerouting/archive/master.tar.gz";
+#      # sha256 = "0b7s78fg70avh2bqqvwpfz2b4vv0ys79nncgg5q2svsf4jczsv03";
+      #sha256 = "1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb";  # 15 may 2021
+      sha256 = "0divpa8pslw047xgakzcbnh3rjkwpn31pixh6scm0v27lx8sp3pw";  # 25 jul 2021
 
-    src = src1;
+    };
+
+
 
   buildInputs = [ jdk maven makeWrapper ];
   buildPhase = ''

@@ -37,30 +37,33 @@ callPackage ({ stdenv,  fetchurl,  maven,  jdk,  javaPackages }: stdenv.mkDeriva
   pname = "maven-dependencies";
   version = "1.0.0";
 
-#  src = fetchurl {
-#      url = "https://github.com/nick-less/freerouting/archive/master.tar.gz";
+
+  # fetchurl might be needed to keep the stuff around...
+
+  src = fetchurl {
+      url = "https://github.com/nick-less/freerouting/archive/master.tar.gz";
 #      # sha256 = "0b7s78fg70avh2bqqvwpfz2b4vv0ys79nncgg5q2svsf4jczsv03";
-#      # sha256 = "1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb";  # 15 may 2021
-#      sha256 = "0divpa8pslw047xgakzcbnh3rjkwpn31pixh6scm0v27lx8sp3pw";  # 25 jul 2021
+#      sha256 = "1yccc633mxc8dwf2ipg7vz67d3fgwh4bisazgalvk0h57zyr8iwb";  # 15 may 2021
+      sha256 = "0divpa8pslw047xgakzcbnh3rjkwpn31pixh6scm0v27lx8sp3pw";  # 25 jul 2021
+
+    };
+
+#  src = (fetchFromGitHub {
+#      owner = "nick-less";
+#      repo = "freerouting";
 #
-#    };
-
-  src = (fetchFromGitHub {
-      owner = "nick-less";
-      repo = "freerouting";
-
-      rev = "ff48e2e670c39ee4fe503bc363da6420e399e69f";  # 21 jul 2021   most recent commit
-    
-      sha256 = "0pl986ljv8qc3hmfswjb9l6pkpil15lnizhjkw31a4l1h0kz0phl";   # appears unused... no it needed weird.
-      fetchSubmodules = true; # needed to use fetchgit internally
-    #  leaveDotGit = true; # needed to preserve the .git dir
-    #  postFetch = ''
-    #    git lfs init
-    #    git lfs fetch
-    #    # anything else needed to check out lfs files
-    #    # possibly delete .git now
-    #  '';
-    });
+#      rev = "ff48e2e670c39ee4fe503bc363da6420e399e69f";  # 21 jul 2021   most recent commit
+#    
+#      sha256 = "0pl986ljv8qc3hmfswjb9l6pkpil15lnizhjkw31a4l1h0kz0phl";   # appears unused... no it needed weird.
+#      fetchSubmodules = true; # needed to use fetchgit internally
+#      leaveDotGit = true; # needed to preserve the .git dir
+#    #  postFetch = ''
+#    #    git lfs init
+#    #    git lfs fetch
+#    #    # anything else needed to check out lfs files
+#    #    # possibly delete .git now
+#    #  '';
+#    });
 
   nativeBuildInputs = [ maven ];
   buildInputs = [ jdk ];
@@ -83,8 +86,11 @@ callPackage ({ stdenv,  fetchurl,  maven,  jdk,  javaPackages }: stdenv.mkDeriva
     # outputHash = "1icph2pvl5m437cprsk2mrjiwblk6q4cqlzrcx465lcj2spam139";   # 15 may 2021
     # outputHash = "0bkf5f4vz4m6px2s6n9ylym8c226bszxdlsr7x2jq8fskq9kn82g";   # 21 may 2021
 
-    outputHash =   "1pj9r9l5lqld2jimxhc6wr7aqxfhhkrf5jc1yg6cz8zyvzr19pym";    # 21 jul.
+    # IMPORTANT, change this to force it to download again
+     #outputHash =   "0divpa8pslw047xgakzcbnh3rjkwpn31pixh6scm0v27lx8sp3pw";  # old?
 
+     outputHash =   "1ynlr9ggyrp49cx8d4lyg43yz4adapjg0vnl1lkya5ny6p61l25r";  # 25 jul 2021
+    
 
 }) {}
 
