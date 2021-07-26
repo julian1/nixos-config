@@ -7,59 +7,10 @@ let
     url = "https://github.com/julian1/dotfiles/archive/master.tar.gz";
     #inherit sha256;
 
-
-    prePatch = ''
-      substituteInPlace gitconfig \
-          --replace 'mail@julian1' 'git@julian1'
-    '';
-
   };
 
 in
 
-with lib;
-
-{
-
-  #config.users.users.root.packages =
-  #  with pkgs;[ vim git screen less man psmisc ]; # glibcLocales
-  #
-  config.users.users.root.packages =
-  let
-    myVim =
-    pkgs.vim_configurable.customize {
-        # Specifies the vim binary name.
-        name = "vim";
-        # CHANGE this - to just read a file from dotfiles
-        vimrcConfig.customRC = builtins.readFile ( "${dotfilesSrc}/vimrc" ) ;
-        # dec 2019. Install dotfiles by hand
-
-        vimrcConfig.packages.myVimPackage = with pkgs.vimPlugins; {
-          # loaded on launch
-          start = [ vim-nix  ];
-          };
-    };
-
-      myGit =
-      pkgs.git.overrideAttrs (old: {
-        # configureFlags = [ "--with-gitconfig=$out/etc/gitconfig" ];
-        configureFlags = [ "--with-gitconfig=/etc/gitconfig" ];
-      });
-  in
-  # note less, nc, netstat, curl, rsync are installed by default
-  with pkgs;
-  [  myVim myGit screen less man psmisc ];
-
-
-
-
-
-
-  config.users.users.me.packages =
-
-  # system is mostly unusable without a good working vim.
-  # note we symlink config files, so not really needed for root.
-  # https://www.mpscholten.de/nixos/2016/04/11/setting-up-vim-on-nixos.html
   let
     myVim =
     pkgs.vim_configurable.customize {
@@ -89,7 +40,7 @@ with lib;
     myGit =
       pkgs.git.overrideAttrs (old: {
         # configureFlags = [ "--with-gitconfig=$out/etc/gitconfig" ];
-nckkkkkkkkkkkkk        configureFlags = [ "--with-gitconfig=/etc/gitconfig" ];
+        configureFlags = [ "--with-gitconfig=/etc/gitconfig" ];
         #postInstall = ''
         #  mkdir $out/etc/
         #  cp "${../dotfiles/gitconfig}" $out/etc/gitconfig
@@ -97,10 +48,35 @@ nckkkkkkkkkkkkk        configureFlags = [ "--with-gitconfig=/etc/gitconfig" ];
       });
   in
 
-  # note less, nc, netstat, curl, rsync are installed by default
-  with pkgs;
 
-  [  myVim myGit screen less man psmisc ];  # add bash??  so bang patterns in scripts work?
+with lib;
+
+
+{
+
+  #config.users.users.root.packages =
+  #  with pkgs;[ vim git screen less man psmisc ]; # glibcLocales
+  #
+  config.users.users.root.packages =
+    # note less, nc, netstat, curl, rsync are installed by default
+    with pkgs;
+    [  myVim myGit screen less man psmisc ];
+
+
+
+
+
+
+  config.users.users.me.packages =
+
+    # system is mostly unusable without a good working vim.
+    # note we symlink config files, so not really needed for root.
+    # https://www.mpscholten.de/nixos/2016/04/11/setting-up-vim-on-nixos.html
+
+    # note less, nc, netstat, curl, rsync are installed by default
+    with pkgs;
+
+    [  myVim myGit screen less man psmisc ];  # add bash??  so bang patterns in scripts work?
 
   config.environment.etc = {
 
@@ -110,7 +86,8 @@ nckkkkkkkkkkkkk        configureFlags = [ "--with-gitconfig=/etc/gitconfig" ];
     # screenrc = myScreen;
 
     gitconfig = {
-        text = builtins.readFile ( "${dotfilesSrc}/gitconfig" ) ;
+        #text =  builtins.readFile ( "${dotfilesSrc}/gitconfig" ) ;
+        text =  builtins.replaceStrings  [ "mail@julian1" ]  [ "git@julian1" ]  (builtins.readFile ("${dotfilesSrc}/gitconfig")) ;
         mode = "0444";
       };
 
