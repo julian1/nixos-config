@@ -2,12 +2,15 @@
   must use master branch of pkgs, for latest nvidia driver.
   commit 881ebaacf820f72
 
+  careful. kernel updates, and rebuild of will nvidia driver will kill Xorg and all open applications.
+  even if don't reboot.
+
   boot, brightness
-  $ cat /sys/class/backlight/amdgpu_bl1/brightness  
+  $ cat /sys/class/backlight/amdgpu_bl1/brightness
   78
-  xhost + local:      (start firefox as users.
-  alsactl init        (maybe need root?)
-  pulseaudio --kill   
+  xhost + local:      (for containers/apps run under different users that need to share Xorg)
+  alsactl init        (must be root?)
+  pulseaudio --kill   (as user)
   pulseaudio --start
   alsamixer           (verify working)
 
@@ -31,10 +34,13 @@
       /root/nixos-config/common/dotfiles.nix
     ];
 
-  #OK. nvidia does compile against non latest. but xorg won't start.
-  # against non latest kernel.
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # nvidia drm fails to build against 5.13 kernel, ie. nixos master branch jul 17 2021
+  # so use 5.12 instead.
+  # https://github.com/NixOS/nixpkgs/issues/130130
+
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_5_12;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -101,8 +107,8 @@
         # thumb drive?
         # SUBSYSTEM=="block", ATTRS{idVendor}=="058f", ATTRS{idProduct}=="6387", MODE="0666", OWNER="me"
 
-       
-        # for /dev/ttyUSB0 eg. usb to uart, use group 'dialout'. changing device ownwer doesn't appear to work.  
+
+        # for /dev/ttyUSB0 eg. usb to uart, use group 'dialout'. changing device ownwer doesn't appear to work.
 
         # ice40 / fpga works!
         # https://stackoverflow.com/questions/36633819/iceprog-cant-find-ice-ftdi-usb-device-linux-permission-issue
