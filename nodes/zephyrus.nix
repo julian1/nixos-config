@@ -32,6 +32,7 @@
 
       /root/nixos-config/common/users.nix
       /root/nixos-config/common/dotfiles.nix
+      /root/nixos-config/common/low-battery-monitor.nix
     ];
 
 
