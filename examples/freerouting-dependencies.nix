@@ -3,9 +3,8 @@
   Use this first, as a build pre-step to download maven dependencies.
   Can then use freerouting-build in a sandboxed environment without network access
 
-  USE.
+  USE. NO. these fail. must investigate,
   > nix-build ~/devel/nixos-config/examples/freerouting-dependencies.nix  -I nixpkgs=/home/me/devel/nixpkgs/
-
   > nix-build ~/devel/nixos-config/examples/freerouting-dependencies.nix  -I nixpkgs=/home/me/devel/nixpkgs/ 2>&1  | tee freerouting.log
 
   See. relies on FOD. to allow making networking calls.
@@ -18,14 +17,25 @@
   nix-build examples/freerouting-build.nix
 
   then run,
-  ./result/bin/freerouting
+  ./result/bin/freerouting 
+  or (eg.) 
+  /nix/store/x468vvvpl2x56852zbqq840an2525w2a-freerouting-1.0.0/bin/freerouting
 
   Ok. most recent commit 25 jul 2021 works.
   OK. THIS WORKED!!.   downloading an old version.
   nix-build ~/devel/nixos-config/examples/freerouting-dependencies.nix   2>&1  | tee freerouting.log
 
+  Use this for the current git revision,
+  $ cat /etc/os-release | grep VERSION=
+  Ok,
+  VERSION="21.11.git.6e5f2d2b010 (Porcupine)"
+
+
+
   BUT THIS DOESN'T
   nix-build ~/devel/nixos-config/examples/freerouting-dependencies.nix  -I nixpkgs=/home/me/devel/nixpkgs/ 2>&1  | tee freerouting.log
+
+
 
 */
 
