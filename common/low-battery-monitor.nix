@@ -11,6 +11,10 @@
 with lib;
 
 let
+
+  speaker-test = "${pkgs.alsa-utils}/bin/speaker-test";
+
+
   low-battery-check = pkgs.writeShellScriptBin "low-battery-check" ''
 
     # looping version. without systemd timer which is too chatty in the logs
@@ -18,7 +22,11 @@ let
     beep() {
       #https://unix.stackexchange.com/questions/1974/how-do-i-make-my-pc-speaker-beep
       #speaker-test -t sine -f 1000 -l 1 & sleep .5 && kill -9 $! > /dev/null 2>&1
-      speaker-test -t sine -f 1000 -l 1 > /dev/null & sleep .5 && kill -9 $!
+
+      # required in nixos. else cannot find.  note. user 1000 is user me.
+      export PULSE_SERVER=unix:/run/user/1000/pulse/native;
+
+      ${speaker-test} -t sine -f 1000 -l 1 > /dev/null & sleep .5 && kill -9 $!
     }
 
     run() {
