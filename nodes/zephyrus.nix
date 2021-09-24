@@ -87,6 +87,13 @@
   networking.interfaces.enp3s0.useDHCP = true;
   networking.interfaces.wlp4s0.useDHCP = true;
 
+  # usb/mobile connection sharing. comes up by default  when cable plugged. nice.
+  # disconnect takes about 30s to revert.
+  # use route to monitor default gateway
+  networking.interfaces.enp6s0f4u1.useDHCP = true;
+
+
+
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
