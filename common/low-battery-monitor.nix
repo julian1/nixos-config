@@ -30,7 +30,7 @@ let
     }
 
     run() {
-      threshold=99
+      threshold=50
       capacity=$(cat /sys/class/power_supply/BAT0/capacity)
       status=$(cat /sys/class/power_supply/BAT0/status)
 
