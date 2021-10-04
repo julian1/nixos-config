@@ -345,6 +345,9 @@
     usbutils
     # radeon-profile gui app. works.
 
+    # networking 
+    whois
+    traceroute
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
