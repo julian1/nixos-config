@@ -90,6 +90,8 @@
   # usb/mobile connection sharing. comes up by default  when cable plugged. nice.
   # disconnect takes about 30s to revert.
   # use route to monitor default gateway
+
+  # WARN. slows boot, as waits for a minute. 
   networking.interfaces.enp6s0f4u1.useDHCP = true;
 
 
