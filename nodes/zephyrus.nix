@@ -128,7 +128,18 @@
         ACTION=="add", ATTR{idVendor}=="0483", ATTR{idProduct}=="3748", MODE:="666", OWNER="me"
 
         # tzrd
-        ACTION=="add", ATTR{idVendor}=="534c", ATTR{idProduct}=="0001", MODE:="666", OWNER="trusted"
+        # ACTION=="add", ATTR{idVendor}=="534c", ATTR{idProduct}=="0001", MODE:="666", OWNER="trusted"
+
+
+
+        # Trezor
+        SUBSYSTEM=="usb", ATTR{idVendor}=="534c", ATTR{idProduct}=="0001", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl", SYMLINK+="trezor%n"
+        KERNEL=="hidraw*", ATTRS{idVendor}=="534c", ATTRS{idProduct}=="0001", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl"
+
+        # Trezor v2
+        SUBSYSTEM=="usb", ATTR{idVendor}=="1209", ATTR{idProduct}=="53c0", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl", SYMLINK+="trezor%n"
+        SUBSYSTEM=="usb", ATTR{idVendor}=="1209", ATTR{idProduct}=="53c1", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl", SYMLINK+="trezor%n"
+        KERNEL=="hidraw*", ATTRS{idVendor}=="1209", ATTRS{idProduct}=="53c1", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl"
 
       '';
   };
@@ -348,6 +359,8 @@
     # networking 
     whois
     traceroute
+
+    git-crypt
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
