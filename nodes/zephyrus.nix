@@ -1,4 +1,17 @@
 /*
+
+  =====================
+  EXTR
+  don't need to sym-link /etc/nixos/configuration.nix
+  just sudo/su and,
+
+  nixos-rebuild build -I nixpkgs=/home/me/devel/nixpkgs/  -I  nixos-config=./nodes/zephyrus.nix     switch
+
+
+  hardware-configuration.nix stays in /etc/nixos/
+  =====================
+
+
   must use master branch of pkgs, for latest nvidia driver.
   commit 881ebaacf820f72
 
