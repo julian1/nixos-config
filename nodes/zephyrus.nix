@@ -80,18 +80,26 @@
   #####
 
 
+  # Set your time zone.
+  # time.timeZone = "Europe/Amsterdam";
+  time.timeZone = "Australia/Hobart";
+
+
 
   networking.hostName = "zephyrus"; # Define your hostname.
   # JA
   # wpa_passphrase essid pass > /etc/wpa_supplicant.conf
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  #networking.wireless.networks = {
-#
-#  }
 
-  # Set your time zone.
-  # time.timeZone = "Europe/Amsterdam";
-  time.timeZone = "Australia/Hobart";
+  # don't use for public hosted code. rely on /etc/wpa_supplicant.conf instead.
+  #networking.wireless.networks = {
+  #  #  exampleSSID = {
+  #  #    pskRaw = "46c25aa68ccb90945621c1f1adbe93683f884f5f31c6e2d524eb6b446642762d"; };
+  #};
+  
+  # get warning without configuring this.  https://nixos.org/manual/nixos/stable/options.html
+  networking.wireless.interfaces = [ "wlp4s0" ] ;
+
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -119,6 +127,19 @@
   #   font = "Lat2-Terminus16";
   #   keyMap = "us";
   # };
+
+  networking.extraHosts =
+    ''
+      127.0.0.2 other-localhost
+      192.168.0.4   dell
+      3.25.161.11   aws3
+    '';
+
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # or disable the firewall altogether.
+  # networking.firewall.enable = false;
 
 
 
@@ -224,7 +245,7 @@
 
 
 
-
+  # for unrar but doesn't seem to work.
   nixpkgs.config.allowUnfree = true;
 
 
@@ -393,19 +414,6 @@
   services.openssh.enable = true;
 
   services.openssh.permitRootLogin = "prohibit-password";
-
-  networking.extraHosts =
-    ''
-      127.0.0.2 other-localhost
-      192.168.0.4   dell
-      3.25.161.11   aws3
-    '';
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
