@@ -380,7 +380,7 @@
     feh
     openssl     # backup/restore
     zip  unzip
-    # scrot
+    scrot
     # wget use curl instead
     #
 
