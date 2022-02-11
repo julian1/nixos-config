@@ -84,43 +84,6 @@
   # time.timeZone = "Europe/Amsterdam";
   time.timeZone = "Australia/Hobart";
 
-
-
-  networking.hostName = "zephyrus"; # Define your hostname.
-  # JA
-  # wpa_passphrase essid pass > /etc/wpa_supplicant.conf
-  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # don't use for public hosted code. rely on /etc/wpa_supplicant.conf instead.
-  #networking.wireless.networks = {
-  #  #  exampleSSID = {
-  #  #    pskRaw = "46c25aa68ccb90945621c1f1adbe93683f884f5f31c6e2d524eb6b446642762d"; };
-  #};
-  
-  # get warning without configuring this.  https://nixos.org/manual/nixos/stable/options.html
-  networking.wireless.interfaces = [ "wlp4s0" ] ;
-
-
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking.useDHCP = false;
-  networking.interfaces.enp3s0.useDHCP = true;
-  networking.interfaces.wlp4s0.useDHCP = true;
-
-  # usb/mobile connection sharing. comes up by default  when cable plugged. nice.
-  # disconnect takes about 30s to revert.
-  # use route to monitor default gateway
-
-  # WARN. slows boot, as waits for a minute. 
-  networking.interfaces.enp6s0f4u1.useDHCP = true;
-
-
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
   # Select internationalisation properties.
   # i18n.defaultLocale = "en_US.UTF-8";
   # console = {
@@ -128,20 +91,57 @@
   #   keyMap = "us";
   # };
 
-  networking.extraHosts =
-    ''
-      127.0.0.2 other-localhost
-      192.168.0.4   dell
-      3.25.161.11   aws3
-    '';
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking = {
+
+    hostName = "zephyrus"; # Define your hostname.
+    # JA
+    # wpa_passphrase essid pass > /etc/wpa_supplicant.conf
+    wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+    # don't use for public hosted code. rely on /etc/wpa_supplicant.conf instead.
+    # wireless.networks = {
+    #  #  exampleSSID = {
+    #  #    pskRaw = "46c25aa68ccb90945621c1f1adbe93683f884f5f31c6e2d524eb6b446642762d"; };
+    #};
+
+    # get warning if not configured,  https://nixos.org/manual/nixos/stable/options.html
+    wireless.interfaces = [ "wlp4s0" ] ;
 
 
+    # The global useDHCP flag is deprecated, therefore explicitly set to false here.
+    # Per-interface useDHCP will be mandatory in the future, so this generated config
+    # replicates the default behaviour.
+    useDHCP = false;
+    interfaces.enp3s0.useDHCP = true;
+    interfaces.wlp4s0.useDHCP = true;
+
+    # usb/mobile connection sharing. comes up by default  when cable plugged. nice.
+    # disconnect takes about 30s to revert.
+    # use route to monitor default gateway
+
+    # OTG usb to ethernet. warning. slows boot, as waits for a minute.
+    interfaces.enp6s0f4u1.useDHCP = true;
+
+
+    # Configure network proxy if necessary
+    # networking.proxy.default = "http://user:password@proxy:port/";
+    # proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+    extraHosts =
+      ''
+        127.0.0.2 other-localhost
+        192.168.0.4   dell
+        3.25.161.11   aws3
+      '';
+
+    # Open ports in the firewall.
+    # networking.firewall.allowedTCPPorts = [ ... ];
+    # networking.firewall.allowedUDPPorts = [ ... ];
+    # or disable the firewall altogether.
+    # networking.firewall.enable = false;
+
+  };
 
   services.udev = {
       extraRules = ''
@@ -354,12 +354,13 @@
      screen
      vim
      git
-     file tree
+     file
+     tree
 
       #####
-     xorg.xev      # for keycodes
+     xorg.xev      # for keyboard keycodes
      xorg.xmodmap  # to experiment with remapping
-     xorg.xhost   # change persmissions, to permit other sessions
+     xorg.xhost    # change persmissions, to permit other sessions
      # xrdb is installed by default
      # xclip   for copying into a shell
      glxinfo
@@ -374,13 +375,8 @@
     xtrlock
     ###############################
 
-    firefox
-    evince
-    thunderbird
-    feh
     openssl     # backup/restore
     zip  unzip
-    scrot
     # wget use curl instead
     #
 
@@ -392,11 +388,18 @@
     usbutils
     # radeon-profile gui app. works.
 
-    # networking 
+    # networking
     whois
     traceroute
 
     git-crypt
+    firefox
+    evince
+    thunderbird
+    feh
+    trezord
+    scrot
+
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
