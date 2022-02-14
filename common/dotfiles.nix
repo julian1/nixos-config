@@ -87,7 +87,7 @@ with lib;
 
     gitconfig = {
         text =  builtins.readFile ( "${dotfilesSrc}/gitconfig" ) ;
-        #text =  builtins.replaceStrings  [ "mail@julian1" ]  [ "git@julian1" ]  (builtins.readFile ("${dotfilesSrc}/gitconfig")) ;
+        # text =  builtins.replaceStrings  [ "mail@julian1" ]  [ "git@julian1" ]  (builtins.readFile ("${dotfilesSrc}/gitconfig")) ;
         mode = "0444";
       };
 
