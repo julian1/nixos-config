@@ -17,26 +17,27 @@ with lib;
   config.users.extraUsers.root.openssh.authorizedKeys.keys = [ pubkey ];
 
 
-  # need to restart Xorg to get effect.
+  # need to restart Xorg for group changes to take effect, on all spawned shells.
+  # may even need a reboot to fix the group...
 
   config.users.extraGroups.me.gid = 1000;
   config.users.extraUsers.me =
    { isNormalUser = true;
      home = "/home/me";
      description = "my description";
-     extraGroups = [ "me" "wheel" "networkmanager"  "dialout" ];
+    # feb23 2022. add trusted.
+     extraGroups = [ "me" "wheel" "networkmanager"  "dialout" "trusted" ];
      openssh.authorizedKeys.keys = [ pubkey ];
    };
 
 
-  # probably need a reboot to fix the group...
 
   config.users.extraGroups.trusted .gid = 1001;
   config.users.extraUsers.trusted =
    { isNormalUser = true;
      home = "/home/trusted";
      description = "my description";
-     extraGroups = [ "trusted" "wheel" "networkmanager" "me" ];     # note add me.
+     extraGroups = [ "trusted" "wheel" "networkmanager"  ];     # feb22 2022.remove me
      openssh.authorizedKeys.keys = [ pubkey ];
    };
 
@@ -48,5 +49,5 @@ with lib;
   #   wheelNeedsPassword = false;
   # };
 
-   
+
  }
