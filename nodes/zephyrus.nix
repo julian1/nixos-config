@@ -116,12 +116,16 @@
     interfaces.enp3s0.useDHCP = true;
     interfaces.wlp4s0.useDHCP = true;
 
-    # usb/mobile connection sharing. comes up by default  when cable plugged. nice.
-    # disconnect takes about 30s to revert.
-    # use route to monitor default gateway
+    # usb/mobile connection sharing. dhcp brings up everything by defaultwhen cable plugged. nice.
+    # use 'route' to check interface used.
+    # note. disconnect takes about 30s to revert.
 
     # OTG usb to ethernet. warning. slows boot, as waits for a minute.
-    interfaces.enp6s0f4u1.useDHCP = true;
+    # interfaces.enp6s0f4u1.useDHCP = true;
+
+    # feb 23 2022.
+    # dmesg. rndis_host 1-1:1.0 enp6s0f3u1: renamed from usb0
+    interfaces.enp6s0f3u1.useDHCP = true;
 
 
     # Configure network proxy if necessary
