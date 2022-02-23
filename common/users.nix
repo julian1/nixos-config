@@ -19,6 +19,9 @@ with lib;
 
   # need to restart Xorg for group changes to take effect, on all spawned shells.
   # may even need a reboot to fix the group...
+  # test using ssh localhost.
+
+  # trusted can read /home/me if, chmod 770 /home/me/
 
   config.users.extraGroups.me.gid = 1000;
   config.users.extraUsers.me =
