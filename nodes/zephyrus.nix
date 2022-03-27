@@ -407,6 +407,8 @@
     # octave
     # gnuplot
     # ghostscript
+  
+    sshfs
 
   ];
 
