@@ -404,11 +404,12 @@
     trezord
     scrot
 
-    # octave
-    # gnuplot
-    # ghostscript
+    octave
+    gnuplot
+    ghostscript
 
     darktable
+    exiftool 
   
     sshfs
 
