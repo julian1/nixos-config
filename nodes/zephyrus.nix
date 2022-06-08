@@ -53,11 +53,14 @@
   # so use 5.12 instead.
   # https://github.com/NixOS/nixpkgs/issues/130130
 
-  # boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelPackages = pkgs.linuxPackages_5_12;
+  # nvidia drm compiles fine for 5.18 latest. jun 8. 2022.
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_5_12;
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
+
+  # removed, to avoid error warning. jun 8. 2022.
+  #  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   #####
@@ -409,8 +412,8 @@
     ghostscript
 
     darktable
-    exiftool 
-  
+    exiftool
+
     sshfs
 
   ];
