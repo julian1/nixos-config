@@ -1,4 +1,5 @@
 /*
+  nix-shell  ~/devel/nixos-config/examples/arm.nix  -I nixpkgs=/home/me/devel/nixpkgs/
 
   https://nixos.wiki/wiki/Cross_Compiling
   https://rzetterberg.github.io/teensy-development-on-nixos.html
@@ -40,7 +41,7 @@ pkgs.stdenv.mkDerivation {
     # think this is traditional
     netcat
 
-    # to connect to uart
+    # alternative to netcat, to connect to uart
     picocom
 
     # ncurses or ncurses-dev ??? compiled under arm?
