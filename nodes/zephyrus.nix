@@ -128,11 +128,7 @@
 
     # feb 23 2022.
     # dmesg. rndis_host 1-1:1.0 enp6s0f3u1: renamed from usb0
-    interfaces.enp6s0f3u1.useDHCP = true;     # usb-A to c cable
-    interfaces.enp6s0f4u1.useDHCP = true;     # white usb-c cable.  aug 1. 2022
-    interfaces.enp6s0f4u2.useDHCP = true;     # white usb-c cable.  aug 1. 2022
-    
-
+    interfaces.enp6s0f3u1.useDHCP = true;
 
 
     # Configure network proxy if necessary
@@ -419,8 +415,6 @@
     exiftool
 
     sshfs
-    # wine    # for ltspice . no need nixpkgs2
-    awscli
 
   ];
 
