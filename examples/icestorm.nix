@@ -1,3 +1,7 @@
+/*
+  nix-shell  ~/devel/nixos-config/examples/icestorm.nix  -I nixpkgs=/home/me/devel/nixpkgs/
+*/
+
 
 { pkgs ? import <nixpkgs> {} }:
 with pkgs;
@@ -15,6 +19,7 @@ pkgs.stdenv.mkDerivation {
     yosys
     arachne-pnr
     icestorm
+    nextpnr
   ];
 
 }
