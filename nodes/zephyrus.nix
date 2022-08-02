@@ -421,6 +421,7 @@
     sshfs
     # wine    # for ltspice . no need nixpkgs2
     awscli
+    # mlocate   # says does not appear to be valid db
 
   ];
 
