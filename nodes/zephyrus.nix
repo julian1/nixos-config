@@ -456,7 +456,10 @@
   # https://nixos.wiki/wiki/Printing
   # https://blog.dwagenk.com/nix/2020/04/nix-printing/
 
-  # should be able to navigate to http://localhost:631/ now.
+  # can navigate to http://localhost:631/ now.
+
+  # find /nix/ | grep  yourppd
+  # /nix/store/nwb7mhgwsp9qbmq98anvhzcnmzzmisx7-cups-progs/share/cups/model/yourppd.ppd
 
   # configure after install.
   # lpadmin -p 'Brother' -v 'socket://192.168.0.8:9100' -P '/root/nixos-config/nodes/BRHL16_2_GPL.ppd'  -E
@@ -465,9 +468,6 @@
 
   # configure default
   # lpadmin -d 'Brother'
-
-  # find /nix/ | grep  yourppd
-  # /nix/store/nwb7mhgwsp9qbmq98anvhzcnmzzmisx7-cups-progs/share/cups/model/yourppd.ppd
 
   services.printing.enable = true;
 
