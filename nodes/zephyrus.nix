@@ -461,12 +461,13 @@
   # configure after install.
   # lpadmin -p 'Brother' -v 'socket://192.168.0.8:9100' -P '/root/nixos-config/nodes/BRHL16_2_GPL.ppd'  -E
   # lpadmin -p 'Brother' -v 'socket://192.168.0.8:9100' -P '/nix/store/incn73f2iqls7m0v38y2mx3a2lbwv02f-yourppd.ppd.drv' -E
+  # /nix/store/nwb7mhgwsp9qbmq98anvhzcnmzzmisx7-cups-progs/share/cups/model/yourppd.ppd
 
   # configure default
   # lpadmin -d 'Brother'
 
   # find /nix/ | grep  yourppd
-  # file should be /nix/store/incn73f2iqls7m0v38y2mx3a2lbwv02f-yourppd.ppd.drv
+  # /nix/store/nwb7mhgwsp9qbmq98anvhzcnmzzmisx7-cups-progs/share/cups/model/yourppd.ppd
 
   services.printing.enable = true;
 
