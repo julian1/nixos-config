@@ -131,7 +131,7 @@
     interfaces.enp6s0f3u1.useDHCP = true;     # usb-A to c cable
     interfaces.enp6s0f4u1.useDHCP = true;     # white usb-c cable.  aug 1. 2022
     interfaces.enp6s0f4u2.useDHCP = true;     # white usb-c cable.  aug 1. 2022
-    
+
 
 
 
@@ -450,6 +450,32 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "20.09"; # Did you read the comment?
+
+
+  ############
+  # https://nixos.wiki/wiki/Printing
+  # https://blog.dwagenk.com/nix/2020/04/nix-printing/
+
+  # should be able to navigate to http://localhost:631/ now.
+
+  # configure after install.
+  # lpadmin -p 'Brother' -v 'socket://192.168.0.8:9100' -P '/root/nixos-config/nodes/BRHL16_2_GPL.ppd'  -E
+  # lpadmin -p 'Brother' -v 'socket://192.168.0.8:9100' -P '/nix/store/incn73f2iqls7m0v38y2mx3a2lbwv02f-yourppd.ppd.drv' -E
+
+  # configure default
+  # lpadmin -d 'Brother'
+
+  # find /nix/ | grep  yourppd
+  # file should be /nix/store/incn73f2iqls7m0v38y2mx3a2lbwv02f-yourppd.ppd.drv
+
+  services.printing.enable = true;
+
+  services.printing.drivers = [
+      (pkgs.writeTextDir "share/cups/model/yourppd.ppd" (builtins.readFile ./BRHL16_2_GPL.ppd ))
+  ];
+
+
+
 
 }
 
