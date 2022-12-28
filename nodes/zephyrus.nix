@@ -425,6 +425,8 @@
     # mlocate   # says does not appear to be valid db
     mpv
 
+    # rxvt-unicode . use nix-shell -p.
+    # libreoffice
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -476,6 +478,11 @@
   ];
 
 
+# not needed for devanagari in firefox, libreoffice.
+#  fonts.fonts = with pkgs; [
+#    lohit-fonts.devanagari
+#    annapurna-sil
+#   ];
 
 
 }
