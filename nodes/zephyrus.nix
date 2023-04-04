@@ -20,12 +20,22 @@
 
   boot, brightness
   $ cat /sys/class/backlight/amdgpu_bl1/brightness
-  78
+
+  keyboard brightness
+  echo 0 >  /sys/class/leds/asus::kbd_backlight/brightness
+
+  xrand brightness
+  xrandr --output eDP --brightness .4
+
+
+  sharing xwindows
   xhost + local:      (for containers/apps run under different users that need to share Xorg)
   alsactl init        (must be root?)
   pulseaudio --kill   (as user)
   pulseaudio --start
   alsamixer           (verify working)
+
+
 
   nixos-rebuild build -I nixpkgs=/home/me/devel/nixpkgs/ switch
 
