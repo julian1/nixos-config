@@ -108,6 +108,12 @@
     #  #    pskRaw = "46c25aa68ccb90945621c1f1adbe93683f884f5f31c6e2d524eb6b446642762d"; };
     #};
 
+    ## apr 2023. OK. wpa_supplicant.conf can have multiple entries. so use that instead of configuring here,
+    #  because pskRaw is enough to authenticate.
+    # format,
+    # network={ ssid="xxx" psk=xxx }   network={ ssid="xxx" psk=xxx }  etc.
+
+
     # get warning if not configured,  https://nixos.org/manual/nixos/stable/options.html
     wireless.interfaces = [ "wlp4s0" ] ;
 
