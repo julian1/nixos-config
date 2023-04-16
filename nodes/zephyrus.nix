@@ -56,6 +56,9 @@
       /root/nixos-config/common/users.nix
       /root/nixos-config/common/dotfiles.nix
       /root/nixos-config/common/low-battery-monitor.nix
+
+      #/root/nixos-config/waveforms-flake/pkgs/adept2-runtime/default.nix 
+      
     ];
 
 
@@ -443,11 +446,28 @@
 
     # rxvt-unicode . use nix-shell -p.
     # libreoffice
+
+    # ltspice
+    wine
+
+    kicad
+
+    # digilent waveforms 
+    # for patching binaries
+    dpkg patchelf nix-index
+
+    # qt514.qtmultimedia
+    qt5.qtmultimedia
+    qt5.qtscript
+
+    #qt514.full
+
+    xdg-utils
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  # programs.mtr.enable = true;
+  # programs.mtr.enable = tRUE;
   # programs.gnupg.agent = {
   #   enable = true;
   #   enableSSHSupport = true;
@@ -459,7 +479,9 @@
   # JA
   services.openssh.enable = true;
 
-  services.openssh.permitRootLogin = "prohibit-password";
+  # services.openssh.permitRootLogin = "prohibit-password";
+    services.openssh.settings.PermitRootLogin = "prohibit-password";   # apr 2023.
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -499,6 +521,9 @@
 #    lohit-fonts.devanagari
 #    annapurna-sil
 #   ];
+
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
 
 }
