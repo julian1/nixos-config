@@ -421,6 +421,7 @@
     # networking
     whois
     traceroute
+    dig
 
     git-crypt
     firefox
@@ -439,7 +440,6 @@
     exiftool
 
     sshfs
-    # wine    # for ltspice . no need nixpkgs2
     awscli
     # mlocate   # says does not appear to be valid db
     mpv
@@ -452,17 +452,12 @@
 
     kicad
 
-    # digilent waveforms 
-    # for patching binaries
+    # digilent waveforms, patchelf for patching binaries
     dpkg patchelf nix-index
-
-    # qt514.qtmultimedia
     qt5.qtmultimedia
     qt5.qtscript
+    # xdg-utils
 
-    #qt514.full
-
-    xdg-utils
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -523,7 +518,7 @@
 #   ];
 
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+#  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
 
 }
