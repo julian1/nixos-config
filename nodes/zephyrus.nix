@@ -456,7 +456,7 @@
     dpkg patchelf nix-index
     qt5.qtmultimedia
     qt5.qtscript
-    # xdg-utils
+    xdg-utils
 
   ];
 
