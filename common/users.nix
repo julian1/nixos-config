@@ -23,13 +23,16 @@ with lib;
 
   # trusted can read /home/me if, chmod 770 /home/me/
 
+  config.users.groups.plugdev = {};
+
+
   config.users.extraGroups.me.gid = 1000;
   config.users.extraUsers.me =
    { isNormalUser = true;
      home = "/home/me";
      description = "my description";
     # feb23 2022. add trusted.
-     extraGroups = [ "me" "wheel" "networkmanager"  "dialout" "trusted" ];
+     extraGroups = [ "me" "wheel" "networkmanager"  "dialout" "trusted" "plugdev" ];
      openssh.authorizedKeys.keys = [ pubkey ];
    };
 
@@ -40,7 +43,7 @@ with lib;
    { isNormalUser = true;
      home = "/home/trusted";
      description = "my description";
-     extraGroups = [ "trusted" "wheel" "networkmanager"  ];     # feb22 2022.remove me
+     extraGroups = [ "trusted" "wheel" "networkmanager" "plugdev" ];     # feb22 2022.remove me
      openssh.authorizedKeys.keys = [ pubkey ];
    };
 
