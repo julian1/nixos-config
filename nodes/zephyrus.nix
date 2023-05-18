@@ -147,9 +147,9 @@
 
     # feb 23 2022.
     # dmesg. rndis_host 1-1:1.0 enp6s0f3u1: renamed from usb0
-    #interfaces.enp6s0f3u1.useDHCP = true;     # usb-A to c cable
-    #interfaces.enp6s0f4u1.useDHCP = true;     # white usb-c cable.  aug 1. 2022
-    # interfaces.enp6s0f4u2.useDHCP = true;     # white usb-c cable.  aug 1. 2022
+    interfaces.enp6s0f3u1.useDHCP = true;     # usb-A to c cable
+    interfaces.enp6s0f4u1.useDHCP = true;     # white usb-c cable.  aug 1. 2022
+    interfaces.enp6s0f4u2.useDHCP = true;     # white usb-c cable.  aug 1. 2022
 
 
 
@@ -445,11 +445,13 @@
     mpv
 
     # rxvt-unicode . use nix-shell -p.
-    # libreoffice
+    # libreoffice - to convert ltspice images to something png.
+    libreoffice
 
     # ltspice
     wine
 
+    # repo patched for v6
     kicad
 
     # digilent waveforms, patchelf for patching binaries
