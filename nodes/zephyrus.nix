@@ -460,6 +460,9 @@
     qt5.qtscript
     xdg-utils
 
+    # nice.
+    pinta
+
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
