@@ -460,8 +460,11 @@
     qt5.qtscript
     xdg-utils
 
-    # nice.
+    # nice. simple photo drawing, editing.
     pinta
+
+    # 
+    freecad
 
   ];
 
