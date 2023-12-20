@@ -57,8 +57,8 @@
       /root/nixos-config/common/dotfiles.nix
       /root/nixos-config/common/low-battery-monitor.nix
 
-      #/root/nixos-config/waveforms-flake/pkgs/adept2-runtime/default.nix 
-      
+      #/root/nixos-config/waveforms-flake/pkgs/adept2-runtime/default.nix
+
     ];
 
 
@@ -463,8 +463,11 @@
     # nice. simple photo drawing, editing.
     pinta
 
-    # 
+    #
     freecad
+
+    # for clipboard image
+    xclip
 
   ];
 
