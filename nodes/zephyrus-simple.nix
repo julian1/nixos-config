@@ -47,16 +47,6 @@
 { config, pkgs, ... }:
 
 
-let
-  # see, https://nixos.wiki/wiki/How_to_fetch_Nixpkgs_with_an_empty_NIX_PATH
-  dotfilesSrc = builtins.fetchTarball {
-    url = "https://github.com/julian1/dotfiles/archive/master.tar.gz";
-    #inherit sha256;
-
-  };
-
-
-in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -248,6 +238,7 @@ in
   services.xserver.enable = true;
 
 
+
   services.xserver = {
 
     windowManager.xmonad = {
@@ -262,26 +253,7 @@ in
 
     # windowManager.default = "xmonad";
     displayManager.defaultSession = "none+xmonad";
-
-
-
-
-    # cat "${dotfilesSrc}/xmonad.hs"   > /home/me/.xmonad/xmonad.hs
-    # dec 2023.
-    #       /root/nixos-config/common/users.nix
-    # config = builtins.readFile ../path/to/xmonad.hs;
-    config = builtins.readFile "${dotfilesSrc}/xmonad.hs";
-
-
   };
-
-
-
-
-
-
-
-
 
   services.xserver.displayManager.sessionCommands =
      # JA
