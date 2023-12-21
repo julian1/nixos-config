@@ -44,22 +44,23 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 
 {
   imports =
     [ # Include the results of the hardware scan.
-      #./hardware-configuration.nix
-      /etc/nixos/hardware-configuration.nix
+      ./hardware-configuration.nix
+      # /etc/nixos/hardware-configuration.nix
 
-      /root/nixos-config/common/users.nix
-      /root/nixos-config/common/dotfiles.nix
-      /root/nixos-config/common/low-battery-monitor.nix
+      #/root/nixos-config/common/users.nix
+      #c/root/nixos-config/common/dotfiles.nix
+      #/root/nixos-config/common/low-battery-monitor.nix
 
       #/root/nixos-config/waveforms-flake/pkgs/adept2-runtime/default.nix
 
     ];
+
 
 
   # nvidia drm fails to build against 5.13 kernel, ie. nixos master branch jul 17 2021
@@ -67,14 +68,18 @@
   # https://github.com/NixOS/nixpkgs/issues/130130
 
   # nvidia drm compiles fine for 5.18 latest. jun 8. 2022.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  #boot.kernelPackages = pkgs.linuxPackages_latest;
   # boot.kernelPackages = pkgs.linuxPackages_5_12;
 
   # Use the systemd-boot EFI boot loader.
 
   # removed, to avoid error warning. jun 8. 2022.
-  #  boot.loader.systemd-boot.enable = true;
+
+  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+
+/*
 
   #####
   boot.loader.grub = {
@@ -94,7 +99,7 @@
     };
   };
   #####
-
+*/
 
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
@@ -147,9 +152,9 @@
 
     # feb 23 2022.
     # dmesg. rndis_host 1-1:1.0 enp6s0f3u1: renamed from usb0
-    interfaces.enp6s0f3u1.useDHCP = true;     # usb-A to c cable
-    interfaces.enp6s0f4u1.useDHCP = true;     # white usb-c cable.  aug 1. 2022
-    interfaces.enp6s0f4u2.useDHCP = true;     # white usb-c cable.  aug 1. 2022
+    #interfaces.enp6s0f3u1.useDHCP = true;     # usb-A to c cable
+    #interfaces.enp6s0f4u1.useDHCP = true;     # white usb-c cable.  aug 1. 2022
+    #interfaces.enp6s0f4u2.useDHCP = true;     # white usb-c cable.  aug 1. 2022
 
 
 
@@ -172,365 +177,6 @@
     # networking.firewall.enable = false;
 
   };
-
-  services.udev = {
-      extraRules = ''
-        # SUBSYSTEM=="usb", ACTION=="add|remove", ENV{ID_VENDOR}=="Lenovo", ENV{ID_MODEL}=="Lenovo_ThinkPad_Dock", RUN+="${pkgs.bash}/bin/bash /home/hoodoo/.local/bin/dock_handler.sh"
-
-        # JA old. from ansible.
-        # thumb drive?
-        # SUBSYSTEM=="block", ATTRS{idVendor}=="058f", ATTRS{idProduct}=="6387", MODE="0666", OWNER="me"
-
-
-        # for /dev/ttyUSB0 eg. usb to uart, use group 'dialout'. changing device ownwer doesn't appear to work.
-
-        # ice40 / fpga works!
-        # https://stackoverflow.com/questions/36633819/iceprog-cant-find-ice-ftdi-usb-device-linux-permission-issue
-        # Bus 001 Device 040: ID 0403:6014 Future Technology Devices International, Ltd FT232H Single HS USB-UART/FIFO IC
-        ACTION=="add", ATTR{idVendor}=="0403", ATTR{idProduct}=="6014", MODE:="666", OWNER="me"
-
-
-        # stlink works!
-        ACTION=="add", ATTR{idVendor}=="0483", ATTR{idProduct}=="3748", MODE:="666", OWNER="me"
-
-        # tzrd
-        # ACTION=="add", ATTR{idVendor}=="534c", ATTR{idProduct}=="0001", MODE:="666", OWNER="trusted"
-
-
-
-        # Trezor
-        SUBSYSTEM=="usb", ATTR{idVendor}=="534c", ATTR{idProduct}=="0001", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl", SYMLINK+="trezor%n"
-        KERNEL=="hidraw*", ATTRS{idVendor}=="534c", ATTRS{idProduct}=="0001", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl"
-
-        # Trezor v2
-        SUBSYSTEM=="usb", ATTR{idVendor}=="1209", ATTR{idProduct}=="53c0", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl", SYMLINK+="trezor%n"
-        SUBSYSTEM=="usb", ATTR{idVendor}=="1209", ATTR{idProduct}=="53c1", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl", SYMLINK+="trezor%n"
-        KERNEL=="hidraw*", ATTRS{idVendor}=="1209", ATTRS{idProduct}=="53c1", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl"
-
-      '';
-  };
-
-
-
-  ###############################################
-  # Enable the X11 windowing system.
-  # JA
-  services.xserver.enable = true;
-
-
-
-  services.xserver = {
-
-    windowManager.xmonad = {
-      enable = true;
-      enableContribAndExtras = true;
-      extraPackages = haskellPackages: [
-        haskellPackages.xmonad-contrib
-        haskellPackages.xmonad-extras
-        haskellPackages.xmonad
-      ];
-    };
-
-    # windowManager.default = "xmonad";
-    displayManager.defaultSession = "none+xmonad";
-  };
-
-  services.xserver.displayManager.sessionCommands =
-     # JA
-    let
-      myCustomLayout = pkgs.writeText "xkb-layout" ''
-        ! Map umlauts to RIGHT ALT + <key>
-
-        keycode 96 = Insert Insert
-
-        !keysym e = e E EuroSign
-        !keysym c = c C cent
-        !keysym a = a A adiaeresis Adiaeresis
-        !keysym o = o O odiaeresis Odiaeresis
-        !keysym u = u U udiaeresis Udiaeresis
-        !keysym s = s S ssharp
-
-        ! disable capslock
-        ! remove Lock = Caps_Lock
-      '';
-    # this doesn't work. need to copy Xresources to $HOME
-    in
-      let myXResources = pkgs.writeText "xresources" ''
-        XTerm*selectToClipboard: true
-      '';
-    in
-  ''
-
-    ${pkgs.xorg.xrdb}/bin/xrdb --merge ${myXResources};
-
-    # doesn't work need to copy Xresources
-    ${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout};
-
-    # keyboard repeat rate
-    ${pkgs.xorg.xset}/bin/xset r rate 200 ;
-
-  '';
-
-#    ${pkgs.xorg.xrdb}/bin/xrdb --merge ${myXResources}
-
-
-
-  # for unrar but doesn't seem to work.
-  nixpkgs.config.allowUnfree = true;
-
-
-
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia.prime = {
-    offload.enable = true;
-
-    # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
-    #intelBusId = "PCI:0:2:0";
-
-    # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
-    #nvidiaBusId = "PCI:1:0:0";
-
-    nvidiaBusId = "PCI:1:0:0";
-#   # //  06:00.0
-    amdgpuBusId  = "PCI:6:0:0";
-
-  };
-
-  ############################################
-  # JA
-  # fails to build. may 28, 2021
-  # https://discourse.nixos.org/t/nixos-config-build-failes-with-latest-kernel/12273
-  # services.xserver.videoDrivers = [ "nvidia" ];
-
-
-  # Example for NixOS 20.09/unstable
-  # build fails against recent 5.11.21 kernel. missing asm/kmap_types.h:
-  # report.  https://www.linuxtoday.com/developer/nvidia-460.67-graphics-driver-released-with-better-support-for-linux-5.11-bug-fixes-210318111002.html
-  # we need,  NVIDIA 460.67
-
-  #   version = "460.73.01";
-  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable_390;
-  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable_460;
-
-
-  # This builds on master branch of nixpkgs, eg. pulls in nvidea 460
-  # nixos-rebuild build -I nixpkgs=/home/me/devel/nixpkgs/  switch
-  # <S-F12>
-  # eg. incorporates,  nixos-rebuild build -I nixpkgs=/home/me/devel/nixpkgs/
-  # services.xserver.videoDrivers = [ "nvidia" ];
-  # services.xserver.videoDrivers = [ "modsetting" "nvidia" ];
-
-  # we need this.
-  # https://github.com/NixOS/nixpkgs/pull/116816
-
-  # deprecated but might help
-  # https://old.reddit.com/r/NixOS/comments/kzrloo/powering_nvidia_card_on_and_off/
-  # hardware.bumblebee.enable = true;
-
-#  hardware.nvidia.prime = {
-#    sync.enable = true;
-#
-#    # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
-#    nvidiaBusId = "PCI:1:0:0";
-#   # //  06:00.0
-#    amdgpuBusId  = "PCI:6:0:0";
-#
-#  };
-
-
-
-  # Configure keymap in X11
-  # services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.users.jane = {
-  #   isNormalUser = true;
-  #   extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-  # };
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  # JA
-
-  # neat
-  # environment.shellAliases = { xtrlock = "xtrlock-pam"; };
-
-  environment.systemPackages = with pkgs;
-    let
-      nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
-        export __NV_PRIME_RENDER_OFFLOAD=1
-        export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
-        export __GLX_VENDOR_LIBRARY_NAME=nvidia
-        export __VK_LAYER_NV_optimus=NVIDIA_only
-        exec -a "$0" "$@"
-      '';
-
-      # can store.../ xtrlock-pam be referenced before use?
-      xtrlock = pkgs.writeShellScriptBin "xtrlock" "exec -a $0 ${xtrlock-pam}/bin/xtrlock-pam $@";
-    in
-  [
-     wpa_supplicant
-     screen
-     vim
-     git
-     file
-     tree
-
-      #####
-     xorg.xev      # for keyboard keycodes
-     xorg.xmodmap  # to experiment with remapping
-     xorg.xhost    # change persmissions, to permit other sessions
-     # xrdb is installed by default
-     # xclip   for copying into a shell
-     glxinfo
-     nvidia-offload
-
-
-    ###############################
-    dmenu                    # A menu for use with xmonad
-    haskellPackages.xmobar   # A Minimalistic Text Based Status Bar
-    #haskellPackages.libmpd   # Shows MPD status in xmobar
-    xtrlock-pam
-    xtrlock
-    ###############################
-
-    openssl     # backup/restore
-    zip  unzip
-    # wget use curl instead
-    #
-
-    # can remove later
-    linuxPackages.cpupower
-    lm_sensors
-    lshw
-    pciutils
-    usbutils
-    # radeon-profile gui app. works.
-
-    # networking
-    whois
-    traceroute
-    dig
-
-    git-crypt
-    firefox
-    evince
-    thunderbird
-    feh
-    trezord
-    scrot
-
-    octave
-    gnuplot
-    ghostscript
-
-    darktable
-    imagemagick
-    exiftool
-
-    sshfs
-    awscli
-    # mlocate   # says does not appear to be valid db
-    mpv
-
-    # rxvt-unicode . use nix-shell -p.
-    # libreoffice - to convert ltspice images to something png.
-    libreoffice
-
-    # ltspice
-    wine
-
-    # repo patched for v6
-    kicad
-
-    # digilent waveforms, patchelf for patching binaries
-    dpkg patchelf nix-index
-    qt5.qtmultimedia
-    qt5.qtscript
-    xdg-utils
-
-    # nice. simple photo drawing, editing.
-    pinta
-
-    #
-    freecad
-
-    # for clipboard image
-    xclip
-
-  ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = tRUE;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # JA
-  services.openssh.enable = true;
-
-  # services.openssh.permitRootLogin = "prohibit-password";
-    services.openssh.settings.PermitRootLogin = "prohibit-password";   # apr 2023.
-
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "20.09"; # Did you read the comment?
-
-
-  ############
-  # https://nixos.wiki/wiki/Printing
-  # https://blog.dwagenk.com/nix/2020/04/nix-printing/
-
-  # can navigate to http://localhost:631/ now.
-
-  # find /nix/ | grep  yourppd
-  # /nix/store/nwb7mhgwsp9qbmq98anvhzcnmzzmisx7-cups-progs/share/cups/model/yourppd.ppd
-
-  # configure after install.
-  # lpadmin -p 'Brother' -v 'socket://192.168.0.8:9100' -P '/root/nixos-config/nodes/BRHL16_2_GPL.ppd'  -E
-  # lpadmin -p 'Brother' -v 'socket://192.168.0.8:9100' -P '/nix/store/incn73f2iqls7m0v38y2mx3a2lbwv02f-yourppd.ppd.drv' -E
-  # /nix/store/nwb7mhgwsp9qbmq98anvhzcnmzzmisx7-cups-progs/share/cups/model/yourppd.ppd
-
-  # configure default
-  # lpadmin -d 'Brother'
-
-  services.printing.enable = true;
-
-  services.printing.drivers = [
-      (pkgs.writeTextDir "share/cups/model/yourppd.ppd" (builtins.readFile ./BRHL16_2_GPL.ppd ))
-  ];
-
-
-# not needed for devanagari in firefox, libreoffice.
-#  fonts.fonts = with pkgs; [
-#    lohit-fonts.devanagari
-#    annapurna-sil
-#   ];
-
-
-#  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
 
 }
 

@@ -46,17 +46,16 @@
 
 { config, pkgs, ... }:
 
+    let
+      # see, https://nixos.wiki/wiki/How_to_fetch_Nixpkgs_with_an_empty_NIX_PATH
+      dotfilesSrc = builtins.fetchTarball {
+        url = "https://github.com/julian1/dotfiles/archive/master.tar.gz";
+        #inherit sha256;
 
-let
-  # see, https://nixos.wiki/wiki/How_to_fetch_Nixpkgs_with_an_empty_NIX_PATH
-  dotfilesSrc = builtins.fetchTarball {
-    url = "https://github.com/julian1/dotfiles/archive/master.tar.gz";
-    #inherit sha256;
-
-  };
+      };
+    in
 
 
-in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -247,7 +246,6 @@ in
   # JA
   services.xserver.enable = true;
 
-
   services.xserver = {
 
     windowManager.xmonad = {
@@ -258,20 +256,24 @@ in
         haskellPackages.xmonad-extras
         haskellPackages.xmonad
       ];
+
+
+      # dec 2023.
+      # https://nixos.wiki/wiki/XMonad
+      # config file needs to be defined rather than just picking up ~/.xmonad/xmonad.hs.
+      # xmobar is still picked up as ~/.xmobarrc
+
+      # to check status if display manage service fails.
+      # systemctl status display-manager.service
+
+      # to restart window system
+      # systemctl restart display-manager.service
+
+      config = builtins.readFile "${dotfilesSrc}/xmonad.hs";
     };
 
     # windowManager.default = "xmonad";
     displayManager.defaultSession = "none+xmonad";
-
-
-
-
-    # cat "${dotfilesSrc}/xmonad.hs"   > /home/me/.xmonad/xmonad.hs
-    # dec 2023.
-    #       /root/nixos-config/common/users.nix
-    # config = builtins.readFile ../path/to/xmonad.hs;
-    config = builtins.readFile "${dotfilesSrc}/xmonad.hs";
-
 
   };
 
