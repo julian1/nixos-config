@@ -137,6 +137,12 @@
 
   networking = {
 
+    # " The firewall is enabled when not set. " eg. now default, dec 2023.
+    # need to reboot?
+    firewall.enable = true;
+
+
+
     hostName = "zephyrus"; # Define your hostname.
     # JA
     # wpa_passphrase essid pass > /etc/wpa_supplicant.conf
@@ -172,14 +178,16 @@
     # OTG usb to ethernet. warning. slows boot, as waits for a minute.
     # interfaces.enp6s0f4u1.useDHCP = true;
 
-/*
+
     # dec 2023 - disable by default. but these do work.
     # feb 23 2022.
     # dmesg. rndis_host 1-1:1.0 enp6s0f3u1: renamed from usb0
-    interfaces.enp6s0f3u1.useDHCP = true;     # usb-A to c cable
-    interfaces.enp6s0f4u1.useDHCP = true;     # white usb-c cable.  aug 1. 2022
-    interfaces.enp6s0f4u2.useDHCP = true;     # white usb-c cable.  aug 1. 2022
-*/
+    #interfaces.enp6s0f3u1.useDHCP = true;     # usb-A to c cable
+    #interfaces.enp6s0f4u1.useDHCP = true;     # white usb-c cable.  aug 1. 2022
+    #interfaces.enp6s0f4u2.useDHCP = true;     # white usb-c cable.  aug 1. 2022
+    interfaces.enp6s0f4u1.useDHCP = true;     # white usb-c cable.  dec 2023.
+    interfaces.enp6s0f3u1.useDHCP = true;     # usb-A to c cable.  dec 2023.
+     
 
 
 
