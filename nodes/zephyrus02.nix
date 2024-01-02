@@ -147,6 +147,7 @@
     # JA
     # wpa_passphrase essid pass > /etc/wpa_supplicant.conf
     wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+                             # doesn't affect usb-c phone connection. dec 2023.
 
     # don't use for public hosted code. rely on /etc/wpa_supplicant.conf instead.
     # wireless.networks = {
@@ -407,9 +408,6 @@
   # services.xserver.layout = "us";
   # services.xserver.xkbOptions = "eurosign:e";
 
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
@@ -496,18 +494,26 @@
     scrot
 
     awscli   # for backup
+
+    imagemagick
+
+    # needed for kicad, to view step files.
+    freecad
+
+    # public lectures, 
+    yt-dlp
+
+    mpv
 /*
     octave
     gnuplot
     ghostscript
 
     darktable
-    imagemagick
     exiftool
 
     sshfs
     # mlocate   # says does not appear to be valid db
-    mpv
 
     # rxvt-unicode . use nix-shell -p.
     # libreoffice - to convert ltspice images to something png.
@@ -527,9 +533,6 @@
 
     # nice. simple photo drawing, editing.
     pinta
-
-    #
-    freecad
 
     # for clipboard image
     xclip
@@ -575,6 +578,8 @@
   # configure default
   # lpadmin -d 'Brother'
 
+
+  # Enable CUPS to print documents.
   services.printing.enable = true;
 
   services.printing.drivers = [
