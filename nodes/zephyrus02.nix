@@ -188,7 +188,7 @@
     #interfaces.enp6s0f4u2.useDHCP = true;     # white usb-c cable.  aug 1. 2022
     interfaces.enp6s0f4u1.useDHCP = true;     # white usb-c cable.  dec 2023.
     interfaces.enp6s0f3u1.useDHCP = true;     # usb-A to c cable.  dec 2023.
-     
+
 
 
 
@@ -200,6 +200,7 @@
       ''
         127.0.0.2 other-localhost
         192.168.0.4   dell
+        192.168.0.8   brother
         3.25.161.11   aws3
       '';
 
@@ -500,7 +501,7 @@
     # needed for kicad, to view step files.
     freecad
 
-    # public lectures, 
+    # public lectures,
     yt-dlp
 
     mpv
@@ -559,9 +560,10 @@
 */
 
 
-/*
+
 
   ############
+  # OLD.
   # https://nixos.wiki/wiki/Printing
   # https://blog.dwagenk.com/nix/2020/04/nix-printing/
 
@@ -578,15 +580,41 @@
   # configure default
   # lpadmin -d 'Brother'
 
+  ################################
+  # jan 2024, this appeared to correctly manually configure the printer.
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  # driver
   services.printing.drivers = [
-      (pkgs.writeTextDir "share/cups/model/yourppd.ppd" (builtins.readFile ./BRHL16_2_GPL.ppd ))
+      (pkgs.writeTextDir "share/cups/model/BRHL16_2_GPL.ppd" (builtins.readFile "/root/nixos-config/nodes/BRHL16_2_GPL.ppd" ))
 
   ];
-*/
+
+  # definition
+  hardware.printers = {
+
+    ensurePrinters = [
+      {
+        name      = "Brother";
+        location  = "Home";
+        deviceUri = "socket://192.168.0.8:9100";
+        model     = "BRHL16_2_GPL.ppd";
+        ppdOptions = {
+          PageSize = "A4";
+        };
+      }
+    ];
+  ensureDefaultPrinter = "Brother";
+};
+
+  # show outstanding print jobs.
+  # lpstat -p Brother -t
+  # lpq
+  # lpstat -p
+  # http://localhost:631/printers/Brother
+
 
 # not needed for devanagari in firefox, libreoffice.
 #  fonts.fonts = with pkgs; [
