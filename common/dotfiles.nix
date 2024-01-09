@@ -86,8 +86,8 @@ with lib;
     # screenrc = myScreen;
 
     gitconfig = {
-        # text =  builtins.readFile ( "${dotfilesSrc}/gitconfig" ) ;
-        text =  builtins.replaceStrings  [ "mail@julian1" ]  [ "git@julian1" ]  (builtins.readFile ("${dotfilesSrc}/gitconfig")) ;
+        text =  builtins.readFile ( "${dotfilesSrc}/gitconfig" ) ;
+        # text =  builtins.replaceStrings  [ "mail@julian1" ]  [ "git@julian1" ]  (builtins.readFile ("${dotfilesSrc}/gitconfig")) ;
         mode = "0444";
       };
 
@@ -119,10 +119,15 @@ with lib;
 
       # better way?
       # this won't remove the file
-      [ -d "/home/me/.xmonad" ] ||  mkdir /home/me/.xmonad
-      cat "${dotfilesSrc}/xmonad.hs"   > /home/me/.xmonad/xmonad.hs
+      # jan 2024.  xmonad.hs now managed top level, with windowManager.xmonad
+      # [ -d "/home/me/.xmonad" ] ||  mkdir /home/me/.xmonad
+      # cat "${dotfilesSrc}/xmonad.hs"   > /home/me/.xmonad/xmonad.hs
+
       cat "${dotfilesSrc}/xmobarrc"    > /home/me/.xmobarrc
-      cat "${dotfilesSrc}/Xresources"  > /home/me/.Xresources
+      cat "${dotfilesSrc}/Xresources"   > /home/me/.Xresources
+
+      [ -d "/home/me/.config/gtk-3.0/" ] ||  mkdir "/home/me/.config/gtk-3.0/"
+      cat "${dotfilesSrc}/gtk-settings.ini"  > /home/me/.config/gtk-3.0/settings.ini
 
       '';
     };
