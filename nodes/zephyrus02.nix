@@ -505,6 +505,7 @@
     yt-dlp
 
     mpv
+    oath-toolkit   # 2fa
 /*
     octave
     gnuplot
