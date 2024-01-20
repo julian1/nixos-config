@@ -42,9 +42,13 @@ pkgs.stdenv.mkDerivation {
     netcat
 
     # alternative to netcat, to connect to uart
+    
     picocom
 
     # ncurses or ncurses-dev ??? compiled under arm?
+
+    # st-trace st-util st-info st-flash
+    stlink
   ];
 
 }
