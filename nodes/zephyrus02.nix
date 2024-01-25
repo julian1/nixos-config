@@ -4,8 +4,9 @@
 
     nixos-rebuild  --option tarball-ttl 60  switch
 
-  keep local repo nixpks , in line with channel .
-    so can build using main nixos for most stuff, but then do shell -p against local repo, for variant stuff (kicad).
+  keep the git commit for local repo nixpks, consistent with the channel, so that libraries/dependencies are all identical .
+    can then do rebuild switch for most stuff without needing the -I argument
+    but means can use shell -p -I against local repo, for exceptional packages (kicad), that have local modifications.
 
   =====================
   EXTR
