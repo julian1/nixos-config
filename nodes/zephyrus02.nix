@@ -1,5 +1,12 @@
 /*
 
+  force download of tarball , for dotfiles,
+
+    nixos-rebuild  --option tarball-ttl 60  switch
+
+  keep local repo nixpks , in line with channel .
+    so can build using main nixos for most stuff, but then do shell -p against local repo, for variant stuff (kicad).
+
   =====================
   EXTR
   don't need to sym-link /etc/nixos/configuration.nix
@@ -506,6 +513,8 @@
 
     mpv
     oath-toolkit   # 2fa
+    netcat-openbsd    # overide default netcat
+
 /*
     octave
     gnuplot
