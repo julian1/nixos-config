@@ -463,7 +463,9 @@
      xorg.xmodmap  # to experiment with remapping
      xorg.xhost    # change persmissions, to permit other sessions
      # xrdb is installed by default
-     # xclip   for copying into a shell
+
+     # for clipboard image, copying into a shell - seems to be default included in 2024.
+      # xclip
      glxinfo
      nvidia-offload
 
@@ -516,6 +518,10 @@
     oath-toolkit   # 2fa
     netcat-openbsd    # overide default netcat
 
+    # ltspice
+    wine
+
+
 /*
     octave
     gnuplot
@@ -531,10 +537,7 @@
     # libreoffice - to convert ltspice images to something png.
     libreoffice
 
-    # ltspice
-    wine
-
-    # repo patched for v6
+    # kicad7.  use patched repo version instead for v6
     kicad
 
     # digilent waveforms, patchelf for patching binaries
@@ -635,6 +638,10 @@
 
 
 #  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+
+  # https://search.nixos.org/options?channel=23.11&show=services.earlyoom.enable&from=0&size=50&sort=relevance&type=packages&query=earlyoom
+  services.earlyoom.enable = true;
 
 
 }
