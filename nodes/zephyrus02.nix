@@ -511,7 +511,7 @@
     # needed for kicad, to view step files.
     freecad
 
-    # public lectures,
+    # public lectures, youtube download
     yt-dlp
 
     mpv

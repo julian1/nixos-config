@@ -39,7 +39,8 @@ pkgs.stdenv.mkDerivation {
 
     # nc comes from somewherei  to connect to openocd port
     # think this is traditional
-    netcat
+    # netcat
+    netcat-openbsd    #  mar 2024.overide default netcat
 
     # alternative to netcat, to connect to uart
     
