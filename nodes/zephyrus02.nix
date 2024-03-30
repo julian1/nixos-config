@@ -194,8 +194,10 @@
     #interfaces.enp6s0f3u1.useDHCP = true;     # usb-A to c cable
     #interfaces.enp6s0f4u1.useDHCP = true;     # white usb-c cable.  aug 1. 2022
     #interfaces.enp6s0f4u2.useDHCP = true;     # white usb-c cable.  aug 1. 2022
-    interfaces.enp6s0f4u1.useDHCP = true;     # white usb-c cable.  dec 2023.
-    interfaces.enp6s0f3u1.useDHCP = true;     # usb-A to c cable.  dec 2023.
+
+    # disable. to avoid stall at boot time.
+    #interfaces.enp6s0f4u1.useDHCP = true;     # white usb-c cable.  dec 2023.
+    #interfaces.enp6s0f3u1.useDHCP = true;     # usb-A to c cable.  dec 2023.
 
 
 
@@ -521,12 +523,13 @@
     # ltspice
     wine
 
-
-/*
+    # numerical
     octave
     gnuplot
     ghostscript
 
+
+/*
     darktable
     exiftool
 
@@ -537,7 +540,7 @@
     # libreoffice - to convert ltspice images to something png.
     libreoffice
 
-    # kicad7.  use patched repo version instead for v6
+    # for kicad7.  use local repo for kicad v6
     kicad
 
     # digilent waveforms, patchelf for patching binaries
