@@ -95,6 +95,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # mar 2024
+  boot.loader.grub.memtest86.enable = true;
+
 /*
   # dec 2023. leave default in hardware-configuration.nix
   #####
@@ -195,7 +198,7 @@
     #interfaces.enp6s0f4u1.useDHCP = true;     # white usb-c cable.  aug 1. 2022
     #interfaces.enp6s0f4u2.useDHCP = true;     # white usb-c cable.  aug 1. 2022
 
-    # disable. to avoid stall at boot time.
+    # disable. to avoid stall at boot time. mar 2024
     #interfaces.enp6s0f4u1.useDHCP = true;     # white usb-c cable.  dec 2023.
     #interfaces.enp6s0f3u1.useDHCP = true;     # usb-A to c cable.  dec 2023.
 
