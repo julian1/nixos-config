@@ -117,15 +117,15 @@ with lib;
         [ -d "/root/$i" ] || mkdir "/root/$i" && chown root: "/root/$i"
       done
 
-      # better way?
-      # this won't remove the file
+      # xmonad and pulse both try to create dirs under .config, so it must exist and have the right permissions
       # jan 2024.  xmonad.hs now managed top level, with windowManager.xmonad
-      # [ -d "/home/me/.xmonad" ] ||  mkdir /home/me/.xmonad
-      # cat "${dotfilesSrc}/xmonad.hs"   > /home/me/.xmonad/xmonad.hs
+      [ -d "/home/me/.config" ] ||  mkdir  /home/me/.config
+      chown me:me /home/me/.config
 
       cat "${dotfilesSrc}/xmobarrc"    > /home/me/.xmobarrc
       cat "${dotfilesSrc}/Xresources"   > /home/me/.Xresources
 
+      # JA apr 2024 fixed to create .config if doesnt exist.
       [ -d "/home/me/.config/gtk-3.0/" ] ||  mkdir "/home/me/.config/gtk-3.0/"
       cat "${dotfilesSrc}/gtk-settings.ini"  > /home/me/.config/gtk-3.0/settings.ini
 
