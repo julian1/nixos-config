@@ -30,22 +30,42 @@ with lib;
   config.users.extraUsers.me =
    { isNormalUser = true;
      home = "/home/me";
-     description = "my description";
+     description = "me user";
     # feb23 2022. add trusted.
-     extraGroups = [ "me" "wheel" "networkmanager"  "dialout" "trusted" "plugdev" ];
+     extraGroups = [ "me" "wheel" "networkmanager"  "dialout" "trusted" "large" "plugdev" ];    # is trusted here necessary
      openssh.authorizedKeys.keys = [ pubkey ];
+
+
+    # Allow trusted to read and write me. But not the other way around. 
+    homeMode = "770";
    };
 
 
 
-  config.users.extraGroups.trusted .gid = 1001;
+  config.users.extraGroups.trusted.gid = 1001;
   config.users.extraUsers.trusted =
    { isNormalUser = true;
      home = "/home/trusted";
-     description = "my description";
+     description = "trusted user";
      extraGroups = [ "trusted" "wheel" "networkmanager" "plugdev" ];     # feb22 2022.remove me
      openssh.authorizedKeys.keys = [ pubkey ];
    };
+
+
+  #What is the difference between users and extraUsers?
+
+  config.users.extraGroups.large.gid = 1002;
+  config.users.extraUsers.large =
+   { isNormalUser = true;
+     home = "/home/large";
+     description = "large user";
+
+    # https://github.com/NixOS/nixpkgs/pull/168168
+    # This is enough to give me access to read and write - using the large group.
+    homeMode = "770";
+   };
+
+
 
 
 

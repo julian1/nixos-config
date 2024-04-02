@@ -119,8 +119,7 @@ with lib;
 
       # xmonad and pulse both try to create dirs under .config, so it must exist and have the right permissions
       # jan 2024.  xmonad.hs now managed top level, with windowManager.xmonad
-      [ -d "/home/me/.config" ] ||  mkdir  /home/me/.config
-      chown me:me /home/me/.config
+      [ -d "/home/me/.config" ] ||  mkdir  /home/me/.config && chown me:me /home/me/.config
 
       cat "${dotfilesSrc}/xmobarrc"    > /home/me/.xmobarrc
       cat "${dotfilesSrc}/Xresources"   > /home/me/.Xresources
