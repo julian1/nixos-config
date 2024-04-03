@@ -88,19 +88,21 @@
   # https://github.com/NixOS/nixpkgs/issues/130130
 
   # nvidia drm compiles fine for 5.18 latest. jun 8. 2022.
-  #boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
   # boot.kernelPackages = pkgs.linuxPackages_5_12;
 
   # Use the systemd-boot EFI boot loader.
 
   # removed, to avoid error warning. jun 8. 2022.
 
-  # dec 2023.
+  # dec 2023. systemd-boot instead of grub
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   # mar 2024
-  boot.loader.grub.memtest86.enable = true;
+  # boot.loader.grub.memtest86.enable = true;
+  # https://search.nixos.org/options?channel=23.11&show=boot.loader.systemd-boot.extraEntries&from=0&size=50&sort=relevance&type=packages&query=systemd-boot
+  boot.loader.systemd-boot.memtest86.enable = true;
 
 /*
   # dec 2023. leave default in hardware-configuration.nix
