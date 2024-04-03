@@ -479,8 +479,8 @@
      xorg.xhost    # change persmissions, to permit other sessions
      # xrdb is installed by default
 
-     # for clipboard image, copying into a shell - seems to be default included in 2024.
-      # xclip
+     # xclip for clipboard image, copying into a shell - seems to be default included in 2024.
+     xclip
      glxinfo
      nvidia-offload
 
@@ -541,6 +541,9 @@
     gnuplot
     ghostscript
 
+    # nice. simple photo drawing, editing.
+    pinta
+
 
 /*
     darktable
@@ -553,7 +556,7 @@
     # libreoffice - to convert ltspice images to something png.
     libreoffice
 
-    # for kicad7.  use local repo for kicad v6
+    # kicad7.  use local repo for kicad v6
     kicad
 
     # digilent waveforms, patchelf for patching binaries
@@ -562,11 +565,6 @@
     qt5.qtscript
     xdg-utils
 
-    # nice. simple photo drawing, editing.
-    pinta
-
-    # for clipboard image
-    xclip
 */
   ];
 
