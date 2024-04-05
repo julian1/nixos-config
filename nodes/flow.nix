@@ -529,6 +529,9 @@
     # public lectures, youtube download
     yt-dlp
 
+    #libxcb.dev #
+    gpu-screen-recorder
+
     mpv
     oath-toolkit   # 2fa
     netcat-openbsd    # overide default netcat
