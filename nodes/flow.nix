@@ -378,10 +378,9 @@
     # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
     #nvidiaBusId = "PCI:1:0:0";
 
+    # JA apr 2024
     nvidiaBusId = "PCI:1:0:0";
-#   # //  06:00.0
-# JA apr 2024
-    amdgpuBusId  = "PCI:9:0:0";
+    amdgpuBusId = "PCI:9:0:0";
 
   };
 
@@ -529,12 +528,15 @@
     # public lectures, youtube download
     yt-dlp
 
-    #libxcb.dev #
     gpu-screen-recorder
+    # gpu-screen-recorder-gtk
+    #kdenlive      # video edit
 
     mpv
     oath-toolkit   # 2fa
     netcat-openbsd    # overide default netcat
+
+    (ffmpeg.override { withXcb = true; })  # ffmpeg screen/desk recorder
 
     # ltspice
     wine
