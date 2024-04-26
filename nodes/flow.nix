@@ -549,7 +549,7 @@
     # nice. simple photo drawing, editing.
     pinta
 
-
+    # anki
 /*
     darktable
     exiftool
