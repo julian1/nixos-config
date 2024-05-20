@@ -83,6 +83,15 @@
     ];
 
 
+
+
+  boot.kernel = {
+    sysctl = {
+      "net.ipv4.conf.all.forwarding" = true;
+      "net.ipv6.conf.all.forwarding" = false;
+    };
+  };
+
   # nvidia drm fails to build against 5.13 kernel, ie. nixos master branch jul 17 2021
   # so use 5.12 instead.
   # https://github.com/NixOS/nixpkgs/issues/130130
@@ -154,9 +163,13 @@
 
   networking = {
 
+    # also see.
+    # boot.kernelParams = [ "net.ifnames=0" ];
+    usePredictableInterfaceNames = false;
+
     # " The firewall is enabled when not set. " eg. now default, dec 2023.
     # need to reboot?
-    firewall.enable = true;
+    firewall.enable = false;
 
 
 
@@ -232,7 +245,170 @@
     # or disable the firewall altogether.
     # networking.firewall.enable = false;
 
+
+    # static assignment worked. but took a little while to come up,
+    # it also added a route
+    # https://search.nixos.org/options?channel=23.11&show=networking.interfaces.%3Cname%3E.ipv4.addresses&from=0&size=50&sort=relevance&type=packages&query=networking.interfaces
+    interfaces.enp10s0f4u1 = {
+
+      useDHCP = false;
+
+      ipv4.addresses = [
+          {
+        address = "10.0.0.1";
+        prefixLength = 24;
+        }
+      ] ;
+    };
   };
+
+
+    /* / settings.address = [ "/example/10.0.0.20" ];
+
+
+    extraConfig = ''
+      interface = enp10s0f4u1
+      dhcp-range = 10.0.0.10,10.0.0.20,24h
+      address=/dev/10.0.0.1
+    '';
+
+
+*/
+
+  # remember we need the masquerade, iptables rule, if want external connection from client.
+
+  # refs,
+  # https://l33tsource.com/blog/2022/11/06/Build-a-dns-server-on-NixOS/
+  # https://search.nixos.org/options?channel=23.11&show=services.dnsmasq.settings&from=0&size=50&sort=alpha_asc&type=packages&query=services.dnsmasq
+  # https://nixos.wiki/wiki/Internet_Connection_Sharing
+
+  # systemctl status dnsmasq
+  # journalctl --unit dnsmasq
+
+
+  services.dnsmasq = {
+
+    enable = true;
+
+    settings = {
+      interface = "enp10s0f4u1";
+
+      /* make sure no default server, which kills */
+      servers = [ ];
+
+      dhcp-range = [ "10.0.0.10,10.0.0.20" ];
+    };
+  };
+
+
+
+/*
+  services.dnsmasq.enable = true;
+  # TODO: Update your DNSmasq configuration below to your needs
+  services.dnsmasq.extraConfig = ''
+    address=/dev/127.0.0.1
+    server=/bla.cool/IPHERE
+  '';
+  # TODO: Update your DNS servers below
+  services.dnsmasq.servers = [
+    "8.8.4.4"
+    "8.8.8.8"
+  ];
+*/
+
+  /* dhcpd4  no longer supported
+
+  */
+/*
+  services.dhcpd4 = {
+    enable = true;
+    interfaces = [ "enp10s0f4u1"  ];
+    extraConfig = ''
+      option domain-name-servers 10.5.1.10, 1.1.1.1;
+      option subnet-mask 255.255.255.0;
+
+      subnet 10.0.0.0 netmask 255.255.255.0 {
+        option broadcast-address 10.0.0.255;
+        option routers 10.0.0.1;
+        interface lan;
+        range 10.0.0.128 10.0.0.254;
+      }
+
+    '';
+  };
+*/
+
+
+
+
+/*
+  systemd.network.networks."10-lan" = {
+    matchConfig.Name = "lan";
+    networkConfig.DHCP = "ipv4";
+  };
+*/
+/*
+  # // useDHCP = false;
+  # networking.useNetworkd = true;
+  systemd.network.enable = true;
+
+    systemd.network = {
+
+      # enp10s0f4u1
+
+      networks."10-enp10s0f4u1" = {
+        # match the interface by name
+        matchConfig.Name = "enp10s0f4u1";
+        address = [
+            # configure addresses including subnet mask
+            "192.0.2.100/24"
+            "2001:DB8::2/64"
+        ];
+        routes = [
+          # create default routes for both IPv6 and IPv4
+          { routeConfig.Gateway = "fe80::1"; }
+          { routeConfig.Gateway = "192.0.2.1"; }
+          # or when the gateway is not on the same network
+          { routeConfig = {
+            Gateway = "172.31.1.1";
+            GatewayOnLink = true;
+          }; }
+        ];
+        # make the routes on this interface a dependency for network-online.target
+        linkConfig.RequiredForOnline = "routable";
+      };
+
+/*
+    address = [
+        # configure addresses including subnet mask
+        "192.0.2.100/24"
+        "2001:DB8::2/64"
+    ];
+
+        netdevs = {
+          # Create the bridge interface
+          "20-br-lan" = {
+            netdevConfig = {
+              Kind = "bridge";
+              Name = "br-lan";
+            };
+          };
+        };
+
+        networks = {
+          # Connect the bridge ports to the bridge
+          "30-lan0" = {
+            matchConfig.Name = "enp10s0f4u1";
+            networkConfig = {
+              Bridge = "br-lan";
+              ConfigureWithoutCarrier = true;
+            };
+            linkConfig.RequiredForOnline = "enslaved";
+          };
+        };
+
+    };
+*/
 
   services.udev = {
       extraRules = ''
