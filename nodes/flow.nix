@@ -165,6 +165,9 @@
 
     # also see.
     # boot.kernelParams = [ "net.ifnames=0" ];
+    # june 2024. worked to give wlan0. on boot.
+    # no need for extra kernel boot params.
+    # but had to boot from nixos boot disk.
     usePredictableInterfaceNames = false;
 
     # " The firewall is enabled when not set. " eg. now default, dec 2023.
@@ -193,7 +196,7 @@
 
     # get warning if not configured,  https://nixos.org/manual/nixos/stable/options.html
     # JA apr 2024
-    wireless.interfaces = [ "wlp6s0" ] ;
+    wireless.interfaces = [ "wlan0" ] ;
 
 
     # The global useDHCP flag is deprecated, therefore explicitly set to false here.
@@ -202,7 +205,7 @@
     useDHCP = false;
     #interfaces.enp3s0.useDHCP = true;
     # JA apr 2024
-    interfaces.wlp6s0.useDHCP = true;
+    interfaces.wlan0.useDHCP = true;
 
     # usb/mobile connection sharing. dhcp brings up everything by defaultwhen cable plugged. nice.
     # use 'route' to check interface used.
@@ -249,9 +252,10 @@
     # static assignment worked. but took a little while to come up,
     # it also added a route
     # https://search.nixos.org/options?channel=23.11&show=networking.interfaces.%3Cname%3E.ipv4.addresses&from=0&size=50&sort=relevance&type=packages&query=networking.interfaces
-    interfaces.enp10s0f4u1 = {
+    interfaces.usb0 = {
 
-      useDHCP = false;
+      # use dhcp = true for usb phone tethering. can change dhcp = false for  static ip assign. for ethernet devel.
+      useDHCP = true;
 
       ipv4.addresses = [
           {
@@ -267,7 +271,7 @@
 
 
     extraConfig = ''
-      interface = enp10s0f4u1
+      interface = usb0
       dhcp-range = 10.0.0.10,10.0.0.20,24h
       address=/dev/10.0.0.1
     '';
@@ -288,10 +292,11 @@
 
   services.dnsmasq = {
 
-    enable = true;
+    enable = false;
+    resolveLocalQueries = false;
 
     settings = {
-      interface = "enp10s0f4u1";
+      interface = "usb0";
 
       /* make sure no default server, which kills */
       servers = [ ];
@@ -322,7 +327,7 @@
 /*
   services.dhcpd4 = {
     enable = true;
-    interfaces = [ "enp10s0f4u1"  ];
+    interfaces = [ "usb0"  ];
     extraConfig = ''
       option domain-name-servers 10.5.1.10, 1.1.1.1;
       option subnet-mask 255.255.255.0;
@@ -354,11 +359,11 @@
 
     systemd.network = {
 
-      # enp10s0f4u1
+      # usb0
 
-      networks."10-enp10s0f4u1" = {
+      networks."10-usb0" = {
         # match the interface by name
-        matchConfig.Name = "enp10s0f4u1";
+        matchConfig.Name = "usb0";
         address = [
             # configure addresses including subnet mask
             "192.0.2.100/24"
@@ -398,7 +403,7 @@
         networks = {
           # Connect the bridge ports to the bridge
           "30-lan0" = {
-            matchConfig.Name = "enp10s0f4u1";
+            matchConfig.Name = "usb0";
             networkConfig = {
               Bridge = "br-lan";
               ConfigureWithoutCarrier = true;
@@ -642,6 +647,8 @@
     in
   [
      wpa_supplicant
+     # dhclient
+     dhcpcd   # dhcpclient. should be installed by default.
      screen
      vim
      git
