@@ -166,8 +166,8 @@
     # also see.
     # boot.kernelParams = [ "net.ifnames=0" ];
     # june 2024. worked to give wlan0. on boot.
-    # no need for extra kernel boot params.
-    # but had to boot from nixos boot disk.
+    # looks like turns on ifnames=0
+    # cat /proc/cmdline  shows  net.ifnames=0 present
     usePredictableInterfaceNames = false;
 
     # " The firewall is enabled when not set. " eg. now default, dec 2023.
