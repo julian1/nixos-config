@@ -249,6 +249,8 @@
     # networking.firewall.enable = false;
 
 
+    /* Jun 2024. Not sure any of this is relevant */
+
     # static assignment worked. but took a little while to come up,
     # it also added a route
     # https://search.nixos.org/options?channel=23.11&show=networking.interfaces.%3Cname%3E.ipv4.addresses&from=0&size=50&sort=relevance&type=packages&query=networking.interfaces
@@ -256,7 +258,13 @@
 
       # use dhcp = true for usb phone tethering. can change dhcp = false for  static ip assign. for ethernet devel.
       useDHCP = true;
+    };
 
+
+    /* static ip assigment. local net. using usb-to wired ethernet
+        works- just need rebuild switch, and can change ip.
+    */
+    interfaces.eth0 = {
       ipv4.addresses = [
           {
         address = "10.0.0.1";
@@ -264,20 +272,11 @@
         }
       ] ;
     };
+
   };
 
 
-    /* / settings.address = [ "/example/10.0.0.20" ];
 
-
-    extraConfig = ''
-      interface = usb0
-      dhcp-range = 10.0.0.10,10.0.0.20,24h
-      address=/dev/10.0.0.1
-    '';
-
-
-*/
 
   # remember we need the masquerade, iptables rule, if want external connection from client.
 
@@ -289,15 +288,20 @@
   # systemctl status dnsmasq
   # journalctl --unit dnsmasq
 
+  # Jun 20. 2024.  dhcp worked with mongoose application.
+  # but needed manual ifconfig eth0 up
 
   services.dnsmasq = {
 
-    enable = false;
+    enable = true;
     resolveLocalQueries = false;
 
     settings = {
-      interface = "usb0";
+      interface = "eth0";     /* not usb0 !!!*/
 
+      /* listen-address="10.0.0.1"; not needed, if ip on is already statically assigned with 'interfaces.eth0.ipv4.addresses'.
+          not needed for layer2 dhcpd anyway.
+      */
       /* make sure no default server, which kills */
       servers = [ ];
 
@@ -306,44 +310,9 @@
   };
 
 
-
-/*
-  services.dnsmasq.enable = true;
-  # TODO: Update your DNSmasq configuration below to your needs
-  services.dnsmasq.extraConfig = ''
-    address=/dev/127.0.0.1
-    server=/bla.cool/IPHERE
-  '';
-  # TODO: Update your DNS servers below
-  services.dnsmasq.servers = [
-    "8.8.4.4"
-    "8.8.8.8"
-  ];
-*/
-
   /* dhcpd4  no longer supported
 
   */
-/*
-  services.dhcpd4 = {
-    enable = true;
-    interfaces = [ "usb0"  ];
-    extraConfig = ''
-      option domain-name-servers 10.5.1.10, 1.1.1.1;
-      option subnet-mask 255.255.255.0;
-
-      subnet 10.0.0.0 netmask 255.255.255.0 {
-        option broadcast-address 10.0.0.255;
-        option routers 10.0.0.1;
-        interface lan;
-        range 10.0.0.128 10.0.0.254;
-      }
-
-    '';
-  };
-*/
-
-
 
 
 /*
