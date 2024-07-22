@@ -92,6 +92,12 @@
     };
   };
 
+
+  boot.extraModulePackages = with config.boot.kernelPackages; [ linux-gpib ];
+
+  # boot.extraModulePackages = [ ];
+
+
   # nvidia drm fails to build against 5.13 kernel, ie. nixos master branch jul 17 2021
   # so use 5.12 instead.
   # https://github.com/NixOS/nixpkgs/issues/130130
@@ -700,6 +706,9 @@
 
     # nice. simple photo drawing, editing.
     pinta
+
+
+    linux-gpib
 
     # anki
 /*
