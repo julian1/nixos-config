@@ -234,7 +234,7 @@
 
 
     # nameservers = [ "1.1.1.1" "9.9.9.9" ];    # cloudfare
-    # nameservers = [ "8.8.8.8"  ];             # google
+    nameservers = [ "8.8.8.8"  ];             # google
 
 
     # Configure network proxy if necessary
@@ -248,6 +248,10 @@
         192.168.0.2   zephyrus
         192.168.0.8   brother
         3.25.161.11   aws3
+
+        127.0.0.1     va.v.liveperson.net
+        127.0.0.1     v.liveperson.net
+        127.0.0.1     liveperson.net
       '';
 
     # Open ports in the firewall.
@@ -669,6 +673,7 @@
     whois
     traceroute
     dig
+    sshfs
 
     git-crypt
     firefox
@@ -711,13 +716,13 @@
 
 
     linux-gpib
+    astrolog
 
     # anki
 /*
     darktable
     exiftool
 
-    sshfs
     # mlocate   # says does not appear to be valid db
 
     # rxvt-unicode . use nix-shell -p.
