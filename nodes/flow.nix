@@ -606,6 +606,24 @@
 
 
 
+  # https://discourse.nixos.org/t/alert-sound-randomly-played-after-24-05-upgrade/46367
+  # cat /etc/pipewire/pipewire.conf.d/99-silent-bell.conf.conf
+  services.pipewire = {
+      # ... not relevant part snipped
+      extraConfig = {
+        pipewire."99-silent-bell.conf" = {
+          "context.properties" = {
+            "module.x11.bell" = false;
+          }; # context.properties
+        }; # extraConfig.pipewire
+      }; # extraConfig
+    }; # pipewire
+
+
+
+
+
+
   # Configure keymap in X11
   # services.xserver.layout = "us";
   # services.xserver.xkbOptions = "eurosign:e";
