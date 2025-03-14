@@ -42,13 +42,18 @@
 
   sharing xwindows
   xhost + local:      (for containers/apps run under different users that need to share Xorg)
+
+  pipewire volume. mar. 2025.
+  wpctl set-volume @DEFAULT_AUDIO_SINK@   80%
+
+  # old. alsa
   alsactl init        (must be root?)
   pulseaudio --kill   (as user)
   pulseaudio --start
   alsamixer           (verify working)
 
 
-
+  # old
   nixos-rebuild build -I nixpkgs=/home/me/devel/nixpkgs/ switch
 
 */
@@ -78,7 +83,7 @@
       /root/nixos-config/common/dotfiles.nix
       /root/nixos-config/common/low-battery-monitor.nix
 
-      #/root/nixos-config/waveforms-flake/pkgs/adept2-runtime/default.nix
+      #/ROOt/nixos-config/waveforms-flake/pkgs/adept2-runtime/default.nix
 
     ];
 
@@ -151,7 +156,9 @@
   #system.stateVersion = "20.09"; # Did you read the comment?
 
   # dec 2023.
-  system.stateVersion = "23.11";
+  # system.stateVersion = "23.11";
+  # mar 2025.
+  system.stateVersion = "24.11";
 
 
 
@@ -262,28 +269,28 @@
 
 
     /* Jun 2024. Not sure any of this is relevant */
-
-    # static assignment worked. but took a little while to come up,
-    # it also added a route
-    # https://search.nixos.org/options?channel=23.11&show=networking.interfaces.%3Cname%3E.ipv4.addresses&from=0&size=50&sort=relevance&type=packages&query=networking.interfaces
-    interfaces.usb0 = {
-
-      # use dhcp = true for usb phone tethering. can change dhcp = false for  static ip assign. for ethernet devel.
-      useDHCP = true;
-    };
-
-
-    /* static ip assigment. local net. using usb-to wired ethernet
-        works- just need rebuild switch, and can change ip.
-    */
-    interfaces.eth0 = {
-      ipv4.addresses = [
-          {
-        address = "10.0.0.1";
-        prefixLength = 24;
-        }
-      ] ;
-    };
+#
+#    # static assignment worked. but took a little while to come up,
+#    # it also added a route
+#    # https://search.nixos.org/options?channel=23.11&show=networking.interfaces.%3Cname%3E.ipv4.addresses&from=0&size=50&sort=relevance&type=packages&query=networking.interfaces
+#    interfaces.usb0 = {
+#
+#      # use dhcp = true for usb phone tethering. can change dhcp = false for  static ip assign. for ethernet devel.
+#      useDHCP = true;
+#    };
+#
+#
+#    /* static ip assigment. local net. using usb-to wired ethernet
+#        works- just need rebuild switch, and can change ip.
+#    */
+#    interfaces.eth0 = {
+#      ipv4.addresses = [
+#          {
+#        address = "10.0.0.1";
+#        prefixLength = 24;
+#        }
+#      ] ;
+#    };
 
   };
 
@@ -302,25 +309,25 @@
 
   # Jun 20. 2024.  dhcp worked with mongoose application.
   # but needed manual ifconfig eth0 up
-
-  services.dnsmasq = {
-
-    enable = true;
-    resolveLocalQueries = false;
-
-    settings = {
-      interface = "eth0";     /* not usb0 !!!*/
-
-      /* listen-address="10.0.0.1"; not needed, if ip on is already statically assigned with 'interfaces.eth0.ipv4.addresses'.
-          not needed for layer2 dhcpd anyway.
-      */
-      /* make sure no default server, which kills */
-      servers = [ ];
-
-      dhcp-range = [ "10.0.0.10,10.0.0.20" ];
-    };
-  };
-
+#
+#  services.dnsmasq = {
+#
+#    enable = true;
+#    resolveLocalQueries = false;
+#
+#    settings = {
+#      interface = "eth0";     /* not usb0 !!!*/
+#
+#      /* listen-address="10.0.0.1"; not needed, if ip on is already statically assigned with 'interfaces.eth0.ipv4.addresses'.
+#          not needed for layer2 dhcpd anyway.
+#      */
+#      /* make sure no default server, which kills */
+#      servers = [ ];
+#
+#      dhcp-range = [ "10.0.0.10,10.0.0.20" ];
+#    };
+#  };
+#
 
   /* dhcpd4  no longer supported
 
@@ -531,19 +538,29 @@
 
 
   services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia.prime = {
-    offload.enable = true;
+  hardware.nvidia = {
 
-    # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
-    #intelBusId = "PCI:0:2:0";
+    #  see https://nixos.wiki/wiki/Nvidia
 
-    # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
-    #nvidiaBusId = "PCI:1:0:0";
+    # add these march 2025.
+    # Modesetting is required.
+    modesetting.enable = true;
 
-    # JA apr 2024
-    nvidiaBusId = "PCI:1:0:0";
-    amdgpuBusId = "PCI:9:0:0";
+    open = false;
 
+    prime = {
+      offload.enable = true;
+
+      # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
+      #intelBusId = "PCI:0:2:0";
+
+      # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
+      #nvidiaBusId = "PCI:1:0:0";
+
+      # JA apr 2024
+      nvidiaBusId = "PCI:1:0:0";
+      amdgpuBusId = "PCI:9:0:0";
+    };
   };
 
   ############################################
@@ -594,8 +611,11 @@
   # services.xserver.xkbOptions = "eurosign:e";
 
   # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
+
+  # disable march 2025. upgrade to 24.11
+  # sound.enable = true;
+  # disable march 2025.
+  # hardware.pulseaudio.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
@@ -677,6 +697,8 @@
 
     git-crypt
     firefox
+    chromium
+
     evince
     thunderbird
     feh
@@ -704,7 +726,7 @@
     (ffmpeg.override { withXcb = true; })  # ffmpeg screen/desk recorder
 
     # ltspice
-    wine
+    # wine
 
     # numerical
     octave
@@ -719,6 +741,17 @@
     astrolog
 
     # anki
+
+    # libreoffice
+    a2ps
+    dconf
+
+
+    # scanimage from hardware.sane
+    # tiffcp
+    # tiff2pdf
+    libtiff
+    sane-backends
 /*
     darktable
     exiftool
@@ -760,6 +793,33 @@
     services.openssh.settings.PermitRootLogin = "prohibit-password";   # apr 2023.
 */
 
+
+  ##################
+  # scanner
+  # https://nixos.wiki/wiki/Scanners
+  # LIDE
+  # found possible USB scanner (vendor=0x04a9 [Canon], product=0x220d [CanoScan], chip=LM9832/3) at libusb:003:008
+  #  https://github.com/NixOS/nixpkgs/issues/273280
+  # hardware.sane.enable = true; # enables support for SANE scanners
+  # https://issues.guix.gnu.org/73406
+
+  # https://github.com/NixOS/nixpkgs/pull/328459  fix.
+
+  #services.ipp-usb.enable=true;
+
+  hardware.sane.enable = true; # enables support for SANE scanners
+
+
+  nixpkgs.overlays = [
+    (final: prev: {
+      # Fixes a problem that attempt to access /nix/store/.../var/lock .
+      # Without this, the scanner is not detected.
+      sane-backends = prev.sane-backends.overrideAttrs
+        ({ configureFlags ? [ ], ... }: {
+          configureFlags = configureFlags ++ [ "--disable-locking" ];
+        });
+    })
+  ];
 
 
 
