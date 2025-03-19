@@ -124,6 +124,9 @@ with lib;
       cat "${dotfilesSrc}/xmobarrc"    > /home/me/.xmobarrc
       cat "${dotfilesSrc}/Xresources"   > /home/me/.Xresources
 
+      # issue is that rebuild/update will overwrite the local file changes
+      # cat "${dotfilesSrc}/gitconfig"   > /home/me/.gitconfig
+
       # JA apr 2024 fixed to create .config if doesnt exist.
       [ -d "/home/me/.config/gtk-3.0/" ] ||  mkdir "/home/me/.config/gtk-3.0/"
       cat "${dotfilesSrc}/gtk-settings.ini"  > /home/me/.config/gtk-3.0/settings.ini
