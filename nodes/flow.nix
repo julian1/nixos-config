@@ -111,6 +111,12 @@
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   # boot.kernelPackages = pkgs.linuxPackages_5_12;
 
+
+  # april 2025. try older kernel.  6.1 was default for nixos 23.11. Tapir.
+  boot.kernelPackages = pkgs.linuxPackages_6_1;
+
+
+
   # Use the systemd-boot EFI boot loader.
 
   # removed, to avoid error warning. jun 8. 2022.
@@ -744,7 +750,7 @@
     (ffmpeg.override { withXcb = true; })  # ffmpeg screen/desk recorder
 
     # ltspice
-    # wine
+    wine
 
     # numerical
     octave
