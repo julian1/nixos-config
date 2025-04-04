@@ -246,6 +246,10 @@
     #interfaces.enp6s0f3u1.useDHCP = true;     # usb-A to c cable.  dec 2023.
 
 
+    # worked. white usb cable. april 2025.  kernel 6.1.131
+    interfaces.eth0.useDHCP = true;
+
+
     # nameservers = [ "1.1.1.1" "9.9.9.9" ];    # cloudfare
     nameservers = [ "8.8.8.8"  ];             # google
 
