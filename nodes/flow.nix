@@ -455,9 +455,12 @@
   ###############################################
   # Enable the X11 windowing system.
   # JA
-  services.xserver.enable = true;
+
+
 
   services.xserver = {
+
+    enable = true;
 
     windowManager.xmonad = {
       enable = true;
@@ -483,16 +486,13 @@
       config = builtins.readFile "${dotfilesSrc}/xmonad.hs";
     };
 
-    # windowManager.default = "xmonad";
-    displayManager.defaultSession = "none+xmonad";
-
   };
 
 
 
 
-
-
+  # windowManager.default = "xmonad";
+  services.displayManager.defaultSession = "none+xmonad";
 
 
 
@@ -646,7 +646,8 @@
   # hardware.pulseaudio.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
+
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # users.users.jane = {
@@ -764,6 +765,8 @@
     # nice. simple photo drawing, editing.
     pinta
 
+
+    openscad
 
     linux-gpib
     astrolog
