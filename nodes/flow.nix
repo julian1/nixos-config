@@ -738,8 +738,6 @@
 
     imagemagick
 
-    # needed for kicad, to view step files.
-    freecad
 
     # public lectures, youtube download
     yt-dlp
@@ -765,15 +763,11 @@
     # nice. simple photo drawing, editing.
     pinta
 
-
-    openscad
-
     linux-gpib
     astrolog
 
     # anki
 
-    # libreoffice
     a2ps
     dconf
 
@@ -783,6 +777,16 @@
     # tiff2pdf
     libtiff
     sane-backends
+
+
+    # large , heavy dependenies.c0w
+    # needed for kicad, to view step files.
+    freecad
+    openscad
+    # libreoffice
+    # openscad-unstable
+
+
 /*
     darktable
     exiftool
