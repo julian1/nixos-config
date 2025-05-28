@@ -10,7 +10,6 @@ let
   };
 
 in
-
   let
     myVim =
     pkgs.vim_configurable.customize {
@@ -30,6 +29,10 @@ in
           # autocmd FileType php :packadd phpCompletion
         };
     };
+
+
+
+    # may 2025. deprecate
 
     # likewise for git gitconfig
     # using /etc/gitconfig, avoids recompliing everytime gitconfig changes
@@ -60,7 +63,8 @@ with lib;
   config.users.users.root.packages =
     # note less, nc, netstat, curl, rsync are installed by default
     with pkgs;
-    [  myVim myGit screen less man psmisc ];
+    # [  myVim myGit screen less man psmisc ];
+    [  vim myGit screen less man psmisc ];
 
 
 
@@ -85,11 +89,12 @@ with lib;
     # [ "--enable-telnet" "--enable-pam" "--with-sys-screenrc=/etc/screenrc" "--enable-colors256" ]
     # screenrc = myScreen;
 
-    gitconfig = {
-        text =  builtins.readFile ( "${dotfilesSrc}/gitconfig" ) ;
-        # text =  builtins.replaceStrings  [ "mail@julian1" ]  [ "git@julian1" ]  (builtins.readFile ("${dotfilesSrc}/gitconfig")) ;
-        mode = "0444";
-      };
+    # deprecate may 2025
+    #gitconfig = {
+    #    # text =  builtins.readFile ( "${dotfilesSrc}/gitconfig" ) ;
+    #    text =  builtins.replaceStrings  [ "mail@julian1" ]  [ "git@julian1" ]  (builtins.readFile ("${dotfilesSrc}/gitconfig")) ;
+    #    mode = "0444";
+    #  };
 
 
     screenrc = {
@@ -117,15 +122,25 @@ with lib;
         [ -d "/root/$i" ] || mkdir "/root/$i" && chown root: "/root/$i"
       done
 
-      # xmonad and pulse both try to create dirs under .config, so it must exist and have the right permissions
+      # xmonad and pulse both attmpt to create dirs under .config, create with the right permissions
       # jan 2024.  xmonad.hs now managed top level, with windowManager.xmonad
       [ -d "/home/me/.config" ] ||  mkdir  /home/me/.config && chown me:me /home/me/.config
 
       cat "${dotfilesSrc}/xmobarrc"    > /home/me/.xmobarrc
       cat "${dotfilesSrc}/Xresources"   > /home/me/.Xresources
 
-      # issue is that rebuild/update will overwrite the local file changes
-      # cat "${dotfilesSrc}/gitconfig"   > /home/me/.gitconfig
+
+      ############################
+
+      for i in ".config/git"; do
+        # echo $i;
+        [ -d "/home/me/$i" ] || mkdir "/home/me/$i" && chown me: "/home/me/$i"
+        [ -d "/root/$i" ] || mkdir "/root/$i" && chown root: "/root/$i"
+      done
+
+      cat "${dotfilesSrc}/gitconfig"   > /home/me/.config/git/config
+      cat "${dotfilesSrc}/gitconfig"   > /root/.config/git/config
+
 
       # JA apr 2024 fixed to create .config if doesnt exist.
       [ -d "/home/me/.config/gtk-3.0/" ] ||  mkdir "/home/me/.config/gtk-3.0/"

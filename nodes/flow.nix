@@ -82,6 +82,7 @@
       /root/nixos-config/common/users.nix
       /root/nixos-config/common/dotfiles.nix
       /root/nixos-config/common/low-battery-monitor.nix
+      /root/nixos-config/common/gitconfig-change.nix
 
       #/ROOt/nixos-config/waveforms-flake/pkgs/adept2-runtime/default.nix
 
@@ -778,12 +779,13 @@
     libtiff
     sane-backends
 
-
-    # large , heavy dependenies.c0w
+    ###############
+    # large, with heavy compile dependenies
     # needed for kicad, to view step files.
-    freecad
+    # freecad  # don't use. instead use 1.0.1 version from master.
+    libreoffice
+
     openscad
-    # libreoffice
     # openscad-unstable
 
 
