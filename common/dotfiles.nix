@@ -64,11 +64,7 @@ with lib;
     # note less, nc, netstat, curl, rsync are installed by default
     with pkgs;
     # [  myVim myGit screen less man psmisc ];
-    [  vim myGit screen less man psmisc ];
-
-
-
-
+    [  myVim myGit screen less man psmisc ];
 
 
   config.users.users.me.packages =

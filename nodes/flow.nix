@@ -788,6 +788,7 @@
     openscad
     # openscad-unstable
 
+    # kicad   # v8.
 
 /*
     darktable
