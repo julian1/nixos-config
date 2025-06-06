@@ -431,7 +431,7 @@
         ACTION=="add", ATTR{idVendor}=="0403", ATTR{idProduct}=="6014", MODE:="666", OWNER="me"
 
 
-        # stlink works!
+        # stlink v2 works!
         ACTION=="add", ATTR{idVendor}=="0483", ATTR{idProduct}=="3748", MODE:="666", OWNER="me"
 
         # tzrd
@@ -447,6 +447,11 @@
         SUBSYSTEM=="usb", ATTR{idVendor}=="1209", ATTR{idProduct}=="53c0", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl", SYMLINK+="trezor%n"
         SUBSYSTEM=="usb", ATTR{idVendor}=="1209", ATTR{idProduct}=="53c1", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl", SYMLINK+="trezor%n"
         KERNEL=="hidraw*", ATTRS{idVendor}=="1209", ATTRS{idProduct}=="53c1", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl"
+
+
+        # stlink v3, may 2025.
+        ACTION=="add", ATTR{idVendor}=="0483", ATTR{idProduct}=="3754", MODE:="666", OWNER="me"
+
 
       '';
   };
