@@ -99,7 +99,10 @@
   };
 
 
-  boot.extraModulePackages = with config.boot.kernelPackages; [ linux-gpib ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    # linux-gpib  - fails to compile 25.05.
+
+  ];
 
   # boot.extraModulePackages = [ ];
 
@@ -114,7 +117,9 @@
 
 
   # april 2025. try older kernel.  6.1 was default for nixos 23.11. Tapir.
-  boot.kernelPackages = pkgs.linuxPackages_6_1;
+
+  # june 2025. use normal kernel with upgrade.
+  # boot.kernelPackages = pkgs.linuxPackages_6_1;
 
 
 
@@ -679,7 +684,7 @@
       '';
 
       # can store.../ xtrlock-pam be referenced before use?
-      xtrlock = pkgs.writeShellScriptBin "xtrlock" "exec -a $0 ${xtrlock-pam}/bin/xtrlock-pam $@";
+      #xtrlock = pkgs.writeShellScriptBin "xtrlock" "exec -a $0 ${xtrlock-pam}/bin/xtrlock-pam $@";
     in
   [
      wpa_supplicant
@@ -707,8 +712,10 @@
     dmenu                    # A menu for use with xmonad
     haskellPackages.xmobar   # A Minimalistic Text Based Status Bar
     #haskellPackages.libmpd   # Shows MPD status in xmobar
-    xtrlock-pam
-    xtrlock
+
+
+    # xtrlock-pam         # removed in nixos 25.05
+    # xtrlock
     ###############################
 
     openssl     # backup/restore
@@ -731,19 +738,18 @@
     sshfs
 
     git-crypt
-    firefox
-    chromium
 
     evince
-    thunderbird
     feh
     trezord
     scrot
 
+
+    ###############
+
     awscli   # for backup
 
-    imagemagick
-
+    imagemagick   # convert
 
     # public lectures, youtube download
     yt-dlp
@@ -758,8 +764,6 @@
 
     (ffmpeg.override { withXcb = true; })  # ffmpeg screen/desk recorder
 
-    # ltspice
-    wine
 
     # numerical
     octave
@@ -769,7 +773,7 @@
     # nice. simple photo drawing, editing.
     pinta
 
-    linux-gpib
+    # linux-gpib   # fails to build 25.05
     astrolog
 
     # anki
@@ -784,13 +788,23 @@
     libtiff
     sane-backends
 
-    ###############
-    # large, with heavy compile dependenies
-    # needed for kicad, to view step files.
-    # freecad  # don't use. instead use 1.0.1 version from master.
-    libreoffice
+    ########################
 
-    openscad
+    # large apps, with heavy compile dependencies. that
+    # needed for kicad, to view step files.
+
+    # thunderbird needed to be compiled on upgrade 25.05
+    #thunderbird
+
+    # firefox  # firefox failed to build, hung when running rustc.
+    chromium
+
+    # freecad  # don't use. instead use 1.0.1 version from master.
+    # libreoffice
+
+    # wine   # for ltspice
+
+    # openscad
     # openscad-unstable
 
     # kicad   # v8.
