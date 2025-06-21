@@ -790,14 +790,12 @@
 
     ########################
 
-    # large apps, with heavy compile dependencies. that
-    # needed for kicad, to view step files.
+    # large apps, with heavy compile dependencies.
 
-    # thunderbird needed to be compiled on upgrade 25.05
-    #thunderbird
-
-    # firefox  # firefox failed to build, hung when running rustc.
     chromium
+
+    firefox        # 26.05 wants to compile. firefox failed to build, hung when running rustc.
+    thunderbird    # 25.05. wants to compile it.
 
     # freecad  # don't use. instead use 1.0.1 version from master.
     # libreoffice
