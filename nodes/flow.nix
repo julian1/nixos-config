@@ -99,6 +99,25 @@
   };
 
 
+
+  # https://discourse.nixos.org/t/lockups-with-kernel-6-14-7-and-amd-gpus/64585/9
+  # dmesg [Thu Jul  3 09:18:27 2025] Command line: ...  mem_sleep_default=s2idle amdgpu.noretry=0 amdgpu.vm_update_mode=3 amdgpu.sg_display=0 amdgpu.preempt_mm=0 loglevel=4
+  # net.ifnames=0 lsm=landlock,yama,bpf nvidia-drm.modeset=1 nvidia-drm.fbdev=1
+  boot.kernelParams = [
+    # example settings
+    #"quiet"
+    #"splash"
+    #"usbcore.blinkenlights=1"
+
+    "mem_sleep_default=s2idle"
+    "amdgpu.noretry=0"
+    "amdgpu.vm_update_mode=3"
+    "amdgpu.sg_display=0"
+    "amdgpu.preempt_mm=0"
+  ];
+
+
+
   boot.extraModulePackages = with config.boot.kernelPackages; [
     # linux-gpib  - fails to compile 25.05.
 
@@ -788,6 +807,8 @@
     libtiff
     sane-backends
 
+
+
     ########################
 
     # large apps, with heavy compile dependencies.
@@ -828,6 +849,12 @@
 
 */
   ];
+
+
+
+  # in programs, for suid, needed to disable oom.
+  # needs reboot
+  programs.slock.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
