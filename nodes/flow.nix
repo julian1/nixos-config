@@ -246,10 +246,13 @@
     # The global useDHCP flag is deprecated, therefore explicitly set to false here.
     # Per-interface useDHCP will be mandatory in the future, so this generated config
     # replicates the default behaviour.
-    useDHCP = false;
+
+    #  networking.useDHCP is set to true by default.  2025.
+    # useDHCP = false;
+
     #interfaces.enp3s0.useDHCP = true;
     # JA apr 2024
-    interfaces.wlan0.useDHCP = true;
+    #interfaces.wlan0.useDHCP = true;
 
     # usb/mobile connection sharing. dhcp brings up everything by defaultwhen cable plugged. nice.
     # use 'route' to check interface used.
@@ -272,7 +275,7 @@
 
 
     # worked. white usb cable. april 2025.  kernel 6.1.131
-    interfaces.eth0.useDHCP = true;
+    # interfaces.eth0.useDHCP = true;
 
 
     # nameservers = [ "1.1.1.1" "9.9.9.9" ];    # cloudfare
