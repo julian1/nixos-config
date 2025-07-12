@@ -100,20 +100,18 @@
 
 
 
-  # https://discourse.nixos.org/t/lockups-with-kernel-6-14-7-and-amd-gpus/64585/9
-  # dmesg [Thu Jul  3 09:18:27 2025] Command line: ...  mem_sleep_default=s2idle amdgpu.noretry=0 amdgpu.vm_update_mode=3 amdgpu.sg_display=0 amdgpu.preempt_mm=0 loglevel=4
-  # net.ifnames=0 lsm=landlock,yama,bpf nvidia-drm.modeset=1 nvidia-drm.fbdev=1
   boot.kernelParams = [
     # example settings
     #"quiet"
     #"splash"
     #"usbcore.blinkenlights=1"
 
-    "mem_sleep_default=s2idle"
-    "amdgpu.noretry=0"
-    "amdgpu.vm_update_mode=3"
-    "amdgpu.sg_display=0"
-    "amdgpu.preempt_mm=0"
+    # https://discourse.nixos.org/t/lockups-with-kernel-6-14-7-and-amd-gpus/64585/9
+    #"mem_sleep_default=s2idle"
+    #"amdgpu.noretry=0"
+    #"amdgpu.vm_update_mode=3"
+    #"amdgpu.sg_display=0"
+    #"amdgpu.preempt_mm=0"
   ];
 
 
