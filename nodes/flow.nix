@@ -134,9 +134,13 @@
 
 
   # april 2025. try older kernel.  6.1 was default for nixos 23.11. Tapir.
-
   # june 2025. use normal kernel with upgrade.
-  # boot.kernelPackages = pkgs.linuxPackages_6_1;
+  # july 2025.  - 6.12.34 is current.  try to downgrade/revert
+  #
+  # 23.05       -  I'm using a stable channel (23.05). After automatic update kernel version is 6.1.62
+  # nixos-23.11 - The default version on nixos-23.11 branch is 6.1,
+  # nixos-24.05 - The default kernel package has been updated from 6.1 to 6.6.
+  boot.kernelPackages = pkgs.linuxPackages_6_1;
 
 
 
