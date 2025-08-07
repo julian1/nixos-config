@@ -46,6 +46,10 @@
   pipewire volume. mar. 2025.
   wpctl set-volume @DEFAULT_AUDIO_SINK@   80%
 
+  aug 2025.
+  wpctl status
+  wpctl set-volume  69 1.2
+
   # old. alsa
   alsactl init        (must be root?)
   pulseaudio --kill   (as user)
