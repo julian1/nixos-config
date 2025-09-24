@@ -49,12 +49,16 @@
   aug 2025.
   wpctl status
   wpctl set-volume  69 1.2
+  wpctl set-volume  58 0.8   <- sept. sink id. changed.
 
   # old. alsa
   alsactl init        (must be root?)
   pulseaudio --kill   (as user)
   pulseaudio --start
   alsamixer           (verify working)
+
+  # oct. 2025.  update. to pick up, minor kernel release update
+  nix-channel --update nixos
 
 
   # old
@@ -589,15 +593,21 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
 
-    #  see https://nixos.wiki/wiki/Nvidia
+    # see https://nixos.wiki/wiki/Nvidia
+    # sudo lshw -c display
 
     # add these march 2025.
     # Modesetting is required.
     modesetting.enable = true;
 
+    # Use the NVidia open source kernel module
     open = false;
 
     prime = {
+
+      ## AI enable false to disable GPU offloading, meaning you want your
+      # integrated # GPU (iGPU) to handle most tasks
+      # doesn't get to boot screen
       offload.enable = true;
 
       # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
