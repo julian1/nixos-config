@@ -589,38 +589,51 @@
       ];
 
 
+  # dec . 2025.
+  # https://nixos.wiki/wiki/AMD_GPU
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  # services.xserver.enable = true;  defined earlier
+  services.xserver.videoDrivers = [ "amdgpu" ];
 
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia = {
 
-    # see https://nixos.wiki/wiki/Nvidia
-    # sudo lshw -c display
+#
+#  nov 2025.
+#  services.xserver.videoDrivers = [ "nvidia" ];
+#  hardware.nvidia = {
+#
+#    # see https://nixos.wiki/wiki/Nvidia
+#    # sudo lshw -c display
+#
+#    # add these march 2025.
+#    # Modesetting is required.
+#    modesetting.enable = true;
+#
+#    # Use the NVidia open source kernel module
+#    open = false;
+#
+#    prime = {
+#
+#      ## AI enable false to disable GPU offloading, meaning you want your
+#      # integrated # GPU (iGPU) to handle most tasks
+#      # doesn't get to boot screen
+#      offload.enable = true;
+#
+#      # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
+#      #intelBusId = "PCI:0:2:0";
+#
+#      # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
+#      #nvidiaBusId = "PCI:1:0:0";
+#
+#      # JA apr 2024
+#      nvidiaBusId = "PCI:1:0:0";
+#      amdgpuBusId = "PCI:9:0:0";
+#    };
+#  };
+#
 
-    # add these march 2025.
-    # Modesetting is required.
-    modesetting.enable = true;
 
-    # Use the NVidia open source kernel module
-    open = false;
 
-    prime = {
 
-      ## AI enable false to disable GPU offloading, meaning you want your
-      # integrated # GPU (iGPU) to handle most tasks
-      # doesn't get to boot screen
-      offload.enable = true;
-
-      # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
-      #intelBusId = "PCI:0:2:0";
-
-      # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
-      #nvidiaBusId = "PCI:1:0:0";
-
-      # JA apr 2024
-      nvidiaBusId = "PCI:1:0:0";
-      amdgpuBusId = "PCI:9:0:0";
-    };
-  };
 
   ############################################
   # JA
