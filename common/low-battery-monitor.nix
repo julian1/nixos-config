@@ -12,7 +12,11 @@ with lib;
 
 let
 
+
+  # wave_file = "${pkgs.speech-dispatcher}/share/sounds/speech-dispatcher/test.wav";
+
   speaker-test = "${pkgs.alsa-utils}/bin/speaker-test";
+
 
 
   low-battery-check = pkgs.writeShellScriptBin "low-battery-check" ''
@@ -20,17 +24,23 @@ let
     # looping version. without systemd timer which is too chatty in the logs
 
     beep() {
-      #https://unix.stackexchange.com/questions/1974/how-do-i-make-my-pc-speaker-beep
-      #speaker-test -t sine -f 1000 -l 1 & sleep .5 && kill -9 $! > /dev/null 2>&1
+      # #https://unix.stackexchange.com/questions/1974/how-do-i-make-my-pc-speaker-beep
+      # #speaker-test -t sine -f 1000 -l 1 & sleep .5 && kill -9 $! > /dev/null 2>&1
+      #
+      # # required in nixos. else cannot find.  note. user 1000 is user me.
+      # export PULSE_SERVER=unix:/run/user/1000/pulse/native;
+      #
+      #     ${speaker-test} -t sine -f 1000 -l 1 > /dev/null & sleep .5 && kill -9 $!
 
-      # required in nixos. else cannot find.  note. user 1000 is user me.
-      export PULSE_SERVER=unix:/run/user/1000/pulse/native;
-
-      ${speaker-test} -t sine -f 1000 -l 1 > /dev/null & sleep .5 && kill -9 $!
+      # echo "in beep"
+      # whoami
+      /run/current-system/sw/bin/pw-play  /home/me/test.wav || echo 'Unable to play sound'
     }
 
     run() {
-      threshold=50
+      # threshold=50
+      threshold=97
+
       capacity=$(cat /sys/class/power_supply/BAT0/capacity)
       status=$(cat /sys/class/power_supply/BAT0/status)
 
@@ -69,14 +79,19 @@ in
 
     wantedBy = [ "multi-user.target" ];
 
-    after = [ "network.target" ];
+    # wants = [ "pipewire.service" ];
+    after = [ "sound.target" "network.target" ];
 
     description = "Send alerts on low battery";
 
     serviceConfig = {
       Type = "simple";
-      # IMPORTANT - user must be valid!!! needs to be able to connect to valid pulseaudio session.
+      # IMPORTANT - user must be valid!!!
       User = "me";
+
+      # Set necessary environment variables for PulseAudio/PipeWire access
+      Environment="XDG_RUNTIME_DIR=/run/user/1000";
+
       ExecStart = ''
         ${shell} ${low-battery-check}/bin/low-battery-check
         '';
