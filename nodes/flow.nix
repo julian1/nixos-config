@@ -849,6 +849,8 @@
 
     # large apps, with heavy compile dependencies.
 
+    gedit         # feb 2027.  for devanagari rendering
+
     chromium
 
     firefox        # 26.05 wants to compile. firefox failed to build, hung when running rustc.
@@ -995,11 +997,46 @@
   # http://localhost:631/printers/Brother
 
 
-# not needed for devanagari in firefox, libreoffice.
-#  fonts.fonts = with pkgs; [
-#    lohit-fonts.devanagari
-#    annapurna-sil
-#   ];
+  ###################
+
+  # Feb 2. 2026.  worked for firefox, chromium, and gedit.
+  #  also manually set devanagari font in firefox. in fonts -> advanced.
+  # likely this was not be necessary.
+  # rebooted. after change. not just restart desktop.
+
+  fonts = {
+    enableDefaultPackages = true;
+    packages = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+
+      # Specific Devanagari fonts
+      # Note: These are usually included in the main 'noto-fonts'
+      # package, but can be explicitly included if needed.
+      # noto-fonts-devanagari (usually redundant if using noto-fonts)
+    ];
+  };
+
+  fonts = {
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        serif = [ "Noto Serif" "Noto Serif Devanagari" ];
+        sansSerif = [ "Noto Sans" "Noto Sans Devanagari" ];
+        monospace = [ "Noto Sans Mono" ];
+      };
+    };
+  };
+
+
+  # Ensure your system supports UTF-8, which is required for Devanagari characters:
+  i18n.defaultLocale = "en_US.UTF-8";
+  # Or explicitly add Hindi
+  # i18n.supportedLocales = [ "hi_IN.UTF-8/UTF-8" "en_US.UTF-8/UTF-8" ];
+
+  ###################
+
 
 
 #  nix.settings.experimental-features = [ "nix-command" "flakes" ];
