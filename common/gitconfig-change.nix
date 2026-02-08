@@ -17,6 +17,7 @@ let
 
       day=$( date '+%u')
       if [ $day = 6 ] || [ $day = 7 ] ; then
+      # if false; then
 
         echo gitconfig-change yes ;
         sed -i 's/mail@julian1/git@julian1/'  /home/me/.config/git/config;
