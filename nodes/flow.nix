@@ -3,6 +3,17 @@
   cp nodes/flow.nix  /etc/nixos/configuration.nix
   nixos-rebuild switch
 
+
+  ---------
+  # notice that the wpa_supplicant has wlan0 appended.
+  $ systemctl restart wpa_supplicant-wlan0.service
+  same for journal journal
+  $ journalctl -u wpa_supplicant-wlan0 -f
+
+  # connection to encryption.key off worked.  just had to restart wpa_supplicant a few times
+  # $ systemctl restart wpa_supplicant-wlan0.service
+  # $ journalctl -u wpa_supplicant-wlan0 -f
+
   --------
   force download of tarball , for dotfiles,
 
@@ -850,6 +861,7 @@
     # large apps, with heavy compile dependencies.
 
     gedit         # feb 2027.  for devanagari rendering
+    wine          # for ltspice
 
     chromium
 
@@ -859,7 +871,6 @@
     # freecad  # don't use. instead use 1.0.1 version from master.
     # libreoffice
 
-    # wine   # for ltspice
 
     # openscad
     # openscad-unstable
