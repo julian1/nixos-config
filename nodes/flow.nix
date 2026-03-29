@@ -3,6 +3,8 @@
   cp nodes/flow.nix  /etc/nixos/configuration.nix
   nixos-rebuild switch
 
+  # mount a thumdrive in user space with permissions
+  mount -o uid=1000 /dev/sda1 /home/me/mnt/
 
   ---------
   # notice that the wpa_supplicant has wlan0 appended.
@@ -55,7 +57,8 @@
   xhost + local:      (for containers/apps run under different users that need to share Xorg)
 
   pipewire volume. mar. 2025.
-  wpctl set-volume @DEFAULT_AUDIO_SINK@   80%
+  # feb 2026.  now works.
+  wpctl set-volume @DEFAULT_AUDIO_SINK@   0.8
 
   aug 2025.
   wpctl status
@@ -74,6 +77,8 @@
 
   # old
   nixos-rebuild build -I nixpkgs=/home/me/devel/nixpkgs/ switch
+
+  usb tethering. must plug laptop end first. then phone end.
 
 */
 # Edit this configuration file to define what should be installed on
