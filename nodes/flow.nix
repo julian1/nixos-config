@@ -579,11 +579,27 @@
     in
       let myXResources = pkgs.writeText "xresources" ''
         XTerm*selectToClipboard: true
+
+        XScreenSaver.mode:      off
+
+        ! Disable X11 screen saver
+        !XScreenSaver.saver: blank
+        !XScreenSaver.timeout: 0
+        !*saver: blank
+        !*timeout: 0
+
+        ! jun. 2026
+        ! Disable DPMS (Display Power Management Signaling)
+        ! use xset, xset -q to apply setting immeidately eg.  'xset -dpms'
+        ! use 'xset -q' to query/confirm.
+        ! use xrdb for setting to apply, at xserver start, or login
+        ! use   'xrdb -query' to query start setting
+        xset: -dpms
+
       '';
     in
   ''
-
-    ${pkgs.xorg.xrdb}/bin/xrdb --merge ${myXResources};
+    ${pkgs.xorg.xrdb}/bin/xrdb -merge ${myXResources};
 
     # doesn't work need to copy Xresources
     ${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout};
