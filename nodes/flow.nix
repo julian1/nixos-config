@@ -11,7 +11,7 @@
   $ systemctl restart wpa_supplicant-wlan0.service
   same for journal journal
   $ journalctl -u wpa_supplicant-wlan0 -f
-
+n
   # connection to encryption.key off worked.  just had to restart wpa_supplicant a few times
   # $ systemctl restart wpa_supplicant-wlan0.service
   # $ journalctl -u wpa_supplicant-wlan0 -f
@@ -223,7 +223,10 @@
 
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
-  time.timeZone = "Australia/Hobart";
+  # time.timeZone = "Australia/Hobart";
+  time.timeZone = "Asia/Hong_Kong";
+
+
 
   # Select internationalisation properties.
   # i18n.defaultLocale = "en_US.UTF-8";
