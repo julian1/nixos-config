@@ -526,6 +526,9 @@ n
 
     enable = true;
 
+
+    # Inject custom xorg.conf.d snippets
+
     windowManager.xmonad = {
       enable = true;
       enableContribAndExtras = true;
@@ -555,63 +558,89 @@ n
 
 
 
+
   # windowManager.default = "xmonad";
   services.displayManager.defaultSession = "none+xmonad";
 
 
 
-  services.xserver.displayManager.sessionCommands =
-     # JA
-    let
-      myCustomLayout = pkgs.writeText "xkb-layout" ''
-        ! Map umlauts to RIGHT ALT + <key>
+# X11 does not natively support setting DPMS (Standby, Suspend, Off) times via
+# the .Xresources file. Instead, the standard ways to configure display power
+# management are through the xset command at startup or via the xorg.conf
+# configuration file.
 
-        keycode 96 = Insert Insert
 
-        !keysym e = e E EuroSign
-        !keysym c = c C cent
-        !keysym a = a A adiaeresis Adiaeresis
-        !keysym o = o O odiaeresis Odiaeresis
-        !keysym u = u U udiaeresis Udiaeresis
-        !keysym s = s S ssharp
+## but why doesn't this work?????
+## because runs before X is up.  and there is race condition.
+##  the -dmps may need to be last
+## or some xmonad setting overrides it all.
 
-        ! disable capslock
-        ! remove Lock = Caps_Lock
-      '';
-    # this doesn't work. need to copy Xresources to $HOME
-    in
-      let myXResources = pkgs.writeText "xresources" ''
-        XTerm*selectToClipboard: true
 
-        XScreenSaver.mode:      off
 
-        ! Disable X11 screen saver
-        !XScreenSaver.saver: blank
-        !XScreenSaver.timeout: 0
-        !*saver: blank
-        !*timeout: 0
+#services.xserver.displayManager.sessionCommands = ''
+#  ${pkgs.xorg.xset}/bin/xset s off
+#  ${pkgs.xorg.xset}/bin/xset s noblank
+#  ${pkgs.xorg.xset}/bin/xset dpms 0 0 0
+#  ${pkgs.xorg.xset}/bin/xset -dpms
+#'';
 
-        ! jun. 2026
-        ! Disable DPMS (Display Power Management Signaling)
-        ! use xset, xset -q to apply setting immeidately eg.  'xset -dpms'
-        ! use 'xset -q' to query/confirm.
-        ! use xrdb for setting to apply, at xserver start, or login
-        ! use   'xrdb -query' to query start setting
-        xset: -dpms
 
-      '';
-    in
-  ''
-    ${pkgs.xorg.xrdb}/bin/xrdb -merge ${myXResources};
-
-    # doesn't work need to copy Xresources
-    ${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout};
-
-    # keyboard repeat rate
-    ${pkgs.xorg.xset}/bin/xset r rate 200 ;
-
-  '';
-
+#  services.xserver.displayManager.sessionCommands =
+#     # JA
+#    let
+#      myCustomLayout = pkgs.writeText "xkb-layout" ''
+#        ! Map umlauts to RIGHT ALT + <key>
+#
+#        keycode 96 = Insert Insert
+#
+#        !keysym e = e E EuroSign
+#        !keysym c = c C cent
+#        !keysym a = a A adiaeresis Adiaeresis
+#        !keysym o = o O odiaeresis Odiaeresis
+#        !keysym u = u U udiaeresis Udiaeresis
+#        !keysym s = s S ssharp
+#
+#        ! disable capslock
+#        ! remove Lock = Caps_Lock
+#      '';
+#    # merging does NOT work. must copy .Xresources to $HOME
+#    #   oct 2026.
+#    #  looks like we do this with dotfiles now.
+#    #  so need to copy dpms as well.
+#    # xrdb -merge ~/.Xresources
+#    in
+#      let myXResources = pkgs.writeText "xresources" ''
+#        XTerm*selectToClipboard: true
+#
+#        XScreenSaver.mode:      off
+#
+#        ! Disable X11 screen saver
+#        !XScreenSaver.saver: blank
+#        !XScreenSaver.timeout: 0
+#        !*saver: blank
+#        !*timeout: 0
+#
+#        ! jun. 2026
+#        ! Disable DPMS (Display Power Management Signaling)
+#        ! use xset, xset -q to apply setting immeidately eg.  'xset -dpms'
+#        ! use 'xset -q' to query/confirm.
+#        ! use xrdb for setting to apply, at xserver start, or login
+#        ! use   'xrdb -query' to query start setting
+#        xset: -dpms
+#
+#      '';
+#    in
+#  ''
+#    ${pkgs.xorg.xrdb}/bin/xrdb -merge ${myXResources};
+#
+#    # doesn't work need to copy Xresources
+#    ${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout};
+#
+#    # keyboard repeat rate
+#    ${pkgs.xorg.xset}/bin/xset r rate 200 ;
+#
+#  '';
+#
 #    ${pkgs.xorg.xrdb}/bin/xrdb --merge ${myXResources}
 
 
@@ -831,8 +860,10 @@ n
 
     evince
     feh
-    trezord
+    # trezord
+    trezor-suite
     scrot
+
 
 
     ###############
@@ -879,6 +910,8 @@ n
     sane-backends
 
 
+    # oct. 2026.
+    anki
 
     ########################
 
