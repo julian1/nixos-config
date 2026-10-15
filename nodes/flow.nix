@@ -600,6 +600,7 @@ n
 #      myCustomLayout = pkgs.writeText "xkb-layout" ''
 #        ! Map umlauts to RIGHT ALT + <key>
 #
+#        ! required for terminal copy/paste
 #        keycode 96 = Insert Insert
 #
 #        !keysym e = e E EuroSign
@@ -635,7 +636,7 @@ n
 #        ! use 'xset -q' to query/confirm.
 #        ! use xrdb for setting to apply, at xserver start, or login
 #        ! use   'xrdb -query' to query start setting
-#        xset: -dpms
+#        ! xset: -dpms
 #
 #      '';
 #    in
