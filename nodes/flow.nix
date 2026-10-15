@@ -1096,6 +1096,9 @@ n
       # Note: These are usually included in the main 'noto-fonts'
       # package, but can be explicitly included if needed.
       # noto-fonts-devanagari (usually redundant if using noto-fonts)
+
+      # oct. 2026
+      khmeros
     ];
   };
 
