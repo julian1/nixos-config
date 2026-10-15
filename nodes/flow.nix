@@ -562,7 +562,16 @@ n
   # windowManager.default = "xmonad";
   services.displayManager.defaultSession = "none+xmonad";
 
+##
 
+#  this will show all the config files that are passed to X.
+# ps axf | grep lightdm
+# -config /nix/store/bdd94s1svhyfqyn16q8hzh029mc3jl3s-xserver.conf
+
+#
+
+
+##
 
 # X11 does not natively support setting DPMS (Standby, Suspend, Off) times via
 # the .Xresources file. Instead, the standard ways to configure display power
@@ -641,8 +650,6 @@ n
 #
 #  '';
 #
-#    ${pkgs.xorg.xrdb}/bin/xrdb --merge ${myXResources}
-
 
 
   # for unrar but doesn't seem to work.
