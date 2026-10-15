@@ -80,6 +80,11 @@ n
 
   usb tethering. must plug laptop end first. then phone end.
 
+  #  show all the config files that are passed to X.
+  # useful for debugging.
+  ps axf | grep lightdm
+    ...
+
 */
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
