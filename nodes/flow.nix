@@ -228,8 +228,8 @@ n
 
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
-  # time.timeZone = "Australia/Hobart";
-  time.timeZone = "Asia/Hong_Kong";
+  time.timeZone = "Australia/Hobart";
+  # time.timeZone = "Asia/Hong_Kong";
 
 
 
@@ -333,6 +333,11 @@ n
         127.0.0.1     va.v.liveperson.net
         127.0.0.1     v.liveperson.net
         127.0.0.1     liveperson.net
+
+
+        # nitter.cf
+        # 104.21.62.204 xcancel.com
+
       '';
 
     # Open ports in the firewall.
@@ -365,6 +370,8 @@ n
 #        }
 #      ] ;
 #    };
+
+
 
   };
 
@@ -1098,7 +1105,8 @@ n
       # noto-fonts-devanagari (usually redundant if using noto-fonts)
 
       # oct. 2026
-      khmeros
+      # corrupted khmer anki text, and made everything italic, after anki restart.
+      # khmeros
     ];
   };
 
