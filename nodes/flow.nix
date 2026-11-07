@@ -162,6 +162,9 @@ n
   # boot.kernelPackages = pkgs.linuxPackages_5_12;
 
 
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
+
+
   # april 2025. try older kernel.  6.1 was default for nixos 23.11. Tapir.
   # june 2025. use normal kernel with upgrade.
   # july 2025.  - 6.12.34 is current.  try to downgrade/revert
@@ -885,6 +888,9 @@ n
     scrot
 
 
+    ###############
+    # filesystem check
+    cshatag
 
     ###############
 
