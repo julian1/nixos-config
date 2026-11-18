@@ -36,6 +36,25 @@
     ];
 
 
+
+  #########################
+
+  # from default configuration
+  # nixos-generate-config --root /mnt
+
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  # do not touch. even if upgrade
+  system.stateVersion = "26.05";
+
+  #########################
+
+
+  boot.loader.systemd-boot.memtest86.enable = true;
+
+
+
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
   time.timeZone = "Australia/Hobart";
