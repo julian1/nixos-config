@@ -12,7 +12,10 @@ let
 in
   let
     myVim =
-    pkgs.vim_configurable.customize {
+    # pkgs.vim_configurable.customize {
+
+    # nov 2026. rename for 26.05.
+    pkgs.vim-full.customize {
         # Specifies the vim binary name.
         name = "vim";
         # CHANGE this - to just read a file from dotfiles
@@ -123,7 +126,7 @@ with lib;
       [ -d "/home/me/.config" ] ||  mkdir  /home/me/.config && chown me:me /home/me/.config
 
       cat "${dotfilesSrc}/xmobarrc"    > /home/me/.xmobarrc
-      cat "${dotfilesSrc}/Xresources"   > /home/me/.Xresources
+      # cat "${dotfilesSrc}/Xresources"   > /home/me/.Xresources
 
 
       ############################
