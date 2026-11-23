@@ -134,15 +134,40 @@ n
     #"quiet"
     #"splash"
     #"usbcore.blinkenlights=1"
+#
+#    # https://discourse.nixos.org/t/lockups-with-kernel-6-14-7-and-amd-gpus/64585/9
+#    "mem_sleep_default=s2idle"
+#    "amdgpu.noretry=0"
+#    "amdgpu.vm_update_mode=3"
+#    "amdgpu.sg_display=0"
+#    "amdgpu.preempt_mm=0"
 
-    # https://discourse.nixos.org/t/lockups-with-kernel-6-14-7-and-amd-gpus/64585/9
-    #"mem_sleep_default=s2idle"
-    #"amdgpu.noretry=0"
-    #"amdgpu.vm_update_mode=3"
-    #"amdgpu.sg_display=0"
-    #"amdgpu.preempt_mm=0"
+    # cannot disable CCD (entire 8 cpu carrier) in bios. for asus flow model. although can for strix.
+    # so instead, try to shift regular smp tasks and interrupts off cpu0, and the first carrier.
+#    # also - disabling cpus (other than cpu0, that cannot be disabled) from first carrier - should reduce contention for L3 shared cache.
+#    "isolcpus=0-7"
+#    "irqaffinity=8-15"
+#
+    # "usbcore.autosuspend=-1"
+
+	  # c0,c1 == Halts main internal clocks when idle while keeping core power and caches active.
+    # "processor.max_cstate=1"
+
+    # To disable CPU idle states in Linux,
+    # In Linux kernel tuning, cpuidle.off=1 disables the entire cpuidle subsystem,
+    # while max_cstate=0 (such as intel_idle.max_cstate=0 or processor.max_cstate=0)
+    # targets individual idle drivers to limit or disable deeper CPU C-states.
+
+    "cpuidle.off=1"
+
+    # Turns off ACPI power management broadly and can break sleep, fans, or hardware controls
+    # results in kernel not seeing amd card, and cannot start display manager
+    # "acpi=off"
   ];
 
+
+  ##
+  # hardware.cpu.amd.updateMicrocode = false;
 
 
   boot.extraModulePackages = with config.boot.kernelPackages; [
@@ -162,7 +187,7 @@ n
   # boot.kernelPackages = pkgs.linuxPackages_5_12;
 
 
-  # boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
 
   # april 2025. try older kernel.  6.1 was default for nixos 23.11. Tapir.
